@@ -41,10 +41,11 @@ module ietf-ip-bfd {
 /* 
  * configuration 
  */
-    augment "/bfd:bfd-config/bfd:bfd" {
+    augment "/bfd:bfd-config" {
+        when "bfd:type = 'ianabfdt:ip'";
 
         list ip-bfd {
-            key "/bfd:bfd-config/bfd:bfd/bfd:my-discriminator";
+            key "/bfd:bfd-config/bfd:my-discriminator";
 
             leaf single-hop {
                 type boolean;

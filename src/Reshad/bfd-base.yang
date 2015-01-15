@@ -1,0 +1,147 @@
+module bfd-base {
+  namespace "urn:ietf:params:xml:ns:yang:bfd-base";
+  prefix "bfd";
+   
+  organization "IETF BFD Working Group";
+
+  contact 
+    "WG Web:   <http://tools.ietf.org/wg/bfd>
+      WG List:  TBD
+      WG Chair: Jeff Haas
+      WG Chair: Nobo Akiya
+      Editor:   Vero + Reshad";
+
+  description "This module contains the YANG definition RFC5880";
+
+  revision 2014-09-07 {
+    description "Initial revision.";
+  }
+
+  typedef version {
+    type uint32 {
+      range 0..7;
+    }
+  }
+    
+  typedef discriminator {
+    type uint32 {
+      range 1..4294967295;
+    }
+  }
+
+  typedef diagnostic {    
+    type enumeration {
+      enum none {
+	value 0;
+      }
+      enum controlExpiry {
+	value 1;
+      }
+      enum echoFailed {
+	value 2;
+      }
+      enum nborDown {
+	value 3;
+      }
+      enum fwdingReset {
+	value 4;
+      }
+      enum pathDown {
+	value 5;
+      }
+      enum concPathDown {
+	value 6;
+      }
+      enum adminDown {
+	value 7;
+      }
+      enum reverseConcPathDown {
+	value 8;
+      }
+    }
+  }
+
+  typedef state {    
+    type enumeration {
+      enum adminDown {
+	value 0;
+      }
+      enum down {
+	value 1;
+      }
+      enum init {
+	value 2;
+      }
+      enum up {
+	value 3;
+      }
+    }
+  }
+
+  typedef multiplier {
+    type uint8 {
+      range 1..255;
+    }
+  }
+
+  typedef session-type {
+    type enumeration {
+      enum none {
+	value 0;
+      }
+    }
+  }
+  grouping baseSessionEntry {
+    container config-parms {
+      leaf my-discriminator {
+	type discriminator;
+      }
+      leaf local-multiplier {
+	type multiplier;
+      }
+
+      leaf desired-min-tx-interval {
+	type uint32;
+      }
+      leaf required-min-rx-interval {
+	type uint32;
+      }
+      leaf required-min-rx-echo-interval {
+	type uint32;
+      }
+    }
+
+    container operational {
+      config false;
+      leaf your-discriminator {
+	type uint32;
+      }
+      leaf local-state {
+	type state;
+      }
+      leaf remote-state {
+	type state;
+      }
+      leaf local-diagnostic {
+	type diagnostic;
+      }
+      leaf remote-diagnostic {
+	type diagnostic;
+      }
+      leaf remote-multiplier {
+	type multiplier;
+      }
+    }
+  }
+  
+
+  // list sessions-base {
+  //   key index;
+  //   leaf index {
+  //     type uint32;
+  //   }
+  //   container sessionEntry {
+  //     uses baseSessionEntry;
+  //   }
+  // }	   
+}

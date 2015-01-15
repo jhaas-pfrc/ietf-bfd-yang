@@ -34,6 +34,14 @@ module ietf-bfd {
  * typedefs
  */
 
+/*
+ * Identities
+ */
+identity bfd-type {
+    description
+        "Base identity from which specific BFD types are derived.";
+}
+
 /* 
  * configuration 
  */
@@ -47,6 +55,27 @@ module ietf-bfd {
                 "A string that is used to identify the BFD session.";
         }
 
+        leaf type {
+            type identityref {
+                base bfd-type;
+            }
+            mandatory true;
+            description
+                "The type of BFD session.
+
+                 When a BFD entry is created, a server MAY initialize
+                 the type leaf with a valid value, e.g., if it is 
+                 possible to derive the type from the name of the BFD
+                 session.
+
+                 If a client tries to set the type of an BFD session to a
+                 value that can never be used by the system, e.g., if the
+                 type is not supported or if the type does not match the
+                 name of the BFD session, the server MUST reject the request.
+                 A NETCONF server MUST reply with an rpc-error with the
+                 error-tag 'invalid-value' in this case.";
+        }
+
         leaf admin-state {
             description 
                 "The adminstrative state of the BFD session";
@@ -54,28 +83,28 @@ module ietf-bfd {
                 enum disable {
                     value "0";
                     description
-                        "The administrative state of the session is disabled.";
-		}
+                    "The administrative state of the session is disabled.";
+                }
                 enum enable {
                     value "1";
                     description
-                        "The administrative state of the session is enabled";
+                    "The administrative state of the session is enabled";
                 }
             }
-	}
+        }
 
         leaf role {
             type enumeration {
                 enum active {
                     description
-                        "A system taking the Active role MUST send BFD
+                    "A system taking the Active role MUST send BFD
                         Control packets for a particular session, regardless of whether it
                         has received any BFD packets for that session";
                 }
 
                 enum passive {
                     description
-                        "A system taking the Passive role MUST NOT begin sending BFD 
+                    "A system taking the Passive role MUST NOT begin sending BFD 
                          packets for a particular session until it has received a BFD 
                          packet for that session, and thus has learned the remote 
                          system's discriminator value.";
@@ -86,89 +115,32 @@ module ietf-bfd {
                  both ends can be active, but both ends cannot be passive.";
         }
 
-        leaf version {
-            type uint8 {
-                range 0..7;
-            }
+        leaf control-plane-independent {
+            type boolean;
             description
-                "The version number of the protocol.";
-        }
-
-        leaf diag {
-            type uint8 {
-                range 0..31;
-            }
-            description
-                "A diagnostic code specifying the local system's reason for the
-                 last change in session state";
-        }
-
-        leaf state {
-            type uint8 {
-                range 0..3;
-            }
-            description
-                "The current BFD session state as seen by the transmitting system.";
-        }
-
-        leaf bfd-bits {
-            type bits {
-                bit poll {
-                    position 0;
-                    description
-                        "If set, the transmitting system is requesting verification of
-                         connectivity, or of a parameter change, and is expecting a packet
-                         with the Final (F) bit in reply.  If clear, the transmitting
-                         system is not requesting verification.";
-                }
-
-                bit final {
-                    position 1;
-                    description
-                        "If set, the transmitting system is responding to a received BFD
-                         Control packet that had the Poll (P) bit set.  If clear, the
-                         transmitting system is not responding to a Poll.";
-                }
-
-                bit control-plane-independent {
-                    position 2;
-                    description
-                        "If set, the transmitting system's BFD implementation does not
+                "If set, the transmitting system's BFD implementation does not
                          share fate with its control plane (in other words, BFD is
                          implemented in the forwarding plane and can continue to function
                          through disruptions in the control plane).  If clear, the
                          transmitting system's BFD implementation shares fate with its
-                         control plane.
+                         control plane.";
+        }
 
-                         The use of this bit is application dependent and is outside the
-                         scope of this specification.  See specific application
-                         specifications for details.";
-                }
+        leaf enable-authentication {
+            type boolean;
+            description
+                "If set, the Authentication Section is present and the session is
+                         to be authenticated (see RFC 5880 section 6.7 for details).";
+        }
 
-                bit authentication-present {
-                    position 3;
-                    description
-                        "If set, the Authentication Section is present and the session is
-                         to be authenticated (see section 6.7 for details).";
-                }
-
-                bit demand {
-                    position 4;
-                    description
-                        "If set, Demand mode is active in the transmitting system (the
+        leaf demand {
+            type boolean;
+            description
+                "If set, Demand mode is active in the transmitting system (the
                          system wishes to operate in Demand mode, knows that the session is
                          Up in both directions, and is directing the remote system to cease
                          the periodic transmission of BFD Control packets).  If clear,
                          Demand mode is not active in the transmitting system.";
-                }
-
-                bit multipoint {
-                    position 5;
-                    description
-                        "This bit is reserved for future point-to-multipoint extensions to
-                         BFD.  It MUST be zero on both transmit and receipt.";
-                }
-            }
         }
 
         leaf detect-multiplier {
@@ -179,26 +151,12 @@ module ietf-bfd {
                  receiving system in Asynchronous mode.";
         }
 
-        leaf length {
-            type uint32;
-            description
-                "Length of the BFD Control packet, in bytes.";
-        }
-
         leaf my-discriminator {
             type uint32;
             description
                 "A unique, nonzero discriminator value generated by the
                  transmitting system, used to demultiplex multiple BFD sessions
                  between the same pair of systems.";
-        }
-
-        leaf your-discriminator {
-            type uint32;
-            description
-                "The discriminator received from the corresponding remote system.
-                 This field reflects back the received value of My Discriminator,
-                 or is zero if that value is unknown.";
         }
 
         leaf min-tx-interval {
@@ -237,11 +195,14 @@ module ietf-bfd {
                  bit is set.";
         }
 
-        leaf auth-length {
-            type uint8;
+        leaf hw-accelerated {
+            type boolean;
             description
-                "The length, in bytes, of the authentication section, including the
-                 Auth Type and Auth Len fields.";
+                "If set, it is suggested that the system run the BFD session
+                     using hardware to accelerate/offload the session.
+
+                     If the system is unable to support the sesion in hardware, it
+                     can fail the request completely or switch it to software.";
         }
     }
 }

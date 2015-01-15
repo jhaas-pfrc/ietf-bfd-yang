@@ -1,29 +1,22 @@
-I should define what I have in mind when I talk about the base model.
-
-The base model in my mind is the model that captures information that
-is common across most if not all of BFD sessions. 
-
-So rather than look at the model that Vero presented (BTW, thanks Vero
-for sharing the model), I thought it would be easier to present what I
-had in mind for the base model. Here it is in tree format.
+As discussed on the mailing list, the base model does not carry a list
+of BFD sessions. That is now maintained in individual containers for
+IP-BFD, LSP-BFD etc.
 
 module: ietf-bfd
    +--rw bfd-config
-      +--rw name?                   string
-      +--rw admin-state?            enumeration
-      +--rw role?                   enumeration
-      +--rw version?                uint8
-      +--rw diag?                   uint8
-      +--rw state?                  uint8
-      +--rw bfd-bits?               bits
-      +--rw detect-multiplier?      uint32
-      +--rw length?                 uint32
-      +--rw my-discriminator?       uint32
-      +--rw your-discriminator?     uint32
-      +--rw min-tx-interval?        uint32
-      +--rw min-rx-interval?        uint32
-      +--rw min-rx-echo-interval?   uint32
-      +--rw auth-type?              uint8
-      +--rw auth-length?            uint8
+      +--rw name?                        string
+      +--rw type                         identityref
+      +--rw admin-state?                 enumeration
+      +--rw role?                        enumeration
+      +--rw control-plane-independent?   boolean
+      +--rw enable-authentication?       boolean
+      +--rw demand?                      boolean
+      +--rw detect-multiplier?           uint32
+      +--rw my-discriminator?            uint32
+      +--rw min-tx-interval?             uint32
+      +--rw min-rx-interval?             uint32
+      +--rw min-rx-echo-interval?        uint32
+      +--rw auth-type?                   uint8
+      +--rw hw-accelerated?              boolean
 
-If you want to see the corresponding YANG file, check out the src directory for ietf-bfd.yang
+If you want to see the corresponding YANG file, check out the src directory for mj/ietf-bfd.yang

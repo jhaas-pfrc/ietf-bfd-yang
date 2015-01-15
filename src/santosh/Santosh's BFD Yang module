@@ -1,0 +1,221 @@
+module bfd {
+	namespace "urn:ietf:params:xml:ns:yang:bfd";
+	prefix "bfd";
+	
+    import ietf-inet-types {
+        prefix "inet";
+    }
+
+	organization "IETF BFD (Bidirectional Forwarding Detection) Working Group";
+
+	contact:
+	
+	description "BFD Yang Module";
+	
+	revision "2014-10-08" {
+	    description "Initial version";
+	}
+	
+	/* For all BFD these parameters are mandatory */
+	
+	grouping bfdParams{
+		description "BFD mandatory parameters grouping";
+		
+		leaf version{
+			description "BFD protocol version number";
+			config "true";
+            default automatic;
+            type enumeration {
+				enum 0 {
+					description "BFD version 0 (deprecated)";
+				}      
+				enum 1 {
+					description "BFD version 1";
+				}      
+				enum automatic {
+					description "Choose BFD version automatically";
+				}      
+			}      
+		}
+		
+		leaf multiplier {
+			description "Detection time multiplier";
+			default 3;
+			config "true";
+			type uint32 {
+				range "1 .. 255";
+			}
+		}
+		
+		leaf minimum-interval {
+			description "Minimum transmit and receive interval";
+			units "milliseconds";
+			config "true";
+			type uint32 {
+				range "1 .. 255000";
+			}
+        }
+		
+		leaf minimum-receive-interval {
+			description "Minimum receive interval";
+			units "milliseconds";
+			config "true";
+			type uint32 {
+				range "1 .. 255000";
+			}
+        }
+		
+		leaf minimum-transmit-interval {
+			description "Minimum transmit interval";
+			units "milliseconds";
+			config "true";
+			type uint32 {
+				range "1 .. 255000";
+			}
+        }
+		
+		leaf minimum-echo-receive-interval{
+			description "Minimum echo receive interval";
+			units "milliseconds";
+			config "true";
+			type uint32 {
+				range "1 .. 255000";
+			}
+		}
+		uses authForBFD;
+	}
+
+	/* Authentication for BFD */
+	
+	grouping authForBFD{
+		description "BFD authentication grouping";
+		
+		container authentication{
+			description "Authentication options";
+			
+			leaf key-chain {
+				description "Key chain name";
+				config "true";
+				must "../algorithm" {
+					error-message "May not be configured without algorithm";
+				}
+				type string;
+			} 
+			
+			leaf algorithm {
+				description "Algorithm name";
+				config "true";
+				must "../key-chain" {
+					error-message "May not be configured without key-chain";
+				}
+				type enumeration {
+					enum simple-password {
+						description "Simple password";
+					}
+					enum keyed-md5 {
+						description "Keyed message Digest 5";
+					}
+					enum meticulous-keyed-md5 {
+						description "Meticulous keyed message Digest 5";
+					}
+					enum keyed-sha-1 {
+						description "Keyed secure hash algorithm (SHA1) ";
+					}
+					enum meticulous-keyed-sha-1 {
+						description "Meticulous keyed secure hash algorithm (SHA1) ";
+					}
+				}   
+			}
+			
+			leaf loose-check {
+				description "Verify authentication only if authentication is negotiated";
+				config "true";
+				type empty;
+			}
+		}
+	}	
+
+	/* BFD for singlehop session */
+	
+	grouping singlehopBFD{
+		uses BFDParams;
+	}
+
+	/* BFD for Micro BFD session */
+	
+	grouping microBFD {
+		uses BFDParams;
+		
+
+        leaf neighbor {
+           description "BFD neighbor address";
+		   config "true";
+           type inet:ip-address;
+           mandatory true;
+        }
+		
+        leaf local-address {
+           description "BFD local address";
+		   config "true";
+           type inet:ip-address;
+           mandatory true;
+        }
+	}
+
+	/* BFD for Multihop BFD session */
+	
+	grouping multihopBFD {
+		uses BFDParams;
+		
+		leaf minimum-receive-ttl{
+			description "Minimum receive TTL";
+			default 255;
+			config "true";
+			type uint32 {
+				range "1 .. 255";
+			}
+		}
+		
+        leaf local-address {
+           description "BFD local address";
+		   config "true";
+           type inet:ip-address;
+        }
+	}
+	
+	
+	/* Use grouping for all IGP/BGP/Static */
+	
+	container igpBFD{
+		container interfaceBFD{
+			uses singleHopBFD;
+		}	
+	}
+
+	container ebgpBFD{
+		container peerBFD{
+			uses singleHopBFD;
+		}
+	}
+
+	container ibgpBFD{
+		container peerBFD{
+			use MultiHopBFD;
+		}
+	}
+
+	container staticRouteBFD{
+		choice BFD-type{
+			case singleHop{
+				use singleHopBFD;
+			}
+			case multiHop{
+				use MultiHopBFD;
+			}
+		}
+	}
+	
+	container bundleBFD{
+		uses microBFD;
+	}
+}
