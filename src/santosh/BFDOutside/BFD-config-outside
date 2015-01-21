@@ -1,0 +1,200 @@
+
+
+module ietf-bfd {
+    namespace "urn:ietf:params:xml:ns:yang:bfd";
+    prefix "bfd";
+
+    organization "IETF BFD (Bidirectional Forwarding Detection) Working Group";
+    contact 
+        "WG Web:   <http://tools.ietf.org/wg/bfd/>
+         WG List:  <mailto:rtg-bfd@ietf.org>
+
+         WG Chair: ";
+
+    description 
+        "BFD Yang Module
+
+         Copyright (c) 2014 IETF Trust and the persons identified as
+         authors of the code.  All rights reserved.
+
+         Redistribution and use in source and binary forms, with or
+         without modification, is permitted pursuant to, and subject
+         to the license terms contained in, the Simplified BSD License
+         set forth in Section 4.c of the IETF Trust's Legal Provisions
+         Relating to IETF Documents
+         (http://trustee.ietf.org/license-info).
+
+         This version of this YANG module is part of RFC XXXX; see
+         the RFC itself for full legal notices.";
+
+    revision 
+        "2014-10-06" {
+        description "Initial version";
+    }
+
+/*
+ * typedefs
+ */
+
+/*
+ * Identities
+ */
+identity bfd-type {
+    description
+        "Base identity from which specific BFD types are derived.";
+}
+
+/* 
+ * configuration 
+ */
+    container bfd-config {
+        description 
+            "BFD configuration";
+
+        leaf name {
+            type string;
+            description
+                "A string that is used to identify the BFD session.";
+        }
+
+        leaf type {
+            type identityref {
+                base bfd-type;
+            }
+            mandatory true;
+            description
+                "The type of BFD session.
+
+                 When a BFD entry is created, a server MAY initialize
+                 the type leaf with a valid value, e.g., if it is 
+                 possible to derive the type from the name of the BFD
+                 session.
+
+                 If a client tries to set the type of an BFD session to a
+                 value that can never be used by the system, e.g., if the
+                 type is not supported or if the type does not match the
+                 name of the BFD session, the server MUST reject the request.
+                 A NETCONF server MUST reply with an rpc-error with the
+                 error-tag 'invalid-value' in this case.";
+        }
+
+        leaf admin-state {
+            description 
+                "The adminstrative state of the BFD session";
+            type enumeration {
+                enum disable {
+                    value "0";
+                    description
+                    "The administrative state of the session is disabled.";
+                }
+                enum enable {
+                    value "1";
+                    description
+                    "The administrative state of the session is enabled";
+                }
+            }
+        }
+
+        leaf role {
+            type enumeration {
+                enum active {
+                    description
+                    "A system taking the Active role MUST send BFD
+                        Control packets for a particular session, regardless of whether it
+                        has received any BFD packets for that session";
+                }
+
+                enum passive {
+                    description
+                    "A system taking the Passive role MUST NOT begin sending BFD 
+                         packets for a particular session until it has received a BFD 
+                         packet for that session, and thus has learned the remote 
+                         system's discriminator value.";
+                }
+            }
+            description
+                "Is this end the active or the passive end of the session. Note,
+                 both ends can be active, but both ends cannot be passive.";
+        }
+
+        leaf control-plane-independent {
+            type boolean;
+            description
+                "If set, the transmitting system's BFD implementation does not
+                         share fate with its control plane (in other words, BFD is
+                         implemented in the forwarding plane and can continue to function
+                         through disruptions in the control plane).  If clear, the
+                         transmitting system's BFD implementation shares fate with its
+                         control plane.";
+        }
+
+        leaf enable-authentication {
+            type boolean;
+            description
+                "If set, the Authentication Section is present and the session is
+                         to be authenticated (see RFC 5880 section 6.7 for details).";
+        }
+
+        leaf demand {
+            type boolean;
+            description
+                "If set, Demand mode is active in the transmitting system (the
+                         system wishes to operate in Demand mode, knows that the session is
+                         Up in both directions, and is directing the remote system to cease
+                         the periodic transmission of BFD Control packets).  If clear,
+                         Demand mode is not active in the transmitting system.";
+        }
+
+        leaf detect-multiplier {
+            type uint32;
+            description
+                "Detection time multiplier.  The negotiated transmit interval,
+                 multiplied by this value, provides the Detection Time for the
+                 receiving system in Asynchronous mode.";
+        }
+
+        leaf my-discriminator {
+            type uint32;
+            description
+                "A unique, nonzero discriminator value generated by the
+                 transmitting system, used to demultiplex multiple BFD sessions
+                 between the same pair of systems.";
+        }
+
+        leaf min-tx-interval {
+            type uint32;
+            description
+                "This is the minimum interval, in microseconds, that the local
+                 system would like to use when transmitting BFD Control packets,
+                 less any jitter applied (see section 6.8.2).  The value zero is
+                 reserved.";
+        }
+
+        leaf min-rx-interval {
+            type uint32;
+            description
+                "This is the minimum interval, in microseconds, between received
+                 BFD Control packets that this system is capable of supporting,
+                 less any jitter applied by the sender (see section 6.8.2).  If
+                 this value is zero, the transmitting system does not want the
+                 remote system to send any periodic BFD Control packets.";
+        }
+
+        leaf min-rx-echo-interval {
+            type uint32;
+            description
+                "This is the minimum interval, in microseconds, between received
+                 BFD Echo packets that this system is capable of supporting, less
+                 any jitter applied by the sender (see section 6.8.9).  If this
+                 value is zero, the transmitting system does not support the
+                 receipt of BFD Echo packets.";
+        }
+
+        leaf auth-type {
+            type uint8;
+            description
+                "The authentication type in use, if the authentication-present
+                 bit is set.";
+        }
+    }
+}
