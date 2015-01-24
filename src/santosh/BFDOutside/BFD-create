@@ -3,8 +3,8 @@ module bfd-create {
 	prefix "bfd-create";
 	
 	import ietf-bfd {
-        prefix "bfd";
-    }
+        	prefix "bfd";
+        }
 	import ietf-ip-bfd {
 		prefix "ip-bfd"
 	}
@@ -44,9 +44,9 @@ module bfd-create {
  * For example:  bfd session create session ipbfd1 neighbour <IP-address>
  */
  
-	container bfd-session-create{
+        container bfd-session-create{
 		description 
-            "BFD session create";
+            		"BFD session create";
 			
 		leaf bfd-session-name{
 			type string;
@@ -62,6 +62,6 @@ module bfd-create {
 				"Destination address for single-hop and multi-hop BFD session."
 		}
 		
-		uses bfd:bfd-config;
+		uses ip-bfd:ip-bfd;
 	}
 }

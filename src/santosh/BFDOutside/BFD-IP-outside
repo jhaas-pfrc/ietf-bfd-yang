@@ -5,8 +5,8 @@ module ietf-ip-bfd {
     import ietf-bfd {
         prefix "bfd";
     }
-	
-	import ietf-inet-types {
+
+    import ietf-inet-types {
          prefix "inet";
     }
 
@@ -45,43 +45,40 @@ module ietf-ip-bfd {
 /* 
  * configuration 
  */
-    augment "/bfd:bfd-config" {
-        when "bfd:type = 'ianabfdt:ip'";
-
-        list ip-bfd {
-            key " ";  /* Key yet to be decided*/
-
-            leaf single-hop {
+   groupings ip-bfd {
+        
+        uses bfd:bfd-config;
+        
+        leaf single-hop {
                 type boolean;
                 default "false";
                 description
                     "If enabled, this is a single hop BFD session. That
                      means the BFD session has to terminate on the peer
                      IP interface which is a single hop away.";
-            }
-			
-			leaf multi-hop {
-                type boolean;
-                default "false";
-                description
-                    "If enabled, this is a single hop BFD session. That
-                     means the BFD session has to terminate on the peer
-                     IP interface which is a single hop away.";
-            }
-			
-			leaf src-ip{
-				type inet:ip-address;
-				default "0.0.0.0"
-				description
-					"Source address for single-hop and multi-hop BFD session."
-			}
-					
-			leaf min-receive-ttl{
-				type uint32;
-				default "255"
-				description
-					"Minimum receive TTL for multi-hop BFD sessions."
-			}
         }
+			
+	leaf multi-hop {
+                type boolean;
+                default "false";
+                description
+                    "If enabled, this is a single hop BFD session. That
+                     means the BFD session has to terminate on the peer
+                     IP interface which is a single hop away.";
+        }
+			
+	leaf src-ip{
+		type inet:ip-address;
+		default "0.0.0.0"
+		description
+			"Source address for single-hop and multi-hop BFD session."
+	}
+					
+	leaf min-receive-ttl{
+		type uint32;
+		default "255"
+		description
+			"Minimum receive TTL for multi-hop BFD sessions."
+	}
     }
 }

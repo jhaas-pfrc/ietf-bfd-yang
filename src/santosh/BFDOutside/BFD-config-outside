@@ -47,7 +47,7 @@ identity bfd-type {
 /* 
  * configuration 
  */
-    container bfd-config {
+    groupings bfd-config {
         description 
             "BFD configuration";
 
@@ -196,5 +196,65 @@ identity bfd-type {
                 "The authentication type in use, if the authentication-present
                  bit is set.";
         }
+        
+        uses BFDAuth;
     }
 }
+
+
+grouping BFDAuth {
+    description 
+        "BFD authentication grouping";
+    container authentication {
+        description 
+            "Authentication options";
+        
+    leaf key-chain {
+        description 
+            "Key chain name";
+        config "true";
+        must "../algorithm" {
+            error-message 
+                "May not be configured without algorithm";
+        }
+        type string;
+    }
+
+    leaf algorithm {
+        description 
+            "Algorithm name";
+        config "true";
+        must "../key-chain" {
+            error-message "May not be configured without key-chain";
+        }
+
+        type enumeration {
+            enum simple-password {
+                description 
+                    "Simple password";
+            }
+            enum keyed-md5 {
+                description 
+                    "Keyed message Digest 5";
+            }
+            enum meticulous-keyed-md5 {
+                description 
+                    "Meticulous keyed message Digest 5";
+            }
+            enum keyed-sha-1 {
+                description 
+                    "Keyed secure hash algorithm (SHA1) ";
+            }
+            enum meticulous-keyed-sha-1 {
+                description 
+                    "Meticulous keyed secure hash algorithm (SHA1) ";
+            }
+        }
+    }
+    leaf loose-check {
+        description 
+            "Verify authentication only if authentication is negotiated";
+        config "true";
+        type empty;
+    }
+} 
