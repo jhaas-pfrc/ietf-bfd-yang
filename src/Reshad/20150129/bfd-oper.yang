@@ -1,0 +1,91 @@
+module bfd-oper {
+  namespace "urn:ietf:params:xml:ns:yang:bfd-oper";
+  prefix "bfd-oper";
+   
+  import bfd-parameters {
+    prefix "bfd-parms";
+  }
+  
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
+  organization "IETF BFD Working Group";
+
+  contact 
+    "WG Web:   <http://tools.ietf.org/wg/bfd>
+      WG List:  TBD
+      WG Chair: Jeff Haas
+      WG Chair: Nobo Akiya
+      Editor:   Vero + Reshad";
+
+  description 
+    "This module contains the YANG definition for BFD parameters as per 
+     RFC5881";
+
+  revision 2015-01-17 {
+    description "Initial revision.";
+  }
+
+  grouping bfd-oper-base {
+    description "BFD grouping for base operational data";
+
+    //container operational {
+    //config false;
+      leaf your-discriminator {
+        type uint32;
+      }
+      leaf local-state {
+        type bfd-parms:state;
+      }
+      leaf remote-state {
+        type bfd-parms:state;
+      }
+      leaf local-diagnostic {
+        type bfd-parms:diagnostic;
+      }
+      leaf remote-diagnostic {
+        type bfd-parms:diagnostic;
+      }
+      leaf remote-multiplier {
+        type bfd-parms:multiplier;
+      }
+      //}    
+  }
+
+  container session-lists {
+    config false;
+    list session-sh-ip {
+
+      key "interface destination-address";
+      leaf interface {
+	type if:interface-ref;
+      }
+      leaf destination-address {
+	type inet:ip-address;
+      }
+
+      uses bfd-oper-base;
+    }
+
+    list session-mh-ip {
+
+      key "vrf-name source-address destination-address";
+      leaf vrf-name {
+	type string;
+      }
+      leaf source-address {
+	type inet:ip-address;
+      }
+      leaf destination-address {
+	type inet:ip-address;
+      }
+
+      uses bfd-oper-base;
+    }
+  }
+}
