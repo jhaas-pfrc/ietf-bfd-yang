@@ -115,7 +115,7 @@
       introduced to define the contents of a conceptual data store that allows
       networked devices to be managed using NETCONF <xref target="RFC6241"/>. 
       YANG is proving relevant beyond its initial confines, as bindings to other 
-      interfaces (e.g RESTCONF) and encodings other than XML (e.g JSON) are being
+      interfaces (e.g RESTCONF <xref target="I-D.ietf-netconf-restconf" />) and encodings other than XML (e.g JSON) are being
       defined. Furthermore, YANG data models can be used as the basis of implementation
       for other interfaces, such as CLI and programmatic APIs.</t>
       
@@ -137,11 +137,10 @@
     <section title="Design of the Data Model  ">
       <t/>
 
-      <section title="Configuration model">
+      <section title="Design of configuration model">
         <t/>
 
 		  <t>The configuration model consists mainly of the paramters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, deteciton multiplier etc </t>
-		  <t> TBD DO WE WANT TO LIST ALL CONFIG PARMS HERE???</t>
 		  <t>Some implementations have BFD configuration under the BFD client, e.g. BFD configuration is under routing applications such as OSPF, IS-IS, BGP etc. Other implementations have BFD configuration as standalone, i.e outside the BFD clients. In the sections below we address both approaches.</t>
         <figure align="left"><preamble></preamble><artwork align="left">
           </artwork>
@@ -152,6 +151,17 @@
           <t>- This provides consistency since the same grouping is being used in all applications making use of BFD</t>
           <t>- Since not all implementations of those BFD clients have support for BFD, we SHOULD use if-feature in the respective YANG modules</t>
           <t>An application importing the BFD configuration grouping could do so in a hierarchical manner if it has multiple levels at which BFD configuration can be applied. In a subsequent section we provide an example of how a BFD client would use the grouping in such a way.</t>
+          <t> The configuration items are:
+          <list style="hanging" hangIndent="8">
+          <t hangText="enabled"><vspace/>Set to True to enable BFD.</t>
+          <t hangText="echo-enabled"><vspace/>Set to True to enable the echo function as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="local-multiplier"><vspace/>The is the detection time multiplier as defined in <xref target="RFC5880"/>.</t>     
+          <t hangText="desired-min-tx-interval"><vspace/>The is the Desired Min TX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="required-min-rx-interval"><vspace/>The is the Required Min RX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="required-min-echo-rx-interval"><vspace/>The is the Required Min Echo RX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="authentication-enabled"><vspace/>Set to True to enable BFD authentication.</t>
+          <t hangText="authentication-parms TBD"><vspace/>TBD add authentication parameters.</t>
+         </list></t>
         </section>
 
         <section title="Standalone BFD configuration">
@@ -160,8 +170,8 @@
 
       </section>
 
-      <section title="Operational model">
-        <t>Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. e.g. a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF. For this reason we do not have a single operational list with all the BFD sessions. Instead we have a container in which we have multiple lists, where each list corresponds to one specific path type for BFD. For example we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP etc</t>
+      <section title="Design of operational model">
+        <t>The operational model containes both the overall statistics of BFD sessions running on the device and the per session operational statistics. Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. e.g. a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF.  For this reason, for per session operational statistics, we do not have a single list with different type BFD sessions.  Instead we have a container in which we have multiple lists, where each list corresponds to one specific path type for BFD.  For example we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP etc.  In each list, mainly three categories of operational items are shown.  The fundamental information of a BFD session such as the local dscriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  A second category includes a BFD session running information, e.g. the FSM the device in and diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control pacekets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of this session, e.g. when the session went to up/down, how long it has been since the session is up/down.</t>
 
         <figure align="left"><preamble></preamble><artwork align="left">
           </artwork>
@@ -225,15 +235,15 @@ module: bfd-routing-app
       <figure align="left"><preamble></preamble><artwork align="left">
 module: bfd-oper
    +--ro bfdSessionStatistic
-   |  +--ro ipSessNum?      uint32
+   |  +--ro ipSHSessNum?    uint32
+   |  +--ro ipMHSessNum?    uint32
    |  +--ro totalSessNum?   uint32
    |  +--ro SessUpNum?      uint32
    |  +--ro SessDownNum?    uint32
-   |  +--ro usedDiscrNum?   uint32
-   +--ro session-lists
-      +--ro session-sh-ip* [interface destination-address]
+   +--ro bfdSessionLists
+      +--ro sessionIpSH* [interface destAddress]
       |  +--ro interface              if:interface-ref
-      |  +--ro destination-address    inet:ip-address
+      |  +--ro destAddress            inet:ip-address
       |  +--ro sesssion-type?         enumeration
       |  +--ro local-dscriminator?    bfd-parms:discriminator
       |  +--ro remote-dscriminator?   bfd-parms:discriminator
@@ -248,8 +258,7 @@ module: bfd-oper
       |  |  +--ro detect-Mode?               enumeration
       |  |  +--ro actual-tx-interval?        string
       |  |  +--ro actual-rx-interval?        string
-      |  |  +--ro actual-echo-rx-interval?   string
-      |  |  +--ro Multiplier?                string
+      |  |  +--ro actual-echo-tx-interval?   string
       |  |  +--ro detectTime?                string
       |  |  +--ro ttl?                       uint32
       |  |  +--ro udpDstPort?                uint32
@@ -264,12 +273,12 @@ module: bfd-oper
       |     +--ro sendPkt?           uint64
       |     +--ro downCount?         uint32
       |     +--ro recvBadPkt?        uint64
-      |     +--ro sendBadPkt?        uint64
+      |     +--ro sendFailedPkt?     uint64
       |     +--ro shortBreakCount?   uint32
-      +--ro session-mh-ip* [vrf-name source-address destination-address]
-         +--ro vrf-name               string
-         +--ro source-address         inet:ip-address
-         +--ro destination-address    inet:ip-address
+      +--ro sessionIpMH* [vrfName sourceAddress destAddress]
+         +--ro vrfName                string
+         +--ro sourceAddress          inet:ip-address
+         +--ro destAddress            inet:ip-address
          +--ro sesssion-type?         enumeration
          +--ro local-dscriminator?    bfd-parms:discriminator
          +--ro remote-dscriminator?   bfd-parms:discriminator
@@ -284,8 +293,7 @@ module: bfd-oper
          |  +--ro detect-Mode?               enumeration
          |  +--ro actual-tx-interval?        string
          |  +--ro actual-rx-interval?        string
-         |  +--ro actual-echo-rx-interval?   string
-         |  +--ro Multiplier?                string
+         |  +--ro actual-echo-tx-interval?   string
          |  +--ro detectTime?                string
          |  +--ro ttl?                       uint32
          |  +--ro udpDstPort?                uint32
@@ -300,8 +308,9 @@ module: bfd-oper
             +--ro sendPkt?           uint64
             +--ro downCount?         uint32
             +--ro recvBadPkt?        uint64
-            +--ro sendBadPkt?        uint64
+            +--ro sendFailedPkt?     uint64
             +--ro shortBreakCount?   uint32
+            
         </artwork>
       </figure>
     </section>
@@ -314,14 +323,193 @@ module: bfd-oper
       <t>TBD.</t>
     </section>
 
-    <section title="BFD Yang Module">
+    <section title="BFD Configuration Yang Module">
       <figure align="left"><preamble></preamble><artwork align="left">
+module bfd-parameters {
+  namespace "urn:ietf:params:xml:ns:yang:bfd-parms";
+  prefix "bfd-parms";
+   
+  organization "IETF BFD Working Group";
+
+  contact 
+    "WG Web:   http://tools.ietf.org/wg/bfd
+     WG List:  TBD
+     WG Chair: Jeff Haas
+     WG Chair: Nobo Akiya
+     Editor:   Vero + Reshad";
+
+  description 
+    "This module contains the YANG definition for BFD parameters as per 
+     RFC5881";
+
+  revision 2015-01-06 {
+    description "Initial revision.";
+  }
+
+  typedef discriminator {
+    type uint32 {
+      range 1..4294967295;
+    }
+  }
+
+  typedef diagnostic {    
+    type enumeration {
+      enum none {
+	value 0;
+      }
+      enum controlExpiry {
+	value 1;
+      }
+      enum echoFailed {
+	value 2;
+      }
+      enum nborDown {
+	value 3;
+      }
+      enum fwdingReset {
+	value 4;
+      }
+      enum pathDown {
+	value 5;
+      }
+      enum concPathDown {
+	value 6;
+      }
+      enum adminDown {
+	value 7;
+      }
+      enum reverseConcPathDown {
+	value 8;
+      }
+    }
+  }
+
+  typedef state {    
+    type enumeration {
+      enum adminDown {
+	value 0;
+      }
+      enum down {
+	value 1;
+      }
+      enum init {
+	value 2;
+      }
+      enum up {
+	value 3;
+      }
+    }
+  }
+
+  typedef multiplier {
+    type uint8 {
+      range 1..255;
+    }
+  }
+
+  typedef bfd-auth-algorithm {
+    description "Authentication algorithm";
+    type enumeration {
+      enum simple-password {
+	description
+	  "Simple password";
+      }
+      
+      enum keyed-md5 {
+	description
+	  "Keyed message Digest 5";
+      }
+      
+      enum meticulous-keyed-md5 {
+	description
+	  "Meticulous keyed message Digest 5";
+      }
+                                               
+      enum keyed-sha-1 {
+	description
+	  "Keyed secure hash algorithm (SHA1) ";
+      }
+                                               
+      enum meticulous-keyed-sha-1 {
+	description
+	  "Meticulous keyed secure hash algorithm (SHA1) ";
+      }
+    }
+  }
+
+  grouping bfd-auth-cfg {
+    description "BFD authentication grouping for configuration";
+
+    leaf enable-authentication {
+      type boolean;
+      description 
+	"If set, the Authentication Section is present and the session is
+         to be authenticated (see RFC 5880 section 6.7 for details).";
+    }
+
+    container authentication-parms {
+      leaf key-chain {
+	description
+	  "Key chain name";
+	config "true";
+	must "../algorithm" {
+	  error-message
+	    "May not be configured without algorithm";
+	}
+	type string;
+      }
+      leaf algorithm {
+	description "Authentication algorithm to be used";
+	must "../key-chain" {
+	  error-message
+	    "May not be configured without key-chain";
+	}
+	type bfd-auth-algorithm;
+      }
+    }
+  }
+
+  grouping bfd-sh-cfg-parms {
+    description "BFD grouping for config parameters";
+    
+    container bfd-sh-cfg {
+      leaf enabled {
+        type boolean;
+        description "True if BFD is enabled";
+      }
+
+      leaf echo-enabled {
+        type boolean;
+        description "True if echo mode is enabled";
+      }
+
+      leaf local-multiplier {
+        type multiplier;
+      }
+
+      leaf desired-min-tx-interval {
+        type uint32;
+      }
+
+      leaf required-min-rx-interval {
+        type uint32;
+      }
+
+      leaf required-min-rx-echo-interval {
+        type uint32;
+      }
+      uses bfd-auth-cfg;
+    }
+  }
+
+}
         </artwork>
       </figure>
     </section>
 
     <section title="Security Considerations">
-      <t>TBD</t>
+      <t>The YANG module defined in this memo is designed to be accessed via the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure transport layer and the mandatory to implement secure transport is SSH [RFC6242]. The NETCONF access control model [RFC6536] provides the means to restrict access for particular NETCONF users to a pre-configured subset of all available NETCONF protocol operations and content. With RESTCONF <xref target="I-D.ietf-netconf-restconf" />, it is mandatory to implement the "https" URI scheme, so the secure transport is provided by TLS.</t>
+      <t>The YANG module has writeable data nodes which can be used for creation of BFD sessions and modification of BFD session parameters. The system should "police" creation of BFD sessions to prevent new sessions from causing existing BFD sessions to fail. For BFD session modification, the BFD protocol has mechanisms in place which allow for in service modification. </t>
     </section>
 
     <section title="IANA Considerations">
@@ -361,6 +549,7 @@ module: bfd-oper
 
     <references title="Informative References">
       <?rfc include='reference.RFC.6087'?>
+      <?rfc include="reference.I-D.ietf-netconf-restconf"?>
     </references>
   </back>
 </rfc>
