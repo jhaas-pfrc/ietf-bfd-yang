@@ -5,11 +5,11 @@ module bfd-parameters {
   organization "IETF BFD Working Group";
 
   contact 
-    "WG Web:   <http://tools.ietf.org/wg/bfd>
-      WG List:  TBD
-      WG Chair: Jeff Haas
-      WG Chair: Nobo Akiya
-      Editor:   Vero + Reshad";
+    "WG Web:   http://tools.ietf.org/wg/bfd
+     WG List:  TBD
+     WG Chair: Jeff Haas
+     WG Chair: Nobo Akiya
+     Editor:   Vero + Reshad";
 
   description 
     "This module contains the YANG definition for BFD parameters as per 
