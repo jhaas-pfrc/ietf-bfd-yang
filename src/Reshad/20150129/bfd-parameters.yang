@@ -80,6 +80,68 @@ module bfd-parameters {
     }
   }
 
+  typedef bfd-auth-algorithm {
+    description "Authentication algorithm";
+    type enumeration {
+      enum simple-password {
+	description
+	  "Simple password";
+      }
+      
+      enum keyed-md5 {
+	description
+	  "Keyed message Digest 5";
+      }
+      
+      enum meticulous-keyed-md5 {
+	description
+	  "Meticulous keyed message Digest 5";
+      }
+                                               
+      enum keyed-sha-1 {
+	description
+	  "Keyed secure hash algorithm (SHA1) ";
+      }
+                                               
+      enum meticulous-keyed-sha-1 {
+	description
+	  "Meticulous keyed secure hash algorithm (SHA1) ";
+      }
+    }
+  }
+
+  grouping bfd-auth-cfg {
+    description "BFD authentication grouping for configuration";
+
+    leaf enable-authentication {
+      type boolean;
+      description 
+	"If set, the Authentication Section is present and the session is
+         to be authenticated (see RFC 5880 section 6.7 for details).";
+    }
+
+    container authentication-parms {
+      leaf key-chain {
+	description
+	  "Key chain name";
+	config "true";
+	must "../algorithm" {
+	  error-message
+	    "May not be configured without algorithm";
+	}
+	type string;
+      }
+      leaf algorithm {
+	description "Authentication algorithm to be used";
+	must "../key-chain" {
+	  error-message
+	    "May not be configured without key-chain";
+	}
+	type bfd-auth-algorithm;
+      }
+    }
+  }
+
   grouping bfd-sh-cfg-parms {
     description "BFD grouping for config parameters";
     
@@ -109,6 +171,7 @@ module bfd-parameters {
       leaf required-min-rx-echo-interval {
         type uint32;
       }
+      uses bfd-auth-cfg;
     }
   }
 
