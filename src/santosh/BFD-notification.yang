@@ -1,0 +1,92 @@
+module bfd {
+	namespace "urn:ietf:params:xml:ns:yang:bfd";
+	prefix "bfd";
+	
+    import ietf-inet-types {
+        prefix "inet";
+    }
+	
+	import bfd-parameters {
+		prefix "bfd-parms";
+	}	
+		
+	organization "IETF BFD (Bidirectional Forwarding Detection) Working Group";
+
+	contact:
+	
+	description "BFD Yang Module";
+	
+	revision "2015-2-26" {
+	    description "Initial version";
+	}
+	
+
+	grouping bfd-notification-params {
+		description
+		"This group describes common params that will be send 
+		as part of BFD notification"
+		
+		leaf local-discr{
+			description
+			"BFD local discriminator"
+			type uint32;
+		}
+		
+		leaf remote-discr{
+			description
+			"BFD remote discriminator"
+			type uint32;
+		}
+		
+		leaf new-state{
+			description
+			"Current BFD state"
+			type  bfd-parms:state
+		}
+		
+		leaf state-change-reason{
+			description
+			"BFD state change reason"
+			type string;
+		}
+		
+		leaf up-time{
+			description
+			"How long the BFD session was UP"
+			type string;
+		}
+		
+		leaf routing-instance{
+			description
+			"Routing instance to which this BFD belong to"
+			type uint32;
+		}
+		
+		leaf peer-address{
+			description
+			"BFD peer address"
+			type inet:ip-address;
+		}
+		
+	}
+
+
+  notification bfd-singlehop-notification{
+
+		uses bfd-notification-params;
+		
+		leaf interface-name {
+			description
+			"Interface on which BFD is enabled"
+			type string;
+		}
+		
+		leaf echo-enabled{
+			description
+			"Was echo enabled for BFD"
+			type boolean;
+		}
+	}
+	
+}
+		

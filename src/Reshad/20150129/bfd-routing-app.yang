@@ -46,10 +46,7 @@ module bfd-routing-app {
      key "area-id";
 
      leaf area-id {
-       type union {
-	 type uint32;
-	 type string;
-       }
+       type uint32;
      }
 
      uses bfd-parms:bfd-sh-cfg-parms {
