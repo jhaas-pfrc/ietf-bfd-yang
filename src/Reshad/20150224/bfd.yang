@@ -1,5 +1,5 @@
 module bfd {
-  namespace "urn:ietf:params:xml:ns:yang:bfd-parms";
+  namespace "urn:ietf:params:xml:ns:yang:bfd";
   prefix "bfd";
    
   import ietf-interfaces {
@@ -17,11 +17,11 @@ module bfd {
      WG List:  TBD
      WG Chair: Jeff Haas
      WG Chair: Nobo Akiya
-     Editor:   Vero + Reshad";
+     Editor:   Lianshu Zhang and Reshad Rahman";
 
   description 
     "This module contains the YANG definition for BFD parameters as per 
-     RFC5881";
+     RFC5880, RFC5881 and RFC5883";
 
   revision 2015-01-06 {
     description "Initial revision.";
@@ -36,31 +36,31 @@ module bfd {
   typedef diagnostic {    
     type enumeration {
       enum none {
-	value 0;
+        value 0;
       }
       enum controlExpiry {
-	value 1;
+        value 1;
       }
       enum echoFailed {
-	value 2;
+        value 2;
       }
       enum nborDown {
-	value 3;
+        value 3;
       }
       enum fwdingReset {
-	value 4;
+        value 4;
       }
       enum pathDown {
-	value 5;
+        value 5;
       }
       enum concPathDown {
-	value 6;
+        value 6;
       }
       enum adminDown {
-	value 7;
+        value 7;
       }
       enum reverseConcPathDown {
-	value 8;
+        value 8;
       }
     }
   }
@@ -68,16 +68,16 @@ module bfd {
   typedef state {    
     type enumeration {
       enum adminDown {
-	value 0;
+        value 0;
       }
       enum down {
-	value 1;
+        value 1;
       }
       enum init {
-	value 2;
+        value 2;
       }
       enum up {
-	value 3;
+        value 3;
       }
     }
   }
@@ -98,34 +98,43 @@ module bfd {
     description "Authentication algorithm";
     type enumeration {
       enum simple-password {
-	description
-	  "Simple password";
+        description
+          "Simple password";
       }
       
       enum keyed-md5 {
-	description
-	  "Keyed message Digest 5";
+        description
+          "Keyed message Digest 5";
       }
       
       enum meticulous-keyed-md5 {
-	description
-	  "Meticulous keyed message Digest 5";
+        description
+          "Meticulous keyed message Digest 5";
       }
                                                
       enum keyed-sha-1 {
-	description
-	  "Keyed secure hash algorithm (SHA1) ";
+        description
+          "Keyed secure hash algorithm (SHA1) ";
       }
                                                
       enum meticulous-keyed-sha-1 {
-	description
-	  "Meticulous keyed secure hash algorithm (SHA1) ";
+        description
+          "Meticulous keyed secure hash algorithm (SHA1) ";
       }
     }
   }
 
-  feature bfd-standalone-session-config {
-    description "BFD session standalone config supported";
+  typedef ifName {
+    description "Interface name";
+    type string;
+  }
+  typedef vrfName {
+    description "VRF Name";
+    type string;
+  }        
+
+  feature bfd-centralized-session-config {
+    description "BFD session centralized config supported";
   }
   feature bfd-interface-config {
     description "BFD per-interface config supported";
@@ -140,51 +149,51 @@ module bfd {
     container bfd-common-cfg-parms {
       leaf local-multiplier {
         type multiplier;
-	default 3;
+        default 3;
       }
 
       leaf desired-min-tx-interval {
         type uint32;
-	mandatory true;
+        mandatory true;
       }
 
       leaf required-min-rx-interval {
         type uint32;
-	mandatory true;
+        mandatory true;
       }
 
       leaf demand-enabled {
-	type boolean;
-	default false;
+        type boolean;
+        default false;
       }
 
       leaf enable-authentication {
-	type boolean;
-	description 
-	  "If set, the Authentication Section is present and the session is
+        type boolean;
+        description 
+          "If set, the Authentication Section is present and the session is
          to be authenticated (see RFC 5880 section 6.7 for details).";
-	default false;
+        default false;
       }
 
       container authentication-parms {
-	if-feature bfd-authentication;
-	leaf key-chain-name {
-	  description
-	    "Key chain name";
-	  must "../algorithm" {
-	    error-message
-	      "May not be configured without algorithm";
-	  }
-	  type string;
-	}
-	leaf algorithm {
-	  description "Authentication algorithm to be used";
-	  must "../key-chain" {
-	    error-message
-	      "May not be configured without key-chain";
-	  }
-	  type bfd-auth-algorithm;
-	}
+        if-feature bfd-authentication;
+        leaf key-chain-name {
+          description
+            "Key chain name";
+          must "../algorithm" {
+            error-message
+              "May not be configured without algorithm";
+          }
+          type string;
+        }
+        leaf algorithm {
+          description "Authentication algorithm to be used";
+          must "../key-chain" {
+            error-message
+              "May not be configured without key-chain";
+          }
+          type bfd-auth-algorithm;
+        }
       }
     }
   }
@@ -207,59 +216,217 @@ module bfd {
       leaf enabled {
         type boolean;
         description "True if BFD is enabled";
-	default false;
+        default false;
       }
 
       leaf local-multiplier {
         type multiplier;
-	default 3;
+        default 3;
       }
 
       leaf desired-min-tx-interval {
         type uint32;
-	mandatory true;
+        mandatory true;
       }
 
       leaf required-min-rx-interval {
         type uint32;
-	mandatory true;
+        mandatory true;
+      }
+    }
+  }
+
+  grouping bfdAllSession {
+    description "BFD Session Configuration Information";
+    leaf sesssion-type {
+      type enumeration {
+        enum SINGLE_HOP_IP {
+          value "0";
+          description "SINGLE_HOP_IP:";
+        }
+        enum MULTI_HOP_IP {
+          value "1";
+          description "MULTI_HOP_IP:";
+        }
+      }
+    }
+    leaf local-dscriminator {
+      type discriminator;
+    }
+    leaf remote-dscriminator {
+      type discriminator;
+    }
+    leaf remote-multiplier {
+      type multiplier;
+    }
+    leaf outIfName {
+      description "Physical Out Interface Name";
+      config "false";
+      type ifName;
+    }                
+    leaf demandCapability{
+      description "Local Demand Mode Capability";
+      config "false";
+      type boolean;
+    }                
+
+    list SessRunning {
+      description "BFD Session Running Information";
+      leaf local-state {
+        type state;
+      }
+      leaf remote-state {
+        type state;
+      } 
+      leaf local-diagnostic {
+        type diagnostic;
+      }
+      leaf remote-diagnostic {
+        type diagnostic;
+      }
+      leaf detect-Mode {
+        description "Detect Mode";
+        config "false";
+        type enumeration {
+          enum ASYNC_WITH_ECHO {
+            value "0";
+            description "ASYNC_WITH_ECHO:";
+          }
+          enum ASYNC_WITHOUT_ECHO {
+            value "1";
+            description "ASYNC_WITHOUT_ECHO:";
+          }
+          enum DEMAND_WITH_ECHO {
+            value "2";
+            description "DEMAND_WITH_ECHO:";
+          }
+          enum DEMAND_WITHOUT_ECHO {
+            value "3";
+            description "DEMAND_WITHOUT_ECHO:";
+          }
+        }
+      }
+      leaf actual-tx-interval {
+        description "Actual transmit interval";
+        config "false";
+        type string;
+      }
+      leaf actual-rx-interval {
+        description "Actual receive interval";
+        config "false";
+        type string;
+      }
+      leaf actual-echo-tx-interval {
+        description "Actual echo transmit interval";
+        config "false";
+        type string;
+      }
+      leaf detectTime {
+        description "Detect Time";
+        config "false";
+        type string;
+      }
+    }
+
+    list SessStat {
+      description "BFD Session Statistics";
+      leaf lastDownTime {
+        description "Timestamp of last down";
+        config "false";
+        type uint64;
+      }
+      leaf timeFromDown {
+        description "Duration of last down";
+        config "false";
+        type string;
+      }
+      leaf createTime {
+        description "Timestamp of session created";
+        config "false";
+        type uint64;
+      }
+      leaf timeFromCreate {
+        description "Duration of session created";
+        config "false";
+        type string;
+      }
+      leaf lastUpTime {
+        description "Timestamp of last UP";
+        config "false";
+        type uint64;
+      }
+      leaf timeFromUp {
+        description "Duration of last UP";
+        config "false";
+        type string;
+      }
+      leaf recvPkt {
+        description "Recieved Packet Count";
+        config "false";
+        type uint64;
+      }
+      leaf sendPkt {
+        description "Sent Packet Count";
+        config "false";
+        type uint64;
+      }
+      leaf downCount {
+        description "Session Down Count";
+        config "false";
+        type uint32;
+      }
+      leaf recvBadPkt {
+        description "Received Bad Pcket Count";
+        config "false";
+        type uint64;
+      }
+      leaf sendFailedPkt {
+        description "Packet Failed to Send Count";
+        config "false";
+        type uint64;
+      }
+      leaf shortBreakCount {
+        description "Shortbreak Count";
+        config "false";
+        default "0";
+        type uint32;
       }
     }
   }
 
   container bfd-cfg {
     container bfd-session-cfg {
-      if-feature bfd-standalone-session-config;
+      if-feature bfd-centralized-session-config;
       list session-sh-ip {
-	key "interface destination-address";
-	leaf interface {
-	  type if:interface-ref;
-	}
-	leaf destination-address {
-	  type inet:ip-address;
-	}
-	uses  bfd-grouping-common-cfg-parms;
+        key "interface destination-address";
+        leaf interface {
+          type if:interface-ref;
+        }
+        leaf destination-address {
+          type inet:ip-address;
+        }
+        uses  bfd-grouping-common-cfg-parms;
 
-	uses bfd-grouping-echo-cfg-parms;
+        uses bfd-grouping-echo-cfg-parms;
       }
       list session-mh-ip {
 
-	key "vrf-name source-address destination-address";
-	leaf vrf-name {
-	  type string;
-	}
-	leaf source-address {
-	  type inet:ip-address;
-	}
-	leaf destination-address {
-	  type inet:ip-address;
-	}
-	uses  bfd-grouping-common-cfg-parms;
+        key "vrf-name source-address destination-address";
+        leaf vrf-name {
+          type vrfName;
+        }
+        leaf source-address {
+          type inet:ip-address;
+        }
+        leaf destination-address {
+          type inet:ip-address;
+        }
+        uses  bfd-grouping-common-cfg-parms;
 
-	leaf ttl {
-	  type TTL;
-	  default 255;
-	}
+        leaf ttl {
+          type TTL;
+          default 255;
+        }
       }
     }
 
@@ -269,12 +436,48 @@ module bfd {
       description "Per-interface BFD configuration";
       key interface;
       leaf interface {
-	type if:interface-ref;
+        type if:interface-ref;
       }
       uses  bfd-grouping-common-cfg-parms;
 
       uses bfd-grouping-echo-cfg-parms;   
 
+    }
+  }
+
+  container bfd-oper {
+    container bfdSessionLists {
+      config false;
+      list sessionIpSH {
+        key "interface destAddress";
+        leaf interface {
+          type if:interface-ref;
+        }
+        leaf destAddress {
+          type inet:ip-address;
+        }
+
+        uses bfdAllSession;
+      }
+
+      list sessionIpMH {
+        key "vrfName sourceAddress destAddress";
+        leaf vrfName {
+          type vrfName;
+        }
+        leaf sourceAddress {
+          type inet:ip-address;
+        }
+        leaf destAddress {
+          type inet:ip-address;
+        }
+        leaf ttl {
+          description "TTL of session";
+          config "false";
+          type TTL;
+        }
+        uses bfdAllSession;
+      }
     }
   }
 }
