@@ -121,7 +121,7 @@
       
       <t>This document defines a YANG data model that can be used to configure
       and manage Bidirectional Forwarding Detection (BFD)<xref target="RFC5880"/>. 
-      BFD is a network protocol which is used for liveness detection of arbitrary paths between systems. Some examples:</t>
+      BFD is a network protocol which is used for liveness detection of arbitrary paths between systems. Some examples of different types of paths over which we have BFD:</t>
       <t>1) Two systems directly connected via IP. This is known as BFD over single-hop IP <xref target="RFC5881"/></t>
       <t>2) Two systems connected via multiple hops <xref target="RFC5883"/> </t>
       <t>3) Two systems connected via MPLS Label Switched Paths (LSPs) <xref target="RFC5884"/></t>
@@ -140,38 +140,83 @@
       <section title="Design of configuration model">
         <t/>
 
-		  <t>The configuration model consists mainly of the paramters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, deteciton multiplier etc </t>
-		  <t>Some implementations have BFD configuration under the BFD client, e.g. BFD configuration is under routing applications such as OSPF, IS-IS, BGP etc. Other implementations have BFD configuration as standalone, i.e outside the BFD clients. In the sections below we address both approaches.</t>
+		  <t>The configuration model consists mainly of the parameters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, detection multiplier etc </t>
+		  <t>Some implementations have BFD configuration under the BFD client, e.g. BFD configuration is under routing applications such as OSPF, IS-IS, BGP etc. Other implementations have BFD configuration centralized, i.e outside the multiple BFD clients. In the sections below we address both approaches.</t>
         <figure align="left"><preamble></preamble><artwork align="left">
           </artwork>
         </figure>
 
+        <section  title="Centralized BFD configuration">
+          <t>The BFD data model consists of configuring BFD sessions of different types (e.g. single-hop IP, multi-hop IP etc). Since the different session types have different keys we have a list per session type, but we use a grouping to share the common  configuration data between the different session types.</t>
+          <t></t>
+          <section anchor="COMMON-BFD-CFG" title="Common BFD configuration">
+          <t> The common BFD session configuration items are put in a grouping to be used in multiple places, these items are:
+          <list style="hanging" hangIndent="8">
+          <t hangText="local-multiplier"><vspace/>This is the detection time multiplier as defined in <xref target="RFC5880"/>.</t>     
+          <t hangText="desired-min-tx-interval"><vspace/>This is the Desired Min TX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="required-min-rx-interval"><vspace/>This is the Required Min RX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="demand-enabled"><vspace/>Set to True to enable demand mode as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="enable-authentication"><vspace/>Set to True to enable BFD authentication.</t>
+          <t hangText="authentication-algorithm"><vspace/>Authentication algorithm to use (if enabled).</t>
+          <t hangText="key-chain-name"><vspace/>Key-chain to be used for authentication (if enabled).</t>
+          </list></t>
+          </section>
+          
+          <section anchor="SH-CFG" title="Single-hop IP">
+          <t>We have a list for BFD sessions over single-hop IP. The key consists of:
+          <list style="hanging" hangIndent="8">
+          <t hangText="interface"><vspace/>This is the interface on which the BFD packets for this session are transmitted and received. Examples of an interface are physical media, virtual circuit, tunnel etc.</t>
+          <t hangText="destination address"><vspace/>Address belonging to the peer system as per <xref target="RFC5881"/></t>
+          </list></t>
+          <t>The common configuration data in <xref target="COMMON-BFD-CFG"></xref> is used for single-hop IP. On top of that common data, we also need configuration data for echo:
+          <list style="hanging" hangIndent="8">
+          <t hangText="desired-min-echo-tx-interval"><vspace/>This is the minimum interval that the local system would like to use when transmitting BFD echo packets. If 0 the echo function as defined in <xref target="RFC5880"/> is disabled.</t>
+          <t hangText="required-min-echo-rx-interval"><vspace/>The is the Required Min Echo RX Interval as defined in <xref target="RFC5880"/>.</t>
+          </list></t>
+          </section>
+          
+          <section title="Multi-hop IP">
+          <t>We have a list for BFD sessions over multi-hop IP. The key consists of:
+          <list style="hanging" hangIndent="8">
+          <t hangText="source address"><vspace/>Address belonging to the local system as per <xref target="RFC5883"/></t>
+          <t hangText="destination address"><vspace/>Address belonging to the remote system as per <xref target="RFC5883"/></t>
+          <t hangText="VRF name"><vspace/>VRF in which the BFD multi-hop session is running</t>
+          </list></t>
+          <t>The common configuration data in <xref target="COMMON-BFD-CFG"></xref> is used for multi-hop IP.On top of that common data, we also need TTL:
+          <list style="hanging" hangIndent="8">
+          <t hangText="ttl"><vspace/>TTL of outgoing BFD control packets.</t>
+          </list></t>
+          </section>
+
+          <section anchor="IF-CFG" title="Per-interface configuration">
+          <t>For implementations which have multiplier and intervals configured under the BFD clients we still need a central location to configure authentication, demand mode etc. This can be done by configuring the following parameters per interface:
+          <list style="hanging" hangIndent="8">
+          <t hangText="Common parameters"><vspace/>The common BFD parameters listed in <xref target="COMMON-BFD-CFG" /></t>
+          <t hangText="Echo parameters"><vspace/>The echo parameters listed in <xref target="SH-CFG" /></t>
+          </list></t>
+          </section>
+        </section>
+
         <section title="Configuration in BFD clients">
           <t> When BFD is configured in BFD clients, it is highly desirable to have BFD configuration consistency between those  clients. In this approach we have a grouping for BFD configuration which applications can import in their YANG module:</t>
           <t>- This provides consistency since the same grouping is being used in all applications making use of BFD</t>
-          <t>- Since not all implementations of those BFD clients have support for BFD, we SHOULD use if-feature in the respective YANG modules</t>
+          <t>- Since not all implementations of those BFD clients have support for BFD, we must use if-feature in the respective YANG modules</t>
           <t>An application importing the BFD configuration grouping could do so in a hierarchical manner if it has multiple levels at which BFD configuration can be applied. In a subsequent section we provide an example of how a BFD client would use the grouping in such a way.</t>
           <t> The configuration items are:
           <list style="hanging" hangIndent="8">
           <t hangText="enabled"><vspace/>Set to True to enable BFD.</t>
-          <t hangText="echo-enabled"><vspace/>Set to True to enable the echo function as defined in <xref target="RFC5880"/>.</t>
-          <t hangText="local-multiplier"><vspace/>The is the detection time multiplier as defined in <xref target="RFC5880"/>.</t>     
-          <t hangText="desired-min-tx-interval"><vspace/>The is the Desired Min TX Interval as defined in <xref target="RFC5880"/>.</t>
-          <t hangText="required-min-rx-interval"><vspace/>The is the Required Min RX Interval as defined in <xref target="RFC5880"/>.</t>
-          <t hangText="required-min-echo-rx-interval"><vspace/>The is the Required Min Echo RX Interval as defined in <xref target="RFC5880"/>.</t>
-          <t hangText="authentication-enabled"><vspace/>Set to True to enable BFD authentication.</t>
-          <t hangText="authentication-parms TBD"><vspace/>TBD add authentication parameters.</t>
+          <t hangText="local-multiplier"><vspace/>This the detection time multiplier as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="desired-min-tx-interval"><vspace/>This the Desired Min TX Interval as defined in <xref target="RFC5880"/>.</t>
+          <t hangText="required-min-rx-interval"><vspace/>This the Required Min RX Interval as defined in <xref target="RFC5880"/>.</t>
          </list></t>
+         <t>BFD multiplier and intervals are parameters which are meaningful to a protocol which is a BFD client, since those parameters impact the failure detection time. Other BFD parameters such as authentication, enabling echo function, enabling demand mode would still be configured centrally in BFD  </t>
         </section>
 
-        <section title="Standalone BFD configuration">
-           <t>Mahesh TBD</t>
-        </section>
 
       </section>
 
       <section title="Design of operational model">
-        <t>The operational model containes both the overall statistics of BFD sessions running on the device and the per session operational statistics. Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. e.g. a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF.  For this reason, for per session operational statistics, we do not have a single list with different type BFD sessions.  Instead we have a container in which we have multiple lists, where each list corresponds to one specific path type for BFD.  For example we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP etc.  In each list, mainly three categories of operational items are shown.  The fundamental information of a BFD session such as the local dscriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  A second category includes a BFD session running information, e.g. the FSM the device in and diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control pacekets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of this session, e.g. when the session went to up/down, how long it has been since the session is up/down.</t>
+        <t>The operational model containes both the overall statistics of BFD sessions running on the device and the per session operational statistics. Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. e.g. a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF.  For this reason, for per session operational statistics, we do not have a single list with different type BFD sessions.  Instead we have a container in which we have multiple lists, where each list corresponds to one specific path type for BFD.  For example we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP etc.  In each list, mainly three categories of operational items are shown.  The fundamental information of a BFD session such as the local discriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  A second category includes a BFD session running information, e.g. the FSM the device in and diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control packets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of this session, e.g. when the session went to up/down, how long it has been since the session is up/down.</t>
 
         <figure align="left"><preamble></preamble><artwork align="left">
           </artwork>
@@ -188,40 +233,88 @@
 
 
     <section title="Configuration Data Hierarchy">
+       
+        <section title="Centralized BFD configuration">
+        <t>The following is the centralized configuration data hierarchy: </t>
+        <t>We have a container which contains a list for each session type</t>
+        <t>We have per-interface configuration</t>
+
+        <figure align="left"><preamble></preamble><artwork align="left">
+module: bfd
+   +--rw bfd-cfg
+      +--rw bfd-session-cfg {bfd-standalone-session-config}?
+      |  +--rw session-sh-ip* [interface destination-address]
+      |  |  +--rw interface                        if:interface-ref
+      |  |  +--rw destination-address              inet:ip-address
+      |  |  +--rw bfd-common-cfg-parms
+      |  |  |  +--rw local-multiplier?           multiplier
+      |  |  |  +--rw desired-min-tx-interval     uint32
+      |  |  |  +--rw required-min-rx-interval    uint32
+      |  |  |  +--rw demand-enabled?             boolean
+      |  |  |  +--rw enable-authentication?      boolean
+      |  |  |  +--rw authentication-parms {bfd-authentication}?
+      |  |  |     +--rw key-chain-name?   string
+      |  |  |     +--rw algorithm?        bfd-auth-algorithm
+      |  |  +--rw desired-min-echo-tx-interval?    uint32
+      |  |  +--rw required-min-echo-rx-interval?   uint32
+      |  +--rw session-mh-ip* [vrf-name source-address destination-address]
+      |     +--rw vrf-name                string
+      |     +--rw source-address          inet:ip-address
+      |     +--rw destination-address     inet:ip-address
+      |     +--rw bfd-common-cfg-parms
+      |     |  +--rw local-multiplier?           multiplier
+      |     |  +--rw desired-min-tx-interval     uint32
+      |     |  +--rw required-min-rx-interval    uint32
+      |     |  +--rw demand-enabled?             boolean
+      |     |  +--rw enable-authentication?      boolean
+      |     |  +--rw authentication-parms {bfd-authentication}?
+      |     |     +--rw key-chain-name?   string
+      |     |     +--rw algorithm?        bfd-auth-algorithm
+      |     +--rw ttl?                    TTL
+      +--rw bfd-interface-cfg* [interface] {bfd-interface-config}?
+         +--rw interface                        if:interface-ref
+         +--rw bfd-common-cfg-parms
+         |  +--rw local-multiplier?           multiplier
+         |  +--rw desired-min-tx-interval     uint32
+         |  +--rw required-min-rx-interval    uint32
+         |  +--rw demand-enabled?             boolean
+         |  +--rw enable-authentication?      boolean
+         |  +--rw authentication-parms {bfd-authentication}?
+         |     +--rw key-chain-name?   string
+         |     +--rw algorithm?        bfd-auth-algorithm
+         +--rw desired-min-echo-tx-interval?    uint32
+         +--rw required-min-echo-rx-interval?   uint32
+
+
+
+          </artwork>
+        </figure>
+        </section>
+       
+       
         <section title="Configuration in BFD clients">
         <t>The following is the configuration data hierarchy for a hypothetical BFD client called bfd-routing-app, the BFD configuration is supported conditionally via use of if-feature. </t>
         <t>We have a list of areas and in each area we have a list of interfaces. The BFD configuration grouping is used in a hierarchical fashion, it can be applied in "area" and "interface": </t>
         <t>- If BFD configuration is applied in an interface, that configuration takes precedence over any BFD configuration (if any) at the area level</t>
-        <t>- If BFD configuration is applied in an "area" and none of the interafces in that area has BFD configuration, then all interfaces belong to the "area" in question inherit the BFD configuration for the area in question.</t>
+        <t>- If BFD configuration is applied in an "area" and none of the interfaces in that area has BFD configuration, then all interfaces belong to the "area" in question inherit the BFD configuration for the area in question.</t>
 
         <figure align="left"><preamble></preamble><artwork align="left">
 module: bfd-routing-app
-   +--rw area [area-id]
-      +--rw area-id       uint32
-      +--rw bfd-sh-cfg
-      |  +--rw enabled?                         boolean
-      |  +--rw echo-enabled?                    boolean
-      |  +--rw local-multiplier?                multiplier
-      |  +--rw desired-min-tx-interval?         uint32
-      |  +--rw required-min-rx-interval?        uint32
-      |  +--rw required-min-rx-echo-interval?   uint32
-      |  +--rw enable-authentication?           boolean
-      |  +--rw authentication-parms
-      |     +--rw key-chain?   string
-      |     +--rw algorithm?   bfd-auth-algorithm
-      +--rw interface [interface]
-         +--rw interface     if:interface-ref
-         +--rw bfd-sh-cfg
-            +--rw enabled?                         boolean
-            +--rw echo-enabled?                    boolean
-            +--rw local-multiplier?                multiplier
-            +--rw desired-min-tx-interval?         uint32
-            +--rw required-min-rx-interval?        uint32
-            +--rw required-min-rx-echo-interval?   uint32
-            +--rw enable-authentication?           boolean
-            +--rw authentication-parms
-               +--rw key-chain?   string
-               +--rw algorithm?   bfd-auth-algorithm
+   +--rw area* [area-id]
+      +--rw area-id      uint32
+      +--rw bfd-cfg
+      |  +--rw enabled?                    boolean
+      |  +--rw local-multiplier?           multiplier
+      |  +--rw desired-min-tx-interval     uint32
+      |  +--rw required-min-rx-interval    uint32
+      +--rw interface* [interface]
+         +--rw interface    if:interface-ref
+         +--rw bfd-cfg
+            +--rw enabled?                    boolean
+            +--rw local-multiplier?           multiplier
+            +--rw desired-min-tx-interval     uint32
+            +--rw required-min-rx-interval    uint32
+
 
           </artwork>
         </figure>
@@ -234,7 +327,7 @@ module: bfd-routing-app
 
       <figure align="left"><preamble></preamble><artwork align="left">
 module: bfd-oper
-   +--ro bfdSessionStatistic
+   +--ro bfdSessionStatistics
    |  +--ro ipSHSessNum?    uint32
    |  +--ro ipMHSessNum?    uint32
    |  +--ro totalSessNum?   uint32
@@ -260,8 +353,6 @@ module: bfd-oper
       |  |  +--ro actual-rx-interval?        string
       |  |  +--ro actual-echo-tx-interval?   string
       |  |  +--ro detectTime?                string
-      |  |  +--ro ttl?                       uint32
-      |  |  +--ro udpDstPort?                uint32
       |  +--ro SessStat*
       |     +--ro lastDownTime?      uint64
       |     +--ro timeFromDown?      string
@@ -276,9 +367,10 @@ module: bfd-oper
       |     +--ro sendFailedPkt?     uint64
       |     +--ro shortBreakCount?   uint32
       +--ro sessionIpMH* [vrfName sourceAddress destAddress]
-         +--ro vrfName                string
+         +--ro vrfName                vrfName
          +--ro sourceAddress          inet:ip-address
          +--ro destAddress            inet:ip-address
+         +--ro ttl?                   uint32
          +--ro sesssion-type?         enumeration
          +--ro local-dscriminator?    bfd-parms:discriminator
          +--ro remote-dscriminator?   bfd-parms:discriminator
@@ -295,8 +387,6 @@ module: bfd-oper
          |  +--ro actual-rx-interval?        string
          |  +--ro actual-echo-tx-interval?   string
          |  +--ro detectTime?                string
-         |  +--ro ttl?                       uint32
-         |  +--ro udpDstPort?                uint32
          +--ro SessStat*
             +--ro lastDownTime?      uint64
             +--ro timeFromDown?      string
@@ -310,6 +400,7 @@ module: bfd-oper
             +--ro recvBadPkt?        uint64
             +--ro sendFailedPkt?     uint64
             +--ro shortBreakCount?   uint32
+            
             
         </artwork>
       </figure>
@@ -325,10 +416,18 @@ module: bfd-oper
 
     <section title="BFD Configuration Yang Module">
       <figure align="left"><preamble></preamble><artwork align="left">
-module bfd-parameters {
+module bfd {
   namespace "urn:ietf:params:xml:ns:yang:bfd-parms";
-  prefix "bfd-parms";
+  prefix "bfd";
    
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
   organization "IETF BFD Working Group";
 
   contact 
@@ -407,6 +506,12 @@ module bfd-parameters {
     }
   }
 
+  typedef TTL {
+    type uint8 {
+      range 1..255;
+    }
+  }
+
   typedef bfd-auth-algorithm {
     description "Authentication algorithm";
     type enumeration {
@@ -437,78 +542,503 @@ module bfd-parameters {
     }
   }
 
-  grouping bfd-auth-cfg {
-    description "BFD authentication grouping for configuration";
-
-    leaf enable-authentication {
-      type boolean;
-      description 
-	"If set, the Authentication Section is present and the session is
-         to be authenticated (see RFC 5880 section 6.7 for details).";
-    }
-
-    container authentication-parms {
-      leaf key-chain {
-	description
-	  "Key chain name";
-	config "true";
-	must "../algorithm" {
-	  error-message
-	    "May not be configured without algorithm";
-	}
-	type string;
-      }
-      leaf algorithm {
-	description "Authentication algorithm to be used";
-	must "../key-chain" {
-	  error-message
-	    "May not be configured without key-chain";
-	}
-	type bfd-auth-algorithm;
-      }
-    }
+  feature bfd-standalone-session-config {
+    description "BFD session standalone config supported";
+  }
+  feature bfd-interface-config {
+    description "BFD per-interface config supported";
+  }
+  feature bfd-authentication {
+    description "BFD authentication supported";
   }
 
-  grouping bfd-sh-cfg-parms {
-    description "BFD grouping for config parameters";
+  grouping bfd-grouping-common-cfg-parms {
+    description "BFD grouping for common config parameters";
     
-    container bfd-sh-cfg {
-      leaf enabled {
-        type boolean;
-        description "True if BFD is enabled";
-      }
-
-      leaf echo-enabled {
-        type boolean;
-        description "True if echo mode is enabled";
-      }
-
+    container bfd-common-cfg-parms {
       leaf local-multiplier {
         type multiplier;
+	default 3;
       }
 
       leaf desired-min-tx-interval {
         type uint32;
+	mandatory true;
       }
 
       leaf required-min-rx-interval {
         type uint32;
+	mandatory true;
       }
 
-      leaf required-min-rx-echo-interval {
-        type uint32;
+      leaf demand-enabled {
+	type boolean;
+	default false;
       }
-      uses bfd-auth-cfg;
+
+      leaf enable-authentication {
+	type boolean;
+	description 
+	  "If set, the Authentication Section is present and the session is
+         to be authenticated (see RFC 5880 section 6.7 for details).";
+	default false;
+      }
+
+      container authentication-parms {
+	if-feature bfd-authentication;
+	leaf key-chain-name {
+	  description
+	    "Key chain name";
+	  must "../algorithm" {
+	    error-message
+	      "May not be configured without algorithm";
+	  }
+	  type string;
+	}
+	leaf algorithm {
+	  description "Authentication algorithm to be used";
+	  must "../key-chain" {
+	    error-message
+	      "May not be configured without key-chain";
+	  }
+	  type bfd-auth-algorithm;
+	}
+      }
     }
   }
 
+  grouping bfd-grouping-echo-cfg-parms {
+    description "BFD grouping for echo config parameters";
+    leaf desired-min-echo-tx-interval {
+      type uint32;
+    }
+
+    leaf required-min-echo-rx-interval {
+      type uint32;
+    }
+  }
+
+  grouping bfd-client-cfg-parms {
+    description "BFD grouping for config parameters which could be used by a protocol which is a client of BFD";
+    
+    container bfd-cfg {
+      leaf enabled {
+        type boolean;
+        description "True if BFD is enabled";
+	default false;
+      }
+
+      leaf local-multiplier {
+        type multiplier;
+	default 3;
+      }
+
+      leaf desired-min-tx-interval {
+        type uint32;
+	mandatory true;
+      }
+
+      leaf required-min-rx-interval {
+        type uint32;
+	mandatory true;
+      }
+    }
+  }
+
+  container bfd-cfg {
+    container bfd-session-cfg {
+      if-feature bfd-standalone-session-config;
+      list session-sh-ip {
+	key "interface destination-address";
+	leaf interface {
+	  type if:interface-ref;
+	}
+	leaf destination-address {
+	  type inet:ip-address;
+	}
+	uses  bfd-grouping-common-cfg-parms;
+
+	uses bfd-grouping-echo-cfg-parms;
+      }
+      list session-mh-ip {
+
+	key "vrf-name source-address destination-address";
+	leaf vrf-name {
+	  type string;
+	}
+	leaf source-address {
+	  type inet:ip-address;
+	}
+	leaf destination-address {
+	  type inet:ip-address;
+	}
+	uses  bfd-grouping-common-cfg-parms;
+
+	leaf ttl {
+	  type TTL;
+	  default 255;
+	}
+      }
+    }
+
+    list bfd-interface-cfg {
+      if-feature bfd-interface-config;
+
+      description "Per-interface BFD configuration";
+      key interface;
+      leaf interface {
+	type if:interface-ref;
+      }
+      uses  bfd-grouping-common-cfg-parms;
+
+      uses bfd-grouping-echo-cfg-parms;   
+
+    }
+  }
+}
+        </artwork>
+      </figure>
+    </section>
+    <section title="BFD Client Example Configuration Yang Module">
+      <figure align="left"><preamble></preamble><artwork align="left">
+
+module bfd-routing-app {
+   namespace "urn:cisco:params:xml:ns:yang:bfdroutingapp";
+   prefix bfd-routing-app;
+
+   import bfd {
+     prefix "bfd";
+   }
+
+   import ietf-interfaces {
+     prefix "if";
+   }
+
+   organization
+     "ACME";
+   contact
+     "acme@acme.com";
+
+   description
+     "Testing BFD grouping (simulating a routing application)";
+
+   revision 2014-02-14 {
+     description
+       "Initial revision.";
+   }
+
+   feature routing-app-bfd {
+     description "BFD configuration under routing-app";
+   }
+
+   list area {
+     description
+       "Specify a routing area.";
+
+     key "area-id";
+
+     leaf area-id {
+       type uint32;
+     }
+
+     uses bfd:bfd-client-cfg-parms {
+       if-feature routing-app-bfd;
+     }
+
+     list interface {
+       key "interface";
+       leaf interface {
+         type if:interface-ref;
+       }
+       uses bfd:bfd-client-cfg-parms {
+	 if-feature routing-app-bfd;
+       }
+     }
+
+   }
 }
         </artwork>
       </figure>
     </section>
 
+    <section title="BFD Operational Yang Module">
+      <figure align="left"><preamble></preamble><artwork align="left">
+
+module bfd-oper {
+	namespace "urn:ietf:params:xml:ns:yang:bfd-oper";
+	prefix "bfd-oper";
+	
+	import bfd-parameters {
+		prefix "bfd-parms";
+	}
+	
+	import ietf-interfaces {
+		prefix "if";
+	}
+
+	import ietf-inet-types {
+		prefix "inet";
+	}
+
+	organization "IETF BFD Working Group";
+
+	contact 
+		"WG Web:   http://tools.ietf.org/wg/bfd
+		WG List:  TBD
+		WG Chair: Jeff Haas
+		WG Chair: Nobo Akiya
+		Editor:   Vero + Reshad";
+
+	description 
+		"This module contains the YANG definition for BFD parameters as per RFC5881";
+
+	revision 2015-01-17 {
+		description "Initial revision.";
+	}
+
+	typedef ifName {
+		description "Interface name";
+		type string;
+	}
+	typedef vrfName {
+		description "VRF Name";
+		type string;
+	}	
+
+	grouping bfdAllSession {
+		description "BFD Session Configuration Information";
+		leaf sesssion-type {
+			type enumeration {
+				enum SINGLE_HOP_IP {
+					value "0";
+					description "SINGLE_HOP_IP:";
+				}
+				enum MULTI_HOP_IP {
+					value "1";
+					description "MULTI_HOP_IP:";
+				}
+			}
+		}
+		leaf local-dscriminator {
+			type bfd-parms:discriminator;
+		}
+		leaf remote-dscriminator {
+			type bfd-parms:discriminator;
+		}
+		leaf remote-multiplier {
+			type bfd-parms:multiplier;
+		}
+		leaf outIfName {
+			description "Physical Out Interface Name";
+			config "false";
+			type ifName;
+		}		
+		leaf demandCapability{
+			description "Local Demand Mode Capability";
+			config "false";
+			type boolean;
+		}		
+
+		list SessRunning {
+			description "BFD Session Running Information";
+			leaf local-state {
+				type bfd-parms:state;
+			}
+			leaf remote-state {
+				type bfd-parms:state;
+			} 
+			leaf local-diagnostic {
+				type bfd-parms:diagnostic;
+			}
+			leaf remote-diagnostic {
+				type bfd-parms:diagnostic;
+			}
+			leaf detect-Mode {
+				description "Detect Mode";
+				config "false";
+				type enumeration {
+					enum ASYNC_WITH_ECHO {
+						value "0";
+						description "ASYNC_WITH_ECHO:";
+					}
+					enum ASYNC_WITHOUT_ECHO {
+						value "1";
+						description "ASYNC_WITHOUT_ECHO:";
+					}
+					enum DEMAND_WITH_ECHO {
+						value "2";
+						description "DEMAND_WITH_ECHO:";
+					}
+					enum DEMAND_WITHOUT_ECHO {
+						value "3";
+						description "DEMAND_WITHOUT_ECHO:";
+					}
+				}
+			}
+			leaf actual-tx-interval {
+				description "Actual transmit interval";
+				config "false";
+				type string;
+			}
+			leaf actual-rx-interval {
+				description "Actual receive interval";
+				config "false";
+				type string;
+			}
+			leaf actual-echo-tx-interval {
+				description "Actual echo transmit interval";
+				config "false";
+				type string;
+			}
+			leaf detectTime {
+				description "Detect Time";
+				config "false";
+				type string;
+			}
+		}
+
+		list SessStat {
+			description "BFD Session Statistics";
+			leaf lastDownTime {
+				description "Timestamp of last down";
+				config "false";
+				type uint64;
+			}
+			leaf timeFromDown {
+				description "Duration of last down";
+				config "false";
+				type string;
+			}
+			leaf createTime {
+				description "Timestamp of session created";
+				config "false";
+				type uint64;
+			}
+			leaf timeFromCreate {
+				description "Duration of session created";
+				config "false";
+				type string;
+			}
+			leaf lastUpTime {
+				description "Timestamp of last UP";
+				config "false";
+				type uint64;
+			}
+			leaf timeFromUp {
+				description "Duration of last UP";
+				config "false";
+				type string;
+			}
+			leaf recvPkt {
+				description "Recieved Packet Count";
+				config "false";
+				type uint64;
+			}
+			leaf sendPkt {
+				description "Sent Packet Count";
+				config "false";
+				type uint64;
+			}
+			leaf downCount {
+				description "Session Down Count";
+				config "false";
+				type uint32;
+			}
+			leaf recvBadPkt {
+				description "Received Bad Pcket Count";
+				config "false";
+				type uint64;
+			}
+			leaf sendFailedPkt {
+				description "Packet Failed to Send Count";
+				config "false";
+				type uint64;
+			}
+			leaf shortBreakCount {
+				description "Shortbreak Count";
+				config "false";
+				default "0";
+				type uint32;
+			}
+		}
+	}
+
+	container bfdSessionStatistics {
+		config "false";
+		description "BFD Session Number";
+
+		leaf ipSHSessNum {
+			description "IP Single Hop Session Number";
+			config "false";
+			type uint32;
+		}
+		leaf ipMHSessNum {
+			description "IP Multi Hop Session Number";
+			config "false";
+			type uint32;
+		}
+		leaf totalSessNum {
+			description "Total Session Number";
+			config "false";
+			type uint32;
+		}
+		leaf SessUpNum {
+			description "Session Up Number";
+			config "false";
+			type uint32;
+		}
+		leaf SessDownNum {
+			description "Session Down Number";
+			config "false";
+			type uint32;
+		}
+	}
+
+	container bfdSessionLists {
+		config false;
+		list sessionIpSH {
+			key "interface destAddress";
+			leaf interface {
+				type if:interface-ref;
+			}
+			leaf destAddress {
+				type inet:ip-address;
+			}
+
+			uses bfdAllSession;
+		}
+
+		list sessionIpMH {
+			key "vrfName sourceAddress destAddress";
+			leaf vrfName {
+				type vrfName;
+			}
+			leaf sourceAddress {
+				type inet:ip-address;
+			}
+			leaf destAddress {
+				type inet:ip-address;
+			}
+			leaf ttl {
+				description "TTL of session";
+				config "false";
+				type uint32 {
+					range "1..255";
+				}
+			}
+			uses bfdAllSession;
+		}
+	}
+}
+
+
+        </artwork>
+      </figure>
+    </section>
+
+
     <section title="Security Considerations">
-      <t>The YANG module defined in this memo is designed to be accessed via the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure transport layer and the mandatory to implement secure transport is SSH [RFC6242]. The NETCONF access control model [RFC6536] provides the means to restrict access for particular NETCONF users to a pre-configured subset of all available NETCONF protocol operations and content. With RESTCONF <xref target="I-D.ietf-netconf-restconf" />, it is mandatory to implement the "https" URI scheme, so the secure transport is provided by TLS.</t>
+      <t>The YANG module defined in this memo is designed to be accessed via the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure transport layer and the mandatory to implement secure transport is SSH [RFC6242]. The NETCONF access control model [RFC6536] provides the means to restrict access for particular NETCONF users to a pre-configured subset of all available NETCONF protocol operations and content.</t>
       <t>The YANG module has writeable data nodes which can be used for creation of BFD sessions and modification of BFD session parameters. The system should "police" creation of BFD sessions to prevent new sessions from causing existing BFD sessions to fail. For BFD session modification, the BFD protocol has mechanisms in place which allow for in service modification. </t>
     </section>
 

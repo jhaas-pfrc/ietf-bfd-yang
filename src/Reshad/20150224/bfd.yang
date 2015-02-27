@@ -1,0 +1,280 @@
+module bfd {
+  namespace "urn:ietf:params:xml:ns:yang:bfd-parms";
+  prefix "bfd";
+   
+  import ietf-interfaces {
+    prefix "if";
+  }
+
+  import ietf-inet-types {
+    prefix "inet";
+  }
+
+  organization "IETF BFD Working Group";
+
+  contact 
+    "WG Web:   http://tools.ietf.org/wg/bfd
+     WG List:  TBD
+     WG Chair: Jeff Haas
+     WG Chair: Nobo Akiya
+     Editor:   Vero + Reshad";
+
+  description 
+    "This module contains the YANG definition for BFD parameters as per 
+     RFC5881";
+
+  revision 2015-01-06 {
+    description "Initial revision.";
+  }
+
+  typedef discriminator {
+    type uint32 {
+      range 1..4294967295;
+    }
+  }
+
+  typedef diagnostic {    
+    type enumeration {
+      enum none {
+	value 0;
+      }
+      enum controlExpiry {
+	value 1;
+      }
+      enum echoFailed {
+	value 2;
+      }
+      enum nborDown {
+	value 3;
+      }
+      enum fwdingReset {
+	value 4;
+      }
+      enum pathDown {
+	value 5;
+      }
+      enum concPathDown {
+	value 6;
+      }
+      enum adminDown {
+	value 7;
+      }
+      enum reverseConcPathDown {
+	value 8;
+      }
+    }
+  }
+
+  typedef state {    
+    type enumeration {
+      enum adminDown {
+	value 0;
+      }
+      enum down {
+	value 1;
+      }
+      enum init {
+	value 2;
+      }
+      enum up {
+	value 3;
+      }
+    }
+  }
+
+  typedef multiplier {
+    type uint8 {
+      range 1..255;
+    }
+  }
+
+  typedef TTL {
+    type uint8 {
+      range 1..255;
+    }
+  }
+
+  typedef bfd-auth-algorithm {
+    description "Authentication algorithm";
+    type enumeration {
+      enum simple-password {
+	description
+	  "Simple password";
+      }
+      
+      enum keyed-md5 {
+	description
+	  "Keyed message Digest 5";
+      }
+      
+      enum meticulous-keyed-md5 {
+	description
+	  "Meticulous keyed message Digest 5";
+      }
+                                               
+      enum keyed-sha-1 {
+	description
+	  "Keyed secure hash algorithm (SHA1) ";
+      }
+                                               
+      enum meticulous-keyed-sha-1 {
+	description
+	  "Meticulous keyed secure hash algorithm (SHA1) ";
+      }
+    }
+  }
+
+  feature bfd-standalone-session-config {
+    description "BFD session standalone config supported";
+  }
+  feature bfd-interface-config {
+    description "BFD per-interface config supported";
+  }
+  feature bfd-authentication {
+    description "BFD authentication supported";
+  }
+
+  grouping bfd-grouping-common-cfg-parms {
+    description "BFD grouping for common config parameters";
+    
+    container bfd-common-cfg-parms {
+      leaf local-multiplier {
+        type multiplier;
+	default 3;
+      }
+
+      leaf desired-min-tx-interval {
+        type uint32;
+	mandatory true;
+      }
+
+      leaf required-min-rx-interval {
+        type uint32;
+	mandatory true;
+      }
+
+      leaf demand-enabled {
+	type boolean;
+	default false;
+      }
+
+      leaf enable-authentication {
+	type boolean;
+	description 
+	  "If set, the Authentication Section is present and the session is
+         to be authenticated (see RFC 5880 section 6.7 for details).";
+	default false;
+      }
+
+      container authentication-parms {
+	if-feature bfd-authentication;
+	leaf key-chain-name {
+	  description
+	    "Key chain name";
+	  must "../algorithm" {
+	    error-message
+	      "May not be configured without algorithm";
+	  }
+	  type string;
+	}
+	leaf algorithm {
+	  description "Authentication algorithm to be used";
+	  must "../key-chain" {
+	    error-message
+	      "May not be configured without key-chain";
+	  }
+	  type bfd-auth-algorithm;
+	}
+      }
+    }
+  }
+
+  grouping bfd-grouping-echo-cfg-parms {
+    description "BFD grouping for echo config parameters";
+    leaf desired-min-echo-tx-interval {
+      type uint32;
+    }
+
+    leaf required-min-echo-rx-interval {
+      type uint32;
+    }
+  }
+
+  grouping bfd-client-cfg-parms {
+    description "BFD grouping for config parameters which could be used by a protocol which is a client of BFD";
+    
+    container bfd-cfg {
+      leaf enabled {
+        type boolean;
+        description "True if BFD is enabled";
+	default false;
+      }
+
+      leaf local-multiplier {
+        type multiplier;
+	default 3;
+      }
+
+      leaf desired-min-tx-interval {
+        type uint32;
+	mandatory true;
+      }
+
+      leaf required-min-rx-interval {
+        type uint32;
+	mandatory true;
+      }
+    }
+  }
+
+  container bfd-cfg {
+    container bfd-session-cfg {
+      if-feature bfd-standalone-session-config;
+      list session-sh-ip {
+	key "interface destination-address";
+	leaf interface {
+	  type if:interface-ref;
+	}
+	leaf destination-address {
+	  type inet:ip-address;
+	}
+	uses  bfd-grouping-common-cfg-parms;
+
+	uses bfd-grouping-echo-cfg-parms;
+      }
+      list session-mh-ip {
+
+	key "vrf-name source-address destination-address";
+	leaf vrf-name {
+	  type string;
+	}
+	leaf source-address {
+	  type inet:ip-address;
+	}
+	leaf destination-address {
+	  type inet:ip-address;
+	}
+	uses  bfd-grouping-common-cfg-parms;
+
+	leaf ttl {
+	  type TTL;
+	  default 255;
+	}
+      }
+    }
+
+    list bfd-interface-cfg {
+      if-feature bfd-interface-config;
+
+      description "Per-interface BFD configuration";
+      key interface;
+      leaf interface {
+	type if:interface-ref;
+      }
+      uses  bfd-grouping-common-cfg-parms;
+
+      uses bfd-grouping-echo-cfg-parms;   
+
+    }
+  }
+}
