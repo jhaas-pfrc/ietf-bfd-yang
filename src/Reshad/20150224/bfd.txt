@@ -1,0 +1,112 @@
+module: bfd
+   +--rw bfd-cfg
+   |  +--rw bfd-session-cfg {bfd-centralized-session-config}?
+   |  |  +--rw session-sh-ip* [interface destination-address]
+   |  |  |  +--rw interface                        if:interface-ref
+   |  |  |  +--rw destination-address              inet:ip-address
+   |  |  |  +--rw bfd-common-cfg-parms
+   |  |  |  |  +--rw local-multiplier?           multiplier
+   |  |  |  |  +--rw desired-min-tx-interval     uint32
+   |  |  |  |  +--rw required-min-rx-interval    uint32
+   |  |  |  |  +--rw demand-enabled?             boolean
+   |  |  |  |  +--rw enable-authentication?      boolean
+   |  |  |  |  +--rw authentication-parms {bfd-authentication}?
+   |  |  |  |     +--rw key-chain-name?   string
+   |  |  |  |     +--rw algorithm?        bfd-auth-algorithm
+   |  |  |  +--rw desired-min-echo-tx-interval?    uint32
+   |  |  |  +--rw required-min-echo-rx-interval?   uint32
+   |  |  +--rw session-mh-ip* [vrf-name source-address destination-address]
+   |  |     +--rw vrf-name                vrfName
+   |  |     +--rw source-address          inet:ip-address
+   |  |     +--rw destination-address     inet:ip-address
+   |  |     +--rw bfd-common-cfg-parms
+   |  |     |  +--rw local-multiplier?           multiplier
+   |  |     |  +--rw desired-min-tx-interval     uint32
+   |  |     |  +--rw required-min-rx-interval    uint32
+   |  |     |  +--rw demand-enabled?             boolean
+   |  |     |  +--rw enable-authentication?      boolean
+   |  |     |  +--rw authentication-parms {bfd-authentication}?
+   |  |     |     +--rw key-chain-name?   string
+   |  |     |     +--rw algorithm?        bfd-auth-algorithm
+   |  |     +--rw ttl?                    TTL
+   |  +--rw bfd-interface-cfg* [interface] {bfd-interface-config}?
+   |     +--rw interface                        if:interface-ref
+   |     +--rw bfd-common-cfg-parms
+   |     |  +--rw local-multiplier?           multiplier
+   |     |  +--rw desired-min-tx-interval     uint32
+   |     |  +--rw required-min-rx-interval    uint32
+   |     |  +--rw demand-enabled?             boolean
+   |     |  +--rw enable-authentication?      boolean
+   |     |  +--rw authentication-parms {bfd-authentication}?
+   |     |     +--rw key-chain-name?   string
+   |     |     +--rw algorithm?        bfd-auth-algorithm
+   |     +--rw desired-min-echo-tx-interval?    uint32
+   |     +--rw required-min-echo-rx-interval?   uint32
+   +--rw bfd-oper
+      +--ro bfdSessionLists
+         +--ro sessionIpSH* [interface destAddress]
+         |  +--ro interface              if:interface-ref
+         |  +--ro destAddress            inet:ip-address
+         |  +--ro sesssion-type?         enumeration
+         |  +--ro local-dscriminator?    discriminator
+         |  +--ro remote-dscriminator?   discriminator
+         |  +--ro remote-multiplier?     multiplier
+         |  +--ro outIfName?             ifName
+         |  +--ro demandCapability?      boolean
+         |  +--ro SessRunning*
+         |  |  +--ro local-state?               state
+         |  |  +--ro remote-state?              state
+         |  |  +--ro local-diagnostic?          diagnostic
+         |  |  +--ro remote-diagnostic?         diagnostic
+         |  |  +--ro detect-Mode?               enumeration
+         |  |  +--ro actual-tx-interval?        string
+         |  |  +--ro actual-rx-interval?        string
+         |  |  +--ro actual-echo-tx-interval?   string
+         |  |  +--ro detectTime?                string
+         |  +--ro SessStat*
+         |     +--ro lastDownTime?      uint64
+         |     +--ro timeFromDown?      string
+         |     +--ro createTime?        uint64
+         |     +--ro timeFromCreate?    string
+         |     +--ro lastUpTime?        uint64
+         |     +--ro timeFromUp?        string
+         |     +--ro recvPkt?           uint64
+         |     +--ro sendPkt?           uint64
+         |     +--ro downCount?         uint32
+         |     +--ro recvBadPkt?        uint64
+         |     +--ro sendFailedPkt?     uint64
+         |     +--ro shortBreakCount?   uint32
+         +--ro sessionIpMH* [vrfName sourceAddress destAddress]
+            +--ro vrfName                vrfName
+            +--ro sourceAddress          inet:ip-address
+            +--ro destAddress            inet:ip-address
+            +--ro ttl?                   TTL
+            +--ro sesssion-type?         enumeration
+            +--ro local-dscriminator?    discriminator
+            +--ro remote-dscriminator?   discriminator
+            +--ro remote-multiplier?     multiplier
+            +--ro outIfName?             ifName
+            +--ro demandCapability?      boolean
+            +--ro SessRunning*
+            |  +--ro local-state?               state
+            |  +--ro remote-state?              state
+            |  +--ro local-diagnostic?          diagnostic
+            |  +--ro remote-diagnostic?         diagnostic
+            |  +--ro detect-Mode?               enumeration
+            |  +--ro actual-tx-interval?        string
+            |  +--ro actual-rx-interval?        string
+            |  +--ro actual-echo-tx-interval?   string
+            |  +--ro detectTime?                string
+            +--ro SessStat*
+               +--ro lastDownTime?      uint64
+               +--ro timeFromDown?      string
+               +--ro createTime?        uint64
+               +--ro timeFromCreate?    string
+               +--ro lastUpTime?        uint64
+               +--ro timeFromUp?        string
+               +--ro recvPkt?           uint64
+               +--ro sendPkt?           uint64
+               +--ro downCount?         uint32
+               +--ro recvBadPkt?        uint64
+               +--ro sendFailedPkt?     uint64
+               +--ro shortBreakCount?   uint32
