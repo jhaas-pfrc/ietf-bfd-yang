@@ -124,10 +124,6 @@ module bfd {
     }
   }
 
-  typedef ifName {
-    description "Interface name";
-    type string;
-  }
   typedef vrfName {
     description "VRF Name";
     type string;
