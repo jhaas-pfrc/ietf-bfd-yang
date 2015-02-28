@@ -17,7 +17,7 @@ module bfd {
      WG List:  TBD
      WG Chair: Jeff Haas
      WG Chair: Nobo Akiya
-     Editor:   Lianshu Zhang and Reshad Rahman";
+     Editor:   Lianshu Zheng and Reshad Rahman";
 
   description 
     "This module contains the YANG definition for BFD parameters as per 
@@ -233,7 +233,7 @@ module bfd {
   }
 
   grouping bfd-all-session {
-    description "BFD Session Operational Information";
+    description "BFD session operational information";
     leaf sesssion-type {
       type enumeration {
         enum ip-single-hop {
