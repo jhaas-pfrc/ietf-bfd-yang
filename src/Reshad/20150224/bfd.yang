@@ -236,17 +236,17 @@ module bfd {
     }
   }
 
-  grouping bfdAllSession {
-    description "BFD Session Configuration Information";
+  grouping bfd-all-session {
+    description "BFD Session Operational Information";
     leaf sesssion-type {
       type enumeration {
-        enum SINGLE_HOP_IP {
+        enum ip-single-hop {
           value "0";
-          description "SINGLE_HOP_IP:";
+          description "IP single hop";
         }
-        enum MULTI_HOP_IP {
+        enum ip-multi-hop {
           value "1";
-          description "MULTI_HOP_IP:";
+          description "IP multi hop";
         }
       }
     }
@@ -259,19 +259,19 @@ module bfd {
     leaf remote-multiplier {
       type multiplier;
     }
-    leaf outIfName {
-      description "Physical Out Interface Name";
+    leaf out-if-name {
+      description "Physical out interface name";
       config "false";
       type ifName;
     }                
-    leaf demandCapability{
-      description "Local Demand Mode Capability";
+    leaf demand-capability{
+      description "Local demand mode capability";
       config "false";
       type boolean;
     }                
 
-    list SessRunning {
-      description "BFD Session Running Information";
+    list session-running {
+      description "BFD session running information";
       leaf local-state {
         type state;
       }
@@ -285,24 +285,24 @@ module bfd {
         type diagnostic;
       }
       leaf detect-Mode {
-        description "Detect Mode";
+        description "Detect mode";
         config "false";
         type enumeration {
-          enum ASYNC_WITH_ECHO {
+          enum async-with-echo {
             value "0";
-            description "ASYNC_WITH_ECHO:";
+            description "Async with echo";
           }
-          enum ASYNC_WITHOUT_ECHO {
+          enum async-without-echo {
             value "1";
-            description "ASYNC_WITHOUT_ECHO:";
+            description "Async without echo";
           }
-          enum DEMAND_WITH_ECHO {
+          enum demand-with-echo {
             value "2";
-            description "DEMAND_WITH_ECHO:";
+            description "Demand with echo";
           }
-          enum DEMAND_WITHOUT_ECHO {
+          enum demand-without-echo {
             value "3";
-            description "DEMAND_WITHOUT_ECHO:";
+            description "Demand without echo";
           }
         }
       }
@@ -321,72 +321,72 @@ module bfd {
         config "false";
         type string;
       }
-      leaf detectTime {
-        description "Detect Time";
+      leaf detect-time {
+        description "Detect time";
         config "false";
         type string;
       }
     }
 
-    list SessStat {
-      description "BFD Session Statistics";
-      leaf lastDownTime {
+    list sesssion-statistics {
+      description "BFD session statistics";
+      leaf last-down-time {
         description "Timestamp of last down";
         config "false";
         type uint64;
       }
-      leaf timeFromDown {
+      leaf time-from-down {
         description "Duration of last down";
         config "false";
         type string;
       }
-      leaf createTime {
+      leaf create-time {
         description "Timestamp of session created";
         config "false";
         type uint64;
       }
-      leaf timeFromCreate {
+      leaf time-from-create {
         description "Duration of session created";
         config "false";
         type string;
       }
-      leaf lastUpTime {
+      leaf last-up-time {
         description "Timestamp of last UP";
         config "false";
         type uint64;
       }
-      leaf timeFromUp {
+      leaf time-from-up {
         description "Duration of last UP";
         config "false";
         type string;
       }
-      leaf recvPkt {
-        description "Recieved Packet Count";
+      leaf receive-pkt {
+        description "Received Packet Count";
         config "false";
         type uint64;
       }
-      leaf sendPkt {
+      leaf send-pkt {
         description "Sent Packet Count";
         config "false";
         type uint64;
       }
-      leaf downCount {
+      leaf down-count {
         description "Session Down Count";
         config "false";
         type uint32;
       }
-      leaf recvBadPkt {
-        description "Received Bad Pcket Count";
+      leaf receive-bad-pkt {
+        description "Received bad packet count";
         config "false";
         type uint64;
       }
-      leaf sendFailedPkt {
+      leaf send-failed-pkt {
         description "Packet Failed to Send Count";
         config "false";
         type uint64;
       }
-      leaf shortBreakCount {
-        description "Shortbreak Count";
+      leaf short-break-count {
+        description "Shortbreak count";
         config "false";
         default "0";
         type uint32;
@@ -446,9 +446,39 @@ module bfd {
   }
 
   container bfd-oper {
-    container bfdSessionLists {
+    container bfd-session-statistics {
+		  config "false";
+		  description "BFD session number";
+		  leaf ip-sh-session-num {
+			  description "IP single hop session number";
+			  config "false";
+			  type uint32;
+		  }
+		  leaf ip-mh-session-num {
+			  description "IP multi hop session Number";
+			  config "false";
+			  type uint32;
+		  }
+		  leaf total-session-num {
+			  description "Total session number";
+			  config "false";
+			  type uint32;
+		  }
+		  leaf session-uo-num {
+			  description "Session up number";
+			  config "false";
+			  type uint32;
+		  }
+		  leaf sess-down-num {
+			  description "Session down number";
+			  config "false";
+			  type uint32;
+		  }
+	  }
+    
+    container bfd-session-lists {
       config false;
-      list sessionIpSH {
+      list session-ip-sh {
         key "interface destAddress";
         leaf interface {
           type if:interface-ref;
@@ -457,18 +487,18 @@ module bfd {
           type inet:ip-address;
         }
 
-        uses bfdAllSession;
+        uses bfd-all-session;
       }
 
-      list sessionIpMH {
+      list session-ip-mh {
         key "vrfName sourceAddress destAddress";
         leaf vrfName {
           type vrfName;
         }
-        leaf sourceAddress {
+        leaf source-address {
           type inet:ip-address;
         }
-        leaf destAddress {
+        leaf dest-address {
           type inet:ip-address;
         }
         leaf ttl {
@@ -476,7 +506,7 @@ module bfd {
           config "false";
           type TTL;
         }
-        uses bfdAllSession;
+        uses bfd-all-session;
       }
     }
   }
