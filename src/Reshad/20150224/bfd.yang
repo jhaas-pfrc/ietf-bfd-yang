@@ -443,34 +443,34 @@ module bfd {
 
   container bfd-oper {
     container bfd-session-statistics {
-		  config "false";
-		  description "BFD session number";
-		  leaf ip-sh-session-num {
-			  description "IP single hop session number";
-			  config "false";
-			  type uint32;
-		  }
-		  leaf ip-mh-session-num {
-			  description "IP multi hop session Number";
-			  config "false";
-			  type uint32;
-		  }
-		  leaf total-session-num {
-			  description "Total session number";
-			  config "false";
-			  type uint32;
-		  }
-		  leaf session-uo-num {
-			  description "Session up number";
-			  config "false";
-			  type uint32;
-		  }
-		  leaf sess-down-num {
-			  description "Session down number";
-			  config "false";
-			  type uint32;
-		  }
-	  }
+      config "false";
+      description "BFD session number";
+      leaf ip-sh-session-num {
+        description "IP single hop session number";
+        config "false";
+        type uint32;
+      }
+      leaf ip-mh-session-num {
+        description "IP multi hop session Number";
+        config "false";
+        type uint32;
+      }
+      leaf total-session-num {
+        description "Total session number";
+        config "false";
+        type uint32;
+      }
+      leaf session-up-num {
+        description "Session up number";
+        config "false";
+        type uint32;
+      }
+      leaf sess-down-num {
+        description "Session down number";
+        config "false";
+        type uint32;
+      }
+    }
     
     container bfd-session-lists {
       config false;
