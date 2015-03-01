@@ -506,4 +506,81 @@ module bfd {
       }
     }
   }
+  
+  grouping bfd-notification-params {
+		description
+		"This group describes common params that will be send 
+		as part of BFD notification"
+		
+		leaf local-discr{
+			description
+			"BFD local discriminator"
+			type uint32;
+		}
+		
+		leaf remote-discr{
+			description
+			"BFD remote discriminator"
+			type uint32;
+		}
+		
+		leaf new-state{
+			description
+			"Current BFD state"
+			type state;
+		}
+		
+		leaf state-change-reason{
+			description
+			"BFD state change reason"
+			type string;
+		}
+		
+		leaf time-in-previous-state{
+			description
+			"How long the BFD session was UP"
+			type string;
+		}
+		
+		leaf vrf{
+			description
+			"Routing instance to which this BFD belong to"
+			type string;
+		}
+		
+		leaf peer-address{
+			description
+			"BFD peer address"
+			type inet:ip-address;
+		}
+	}
+	
+	notification bfd-singlehop-notification{
+
+		uses bfd-notification-params;
+		
+		leaf interface-name {
+			description
+			"Interface on which BFD is enabled"
+			type string;
+		}
+		
+		leaf echo-enabled{
+			description
+			"Was echo enabled for BFD"
+			type boolean;
+		}
+	}
+	
+	
+   notification bfd-multihop-notification{
+
+		uses bfd-notification-params;
+		
+		leaf local-address{
+			description
+			"BFD local address"
+			type inet:ip-address;
+		}
+	}
 }
