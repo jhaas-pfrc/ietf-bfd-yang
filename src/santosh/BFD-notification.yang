@@ -50,16 +50,16 @@ module bfd {
 			type string;
 		}
 		
-		leaf up-time{
+		leaf time-in-previous-state{
 			description
 			"How long the BFD session was UP"
 			type string;
 		}
 		
-		leaf routing-instance{
+		leaf vrf{
 			description
 			"Routing instance to which this BFD belong to"
-			type uint32;
+			type string;
 		}
 		
 		leaf peer-address{
@@ -85,6 +85,18 @@ module bfd {
 			description
 			"Was echo enabled for BFD"
 			type boolean;
+		}
+	}
+	
+	
+   notification bfd-multihop-notification{
+
+		uses bfd-notification-params;
+		
+		leaf local-address{
+			description
+			"BFD local address"
+			type inet:ip-address;
 		}
 	}
 	
