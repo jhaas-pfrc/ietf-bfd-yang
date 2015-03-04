@@ -18,7 +18,7 @@ module bfd-routing-app {
    description
      "Testing BFD grouping (simulating a routing application)";
 
-   revision 2014-02-14 {
+   revision 2015-02-14 {
      description
        "Initial revision.";
    }
@@ -37,7 +37,7 @@ module bfd-routing-app {
        type uint32;
      }
 
-     uses bfd:bfd-client-cfg-parms {
+     uses bfd:bfd-client-base-cfg-parms {
        if-feature routing-app-bfd;
      }
 
@@ -46,7 +46,7 @@ module bfd-routing-app {
        leaf interface {
          type if:interface-ref;
        }
-       uses bfd:bfd-client-cfg-parms {
+       uses bfd:bfd-client-base-cfg-parms {
 	 if-feature routing-app-bfd;
        }
      }

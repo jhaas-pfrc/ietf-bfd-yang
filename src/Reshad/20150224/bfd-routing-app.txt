@@ -1,0 +1,15 @@
+module: bfd-routing-app
+   +--rw area* [area-id]
+      +--rw area-id      uint32
+      +--rw bfd-cfg
+      |  +--rw enabled?                    boolean
+      |  +--rw local-multiplier?           multiplier
+      |  +--rw desired-min-tx-interval     uint32
+      |  +--rw required-min-rx-interval    uint32
+      +--rw interface* [interface]
+         +--rw interface    if:interface-ref
+         +--rw bfd-cfg
+            +--rw enabled?                    boolean
+            +--rw local-multiplier?           multiplier
+            +--rw desired-min-tx-interval     uint32
+            +--rw required-min-rx-interval    uint32
