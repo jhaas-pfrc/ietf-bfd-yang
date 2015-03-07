@@ -11,6 +11,10 @@ module bfd {
     prefix "inet";
   }
 
+  import ietf-yang-types {
+    prefix yang;
+  }
+
   organization "IETF BFD Working Group";
 
   contact 
@@ -21,10 +25,10 @@ module bfd {
      Editor:   Lianshu Zheng and Reshad Rahman";
 
   description 
-    "This module contains the YANG definition for BFD parameters as per 
-     RFC5880, RFC5881 and RFC5883";
+    "This module contains the YANG definition for BFD parameters as
+     per RFC5880, RFC5881 and RFC5883";
 
-  revision 2015-03-02 {
+  revision 2015-03-05 {
     description "Initial revision.";
   }
 
@@ -150,14 +154,18 @@ module bfd {
     }
 
     leaf desired-min-tx-interval {
-      description "Desired minimum transmit interval of control packets";
+      description 
+        "Desired minimum transmit interval of control packets";
       type uint32;
+      units microseconds;
       mandatory true;
     }
 
     leaf required-min-rx-interval {
-      description "Required minimum receive interval of control packets";
+      description 
+        "Required minimum receive interval of control packets";
       type uint32;
+      units microseconds;
       mandatory true;
     }
 
@@ -169,8 +177,8 @@ module bfd {
 
     leaf enable-authentication {
       description 
-	"If set, the Authentication Section is present and the session is
-         to be authenticated (see RFC 5880 section 6.7 for details).";
+        "If set, the Authentication Section is present and the session
+         is to be authenticated (see RFC5880 section 6.7 for details).";
       type boolean;
       default false;
     }
@@ -178,21 +186,21 @@ module bfd {
     container authentication-parms {
       if-feature bfd-authentication;
       leaf key-chain-name {
-	description
-	  "Key chain name";
-	must "../algorithm" {
-	  error-message
-	    "May not be configured without algorithm";
-	}
-	type string;
+        description
+          "Key chain name";
+        must "../algorithm" {
+          error-message
+            "May not be configured without algorithm";
+        }
+        type string;
       }
       leaf algorithm {
-	description "Authentication algorithm to be used";
-	must "../key-chain" {
-	  error-message
-	    "May not be configured without key-chain";
-	}
-	type bfd-auth-algorithm;
+        description "Authentication algorithm to be used";
+        must "../key-chain" {
+          error-message
+            "May not be configured without key-chain";
+        }
+        type bfd-auth-algorithm;
       }
     }
   }
@@ -202,20 +210,22 @@ module bfd {
     leaf desired-min-echo-tx-interval {
       description "Desired minumum transmit interval for echo";
       type uint32;
+      units microseconds;
       default 0;
     }
 
     leaf required-min-echo-rx-interval {
       description "Required minimum receive interval for echo";
       type uint32;
+      units microseconds;
       default 0;
     }
   }
 
   grouping bfd-client-base-cfg-parms {
     description 
-      "BFD grouping for base config parameters which could be used by a 
-       protocol which is a client of BFD";
+      "BFD grouping for base config parameters which could be used 
+       by a protocol which is a client of BFD";
     
     container bfd-cfg {
       leaf enabled {
@@ -230,12 +240,18 @@ module bfd {
       }
 
       leaf desired-min-tx-interval {
+        description 
+          "Desired minimum transmit interval of control packets";
         type uint32;
+        units microseconds;
         mandatory true;
       }
 
       leaf required-min-rx-interval {
+        description 
+          "Required minimum receive interval of control packets";
         type uint32;
+        units microseconds;
         mandatory true;
       }
     }
@@ -243,8 +259,8 @@ module bfd {
 
   grouping bfd-client-full-cfg-parms {
     description 
-      "BFD grouping for complete config parameters which could be used by a 
-       protocol which is a client of BFD";
+      "BFD grouping for complete config parameters which could be used
+       by a protocol which is a client of BFD.";
     
     container bfd-cfg {
       leaf enabled {
@@ -263,7 +279,8 @@ module bfd {
     description "BFD session operational information";
     leaf sesssion-type {
       description 
-	"BFD session type, this indicates the path type that BFD is running on";
+        "BFD session type, this indicates the path type that BFD is 
+        running on";
       type enumeration {
         enum ip-single-hop {
           value "0";
@@ -334,46 +351,42 @@ module bfd {
       leaf actual-tx-interval {
         description "Actual transmit interval";
         type uint32;
+        units microseconds;
       }
       leaf actual-rx-interval {
         description "Actual receive interval";
         type uint32;
+        units microseconds;
       }
       leaf actual-echo-tx-interval {
         description "Actual echo transmit interval";
         type uint32;
+        units microseconds;
       }
       leaf detect-time {
         description "Detect time";
         type uint32;
+        units microseconds;
       }
     }
 
     list sesssion-statistics {
       description "BFD session statistics";
-      leaf last-down-time {
-        description "Timestamp of last down";
-        type uint64;
-      }
-      leaf time-from-down {
-        description "Duration of last down";
-        type string;
-      }
+
       leaf create-time {
-        description "Timestamp of session created";
-        type uint64;
+        description 
+          "Time and date when session was created";
+        type yang:date-and-time;
       }
-      leaf time-from-create {
-        description "Duration of session created";
-        type string;
+      leaf last-down-time {
+        description 
+          "Time and date of last time the session went down";
+        type yang:date-and-time;
       }
       leaf last-up-time {
-        description "Timestamp of last UP";
-        type uint64;
-      }
-      leaf time-from-up {
-        description "Duration of last UP";
-        type string;
+        description 
+          "Time and date of last time the session went up";
+        type yang:date-and-time;
       }
       leaf receive-pkt {
         description "Received Packet Count";
@@ -407,12 +420,22 @@ module bfd {
     container bfd-session-cfg {
       if-feature bfd-centralized-session-config;
       list session-ip-sh {
-        key "interface destination-address";
+        key "interface dest-addr";
         leaf interface {
+          description 
+            "Interface on which the IP single-hop session is running.";
           type if:interface-ref;
         }
-        leaf destination-address {
+        leaf dest-addr {
+          description
+            "IP address of the peer";
           type inet:ip-address;
+        }
+        leaf admin-down {
+          description 
+            "Is the BFD session administratively down";
+          type boolean;
+          default false;
         }
         uses bfd-grouping-common-cfg-parms;
 
@@ -421,29 +444,41 @@ module bfd {
 
       list session-ip-mh {
 
-        key "vrf-name source-address destination-address";
+        key "vrf-name source-addr dest-addr";
         leaf vrf-name {
+          description "Routing instance";
           type vrfName;
         }
-        leaf source-address {
+        leaf source-addr {
+          description 
+            "Local IP address";
           type inet:ip-address;
         }
-        leaf destination-address {
+        leaf dest-addr {
+          description
+            "IP address of the peer";
           type inet:ip-address;
+        }
+        leaf admin-down {
+          description 
+            "Is the BFD session administratively down";
+          type boolean;
+          default false;
         }
         uses bfd-grouping-common-cfg-parms;
 
         leaf tx-ttl {
           type TTL;
           default 255;
-	  description "TTL of outgoing BFD control packets";
+          description "TTL of outgoing BFD control packets";
         }
-	leaf rx-ttl {
-	  type TTL;
-	  description 
-	    "Minimum allowed TTL value for incoming BFD control packets";
-	  mandatory true;
-	}
+        leaf rx-ttl {
+          type TTL;
+          description 
+            "Minimum allowed TTL value for incoming BFD control 
+            packets";
+          mandatory true;
+        }
       }
     }
 
@@ -496,11 +531,11 @@ module bfd {
     container bfd-session-lists {
       config false;
       list session-ip-sh {
-        key "interface dest-address";
+        key "interface dest-addr";
         leaf interface {
           type if:interface-ref;
         }
-        leaf dest-address {
+        leaf dest-addr {
           type inet:ip-address;
         }
 
@@ -508,14 +543,14 @@ module bfd {
       }
 
       list session-ip-mh {
-        key "vrfName source-address dest-address";
+        key "vrfName source-addr dest-addr";
         leaf vrfName {
           type vrfName;
         }
-        leaf source-address {
+        leaf source-addr {
           type inet:ip-address;
         }
-        leaf dest-address {
+        leaf dest-addr {
           type inet:ip-address;
         }
         leaf ttl {
@@ -558,7 +593,7 @@ module bfd {
       type string;
     }
         
-    leaf peer-address {
+    leaf dest-addr {
       description "BFD peer address";
       type inet:ip-address;
     }
@@ -583,13 +618,13 @@ module bfd {
   notification bfd-multihop-notification {
 
     uses bfd-notification-params;
-	
+        
     leaf vrf-name {
-      description "Routing instance to which this BFD session belongs to";
+      description "Routing instance";
       type vrfName;
     }
         
-    leaf local-address {
+    leaf source-addr {
       description "BFD local address";
       type inet:ip-address;
     }

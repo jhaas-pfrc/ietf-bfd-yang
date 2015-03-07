@@ -1,9 +1,10 @@
 module: bfd
    +--rw bfd-cfg
    |  +--rw bfd-session-cfg {bfd-centralized-session-config}?
-   |  |  +--rw session-ip-sh* [interface destination-address]
+   |  |  +--rw session-ip-sh* [interface dest-addr]
    |  |  |  +--rw interface                        if:interface-ref
-   |  |  |  +--rw destination-address              inet:ip-address
+   |  |  |  +--rw dest-addr                        inet:ip-address
+   |  |  |  +--rw admin-down?                      boolean
    |  |  |  +--rw local-multiplier?                multiplier
    |  |  |  +--rw desired-min-tx-interval          uint32
    |  |  |  +--rw required-min-rx-interval         uint32
@@ -14,10 +15,11 @@ module: bfd
    |  |  |  |  +--rw algorithm?        bfd-auth-algorithm
    |  |  |  +--rw desired-min-echo-tx-interval?    uint32
    |  |  |  +--rw required-min-echo-rx-interval?   uint32
-   |  |  +--rw session-ip-mh* [vrf-name source-address destination-address]
+   |  |  +--rw session-ip-mh* [vrf-name source-addr dest-addr]
    |  |     +--rw vrf-name                    vrfName
-   |  |     +--rw source-address              inet:ip-address
-   |  |     +--rw destination-address         inet:ip-address
+   |  |     +--rw source-addr                 inet:ip-address
+   |  |     +--rw dest-addr                   inet:ip-address
+   |  |     +--rw admin-down?                 boolean
    |  |     +--rw local-multiplier?           multiplier
    |  |     +--rw desired-min-tx-interval     uint32
    |  |     +--rw required-min-rx-interval    uint32
@@ -48,9 +50,9 @@ module: bfd
       |  +--ro session-up-num?      uint32
       |  +--ro sess-down-num?       uint32
       +--ro bfd-session-lists
-         +--ro session-ip-sh* [interface dest-address]
+         +--ro session-ip-sh* [interface dest-addr]
          |  +--ro interface               if:interface-ref
-         |  +--ro dest-address            inet:ip-address
+         |  +--ro dest-addr               inet:ip-address
          |  +--ro sesssion-type?          enumeration
          |  +--ro local-discriminator?    discriminator
          |  +--ro remote-discriminator?   discriminator
@@ -68,22 +70,19 @@ module: bfd
          |  |  +--ro actual-echo-tx-interval?   uint32
          |  |  +--ro detect-time?               uint32
          |  +--ro sesssion-statistics*
-         |     +--ro last-down-time?      uint64
-         |     +--ro time-from-down?      string
-         |     +--ro create-time?         uint64
-         |     +--ro time-from-create?    string
-         |     +--ro last-up-time?        uint64
-         |     +--ro time-from-up?        string
+         |     +--ro create-time?         yang:date-and-time
+         |     +--ro last-down-time?      yang:date-and-time
+         |     +--ro last-up-time?        yang:date-and-time
          |     +--ro receive-pkt?         uint64
          |     +--ro send-pkt?            uint64
          |     +--ro down-count?          uint32
          |     +--ro receive-bad-pkt?     uint64
          |     +--ro send-failed-pkt?     uint64
          |     +--ro short-break-count?   uint32
-         +--ro session-ip-mh* [vrfName source-address dest-address]
+         +--ro session-ip-mh* [vrfName source-addr dest-addr]
             +--ro vrfName                 vrfName
-            +--ro source-address          inet:ip-address
-            +--ro dest-address            inet:ip-address
+            +--ro source-addr             inet:ip-address
+            +--ro dest-addr               inet:ip-address
             +--ro ttl?                    TTL
             +--ro sesssion-type?          enumeration
             +--ro local-discriminator?    discriminator
@@ -102,12 +101,9 @@ module: bfd
             |  +--ro actual-echo-tx-interval?   uint32
             |  +--ro detect-time?               uint32
             +--ro sesssion-statistics*
-               +--ro last-down-time?      uint64
-               +--ro time-from-down?      string
-               +--ro create-time?         uint64
-               +--ro time-from-create?    string
-               +--ro last-up-time?        uint64
-               +--ro time-from-up?        string
+               +--ro create-time?         yang:date-and-time
+               +--ro last-down-time?      yang:date-and-time
+               +--ro last-up-time?        yang:date-and-time
                +--ro receive-pkt?         uint64
                +--ro send-pkt?            uint64
                +--ro down-count?          uint32
@@ -121,7 +117,7 @@ notifications:
    |  +--ro new-state?                state
    |  +--ro state-change-reason?      string
    |  +--ro time-in-previous-state?   string
-   |  +--ro peer-address?             inet:ip-address
+   |  +--ro dest-addr?                inet:ip-address
    |  +--ro interface?                if:interface-ref
    |  +--ro echo-enabled?             boolean
    +---n bfd-multihop-notification     
@@ -130,6 +126,6 @@ notifications:
       +--ro new-state?                state
       +--ro state-change-reason?      string
       +--ro time-in-previous-state?   string
-      +--ro peer-address?             inet:ip-address
+      +--ro dest-addr?                inet:ip-address
       +--ro vrf-name?                 vrfName
-      +--ro local-address?            inet:ip-address
+      +--ro source-addr?              inet:ip-address

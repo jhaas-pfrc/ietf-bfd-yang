@@ -47,7 +47,7 @@ module bfd-routing-app {
          type if:interface-ref;
        }
        uses bfd:bfd-client-base-cfg-parms {
-	 if-feature routing-app-bfd;
+         if-feature routing-app-bfd;
        }
      }
 
