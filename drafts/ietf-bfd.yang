@@ -44,39 +44,39 @@ module ietf-bfd {
     type enumeration {
       enum none {
         value 0;
-	description "None";
+        description "None";
       }
       enum controlExpiry {
         value 1;
-	description "Control timer expiry";
+        description "Control timer expiry";
       }
       enum echoFailed {
         value 2;
-	description "Echo failure";
+        description "Echo failure";
       }
       enum nborDown {
         value 3;
-	description "Neighbor down";
+        description "Neighbor down";
       }
       enum fwdingReset {
         value 4;
-	description "Forwarding reset";
+        description "Forwarding reset";
       }
       enum pathDown {
         value 5;
-	description "Path down";
+        description "Path down";
       }
       enum concPathDown {
         value 6;
-	description "Concatenated path down";
+        description "Concatenated path down";
       }
       enum adminDown {
         value 7;
-	description "Admin down";
+        description "Admin down";
       }
       enum reverseConcPathDown {
         value 8;
-	description "Reverse concatenated path down";
+        description "Reverse concatenated path down";
       }
     }
     description "BFD diagnostic";
@@ -86,19 +86,19 @@ module ietf-bfd {
     type enumeration {
       enum adminDown {
         value 0;
-	description "admindown";
+        description "admindown";
       }
       enum down {
         value 1;
-	description "down";
+        description "down";
       }
       enum init {
         value 2;
-	description "init";
+        description "init";
       }
       enum up {
         value 3;
-	description "up";
+        description "up";
       }
     }
     description "BFD state";
@@ -111,7 +111,7 @@ module ietf-bfd {
     description "Multiplier";
   }
 
-  typedef TTL {
+  typedef ttl {
     type uint8 {
       range 1..255;
     }
@@ -148,7 +148,7 @@ module ietf-bfd {
     description "Authentication algorithm";
   }
 
-  typedef vrfName {
+  typedef vrf-name {
     type string;
     description "VRF Name";
   }        
@@ -211,7 +211,7 @@ module ietf-bfd {
         must "../algorithm" {
           error-message
             "May not be configured without algorithm";
-	  description "Requires algorithm";
+          description "Requires algorithm";
         }
         description
           "Key chain name";
@@ -221,7 +221,7 @@ module ietf-bfd {
         must "../key-chain" {
           error-message
             "May not be configured without key-chain";
-	  description "Requires key-chain";
+          description "Requires key-chain";
         }
         description "Authentication algorithm to be used";
       }
@@ -261,7 +261,7 @@ module ietf-bfd {
       leaf local-multiplier {
         type multiplier;
         default 3;
-	description "Multiplier transmitted by local system";
+        description "Multiplier transmitted by local system";
       }
 
       leaf desired-min-tx-interval {
@@ -343,21 +343,21 @@ module ietf-bfd {
       description "BFD session running information";
       leaf local-state {
         type state;
-	description "Local state";
+        description "Local state";
       }
       leaf remote-state {
         type state;
-	description "Remote state";
+        description "Remote state";
       } 
       leaf local-diagnostic {
         type diagnostic;
-	description "Local diagnostic";
+        description "Local diagnostic";
       }
       leaf remote-diagnostic {
         type diagnostic;
-	description "Remote diagnostic";
+        description "Remote diagnostic";
       }
-      leaf detect-Mode {
+      leaf detect-mode {
         type enumeration {
           enum async-with-echo {
             value "0";
@@ -451,87 +451,87 @@ module ietf-bfd {
     container bfd-cfg {
       description "BFD configuration";
       container bfd-session-cfg {
-	if-feature bfd-centralized-session-config;
-	description "BFD session configuration";
-	list session-ip-sh {
-	  key "interface dest-addr";
-	  description "List of IP single-hop sessions";
-	  leaf interface {
-	    type if:interface-ref;
-	    description 
-	      "Interface on which the IP single-hop session is 
+        if-feature bfd-centralized-session-config;
+        description "BFD session configuration";
+        list session-ip-sh {
+          key "interface dest-addr";
+          description "List of IP single-hop sessions";
+          leaf interface {
+            type if:interface-ref;
+            description 
+              "Interface on which the IP single-hop session is 
              running.";
-	  }
-	  leaf dest-addr {
-	    type inet:ip-address;
-	    description
-	      "IP address of the peer";
-	  }
-	  leaf admin-down {
-	    type boolean;
-	    default false;
-	    description 
-	      "Is the BFD session administratively down";
-	  }
-	  uses bfd-grouping-common-cfg-parms;
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description
+              "IP address of the peer";
+          }
+          leaf admin-down {
+            type boolean;
+            default false;
+            description 
+              "Is the BFD session administratively down";
+          }
+          uses bfd-grouping-common-cfg-parms;
 
-	  uses bfd-grouping-echo-cfg-parms;
-	}
+          uses bfd-grouping-echo-cfg-parms;
+        }
 
-	list session-ip-mh {
-	  key "vrf-name source-addr dest-addr";
-	  description "List of IP multi-hop sessions";
+        list session-ip-mh {
+          key "vrf-name source-addr dest-addr";
+          description "List of IP multi-hop sessions";
 
-	  leaf vrf-name {
-	    type vrfName;
-	    description "Routing instance";
-	  }
-	  leaf source-addr {
-	    type inet:ip-address;
-	    description 
-	      "Local IP address";
-	  }
-	  leaf dest-addr {
-	    type inet:ip-address;
-	    description
-	      "IP address of the peer";
-	  }
-	  leaf admin-down {
-	    type boolean;
-	    default false;
-	    description 
-	      "Is the BFD session administratively down";
-	  }
-	  uses bfd-grouping-common-cfg-parms;
+          leaf vrf-name {
+            type vrf-name;
+            description "Routing instance";
+          }
+          leaf source-addr {
+            type inet:ip-address;
+            description 
+              "Local IP address";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description
+              "IP address of the peer";
+          }
+          leaf admin-down {
+            type boolean;
+            default false;
+            description 
+              "Is the BFD session administratively down";
+          }
+          uses bfd-grouping-common-cfg-parms;
 
-	  leaf tx-ttl {
-	    type TTL;
-	    default 255;
-	    description "TTL of outgoing BFD control packets";
-	  }
-	  leaf rx-ttl {
-	    type TTL;
-	    mandatory true;
-	    description 
-	      "Minimum allowed TTL value for incoming BFD control 
+          leaf tx-ttl {
+            type ttl;
+            default 255;
+            description "TTL of outgoing BFD control packets";
+          }
+          leaf rx-ttl {
+            type ttl;
+            mandatory true;
+            description 
+              "Minimum allowed TTL value for incoming BFD control 
             packets";
-	  }
-	}
+          }
+        }
       }
 
       list bfd-interface-cfg {
-	if-feature bfd-interface-config;
-	key interface;
+        if-feature bfd-interface-config;
+        key interface;
 
-	description "Per-interface BFD configuration";
-	leaf interface {
-	  type if:interface-ref;
-	  description "Interface";
+        description "Per-interface BFD configuration";
+        leaf interface {
+          type if:interface-ref;
+          description "Interface";
 
-	}
-	uses bfd-grouping-common-cfg-parms;
+        }
+        uses bfd-grouping-common-cfg-parms;
 
-	uses bfd-grouping-echo-cfg-parms;   
+        uses bfd-grouping-echo-cfg-parms;   
 
       }
     }
@@ -540,68 +540,68 @@ module ietf-bfd {
       config "false";      
       description "BFD operational container";
       container bfd-session-statistics {      
-	description "BFD session counters";
-	leaf ip-sh-session-num {
-	  type uint32;
-	  description "IP single hop session number";
-	}
-	leaf ip-mh-session-num {
-	  type uint32;
-	  description "IP multi hop session Number";
-	}
-	leaf total-session-num {
-	  type uint32;
-	  description "Total session number";
-	}
-	leaf session-up-num {
-	  type uint32;
-	  description "Session up number";
-	}
-	leaf sess-down-num {
-	  type uint32;
-	  description "Session down number";
-	}
+        description "BFD session counters";
+        leaf ip-sh-session-num {
+          type uint32;
+          description "IP single hop session number";
+        }
+        leaf ip-mh-session-num {
+          type uint32;
+          description "IP multi hop session Number";
+        }
+        leaf total-session-num {
+          type uint32;
+          description "Total session number";
+        }
+        leaf session-up-num {
+          type uint32;
+          description "Session up number";
+        }
+        leaf sess-down-num {
+          type uint32;
+          description "Session down number";
+        }
       }
     
       container bfd-session-lists {
-	description "Contains multiple session lists, one per type";
-	list session-ip-sh {
-	  key "interface dest-addr";
-	  description "BFD IP single-hop sessions";
-	  leaf interface {
-	    type if:interface-ref;
-	    description 
-	      "Interface on which the BFD session is running.";
-	  }
-	  leaf dest-addr {
-	    type inet:ip-address;
-	    description "BFD peer address";
-	  }
+        description "Contains multiple session lists, one per type";
+        list session-ip-sh {
+          key "interface dest-addr";
+          description "BFD IP single-hop sessions";
+          leaf interface {
+            type if:interface-ref;
+            description 
+              "Interface on which the BFD session is running.";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description "BFD peer address";
+          }
 
-	  uses bfd-all-session;
-	}
+          uses bfd-all-session;
+        }
 
-	list session-ip-mh {
-	  key "vrfName source-addr dest-addr";
-	  description "BFD IP multi-hop sessions";
-	  leaf vrfName {
-	    type vrfName;
-	    description "VRF";
-	  }
-	  leaf source-addr {
-	    type inet:ip-address;
-	    description "BFD source address";
-	  }
-	  leaf dest-addr {
-	    type inet:ip-address;
-	    description "BFD peer address";
-	  }
-	  leaf ttl {
-	    type TTL;
-	    description "TTL of session";
-	  }
-	  uses bfd-all-session;
-	}
+        list session-ip-mh {
+          key "vrf-name source-addr dest-addr";
+          description "BFD IP multi-hop sessions";
+          leaf vrf-name {
+            type vrf-name;
+            description "VRF";
+          }
+          leaf source-addr {
+            type inet:ip-address;
+            description "BFD source address";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description "BFD peer address";
+          }
+          leaf ttl {
+            type ttl;
+            description "TTL of session";
+          }
+          uses bfd-all-session;
+        }
       }
     }
   }
@@ -634,7 +634,7 @@ module ietf-bfd {
     leaf time-in-previous-state {
       type string;
       description 
-	"How long the BFD session was in the previous state";
+        "How long the BFD session was in the previous state";
     }
         
     leaf dest-addr {
@@ -668,7 +668,7 @@ module ietf-bfd {
     uses bfd-notification-params;
         
     leaf vrf-name {
-      type vrfName;
+      type vrf-name;
       description "Routing instance";
     }
         
