@@ -61,7 +61,7 @@
                 <email>mjethanandani@gmail.com</email>
             </address>
         </author>
-        <date day="15" month="April" year="2015"/>
+        <date day="25" month="May" year="2015"/>
         <abstract>
             <t>This document defines a YANG data model that can be used to configure
       and manage Bidirectional Forwarding Detection (BFD).</t>

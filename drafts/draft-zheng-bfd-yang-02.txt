@@ -5,12 +5,12 @@
 Network Working Group                                      L. Zheng, Ed.
 Internet-Draft                                       Huawei Technologies
 Intended status: Standards Track                          R. Rahman, Ed.
-Expires: October 17, 2015                                  Cisco Systems
+Expires: November 26, 2015                                 Cisco Systems
                                                            S. Pallagatti
                                                         Juniper Networks
                                                          M. Jethanandani
                                                        Ciena Corporation
-                                                          April 15, 2015
+                                                            May 25, 2015
 
 
       Yang Data Model for Bidirectional Forwarding Detection (BFD)
@@ -42,7 +42,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on October 17, 2015.
+   This Internet-Draft will expire on November 26, 2015.
 
 Copyright Notice
 
@@ -53,9 +53,9 @@ Copyright Notice
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 1]
+Zheng, et al.           Expires November 26, 2015               [Page 1]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 2]
+Zheng, et al.           Expires November 26, 2015               [Page 2]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 1.  Introduction
@@ -165,9 +165,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 3]
+Zheng, et al.           Expires November 26, 2015               [Page 3]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    centralized, i.e outside the multiple BFD clients.  In the sections
@@ -221,9 +221,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 4]
+Zheng, et al.           Expires November 26, 2015               [Page 4]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    destination address
@@ -277,9 +277,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 5]
+Zheng, et al.           Expires November 26, 2015               [Page 5]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.1.1.6.  Per-interface configuration
@@ -333,9 +333,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 6]
+Zheng, et al.           Expires November 26, 2015               [Page 6]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.2.  Design of operational model
@@ -389,9 +389,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 7]
+Zheng, et al.           Expires November 26, 2015               [Page 7]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.5.  BFD Configuration Data Hierarchy
@@ -445,9 +445,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 8]
+Zheng, et al.           Expires November 26, 2015               [Page 8]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
   module: ietf-bfd
@@ -501,9 +501,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015                [Page 9]
+Zheng, et al.           Expires November 26, 2015               [Page 9]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.5.2.  Configuration in BFD clients
@@ -557,9 +557,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 10]
+Zheng, et al.           Expires November 26, 2015              [Page 10]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    module: ietf-bfd
@@ -613,9 +613,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 11]
+Zheng, et al.           Expires November 26, 2015              [Page 11]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
                   +--ro out-interface?          if:interface-ref
@@ -669,9 +669,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 12]
+Zheng, et al.           Expires November 26, 2015              [Page 12]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.8.  Examples
@@ -725,9 +725,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 13]
+Zheng, et al.           Expires November 26, 2015              [Page 13]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
        description "BFD discriminator";
@@ -781,9 +781,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 14]
+Zheng, et al.           Expires November 26, 2015              [Page 14]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
            value 0;
@@ -837,9 +837,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 15]
+Zheng, et al.           Expires November 26, 2015              [Page 15]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
          }
@@ -893,9 +893,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 16]
+Zheng, et al.           Expires November 26, 2015              [Page 16]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
          type uint32;
@@ -949,9 +949,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 17]
+Zheng, et al.           Expires November 26, 2015              [Page 17]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
        description "BFD grouping for echo config parameters";
@@ -1005,9 +1005,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 18]
+Zheng, et al.           Expires November 26, 2015              [Page 18]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
              "Required minimum receive interval of control packets";
@@ -1061,9 +1061,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 19]
+Zheng, et al.           Expires November 26, 2015              [Page 19]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
        }
@@ -1117,9 +1117,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 20]
+Zheng, et al.           Expires November 26, 2015              [Page 20]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
                description "Demand without echo";
@@ -1173,9 +1173,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 21]
+Zheng, et al.           Expires November 26, 2015              [Page 21]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
          }
@@ -1229,9 +1229,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 22]
+Zheng, et al.           Expires November 26, 2015              [Page 22]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
                default false;
@@ -1285,9 +1285,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 23]
+Zheng, et al.           Expires November 26, 2015              [Page 23]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
          }
@@ -1341,9 +1341,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 24]
+Zheng, et al.           Expires November 26, 2015              [Page 24]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
            list session-ip-sh {
@@ -1397,9 +1397,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 25]
+Zheng, et al.           Expires November 26, 2015              [Page 25]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
          description "BFD local discriminator";
@@ -1453,9 +1453,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 26]
+Zheng, et al.           Expires November 26, 2015              [Page 26]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
      notification bfd-multihop-notification {
@@ -1509,9 +1509,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 27]
+Zheng, et al.           Expires November 26, 2015              [Page 27]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
         description "BFD configuration under routing-app";
@@ -1565,9 +1565,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 28]
+Zheng, et al.           Expires November 26, 2015              [Page 28]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
 2.13.  IANA Considerations
@@ -1621,9 +1621,9 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 29]
+Zheng, et al.           Expires November 26, 2015              [Page 29]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    [RFC7130]  Bhatia, M., Chen, M., Boutros, S., Binderberger, M., and
@@ -1677,9 +1677,9 @@ Authors' Addresses
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 30]
+Zheng, et al.           Expires November 26, 2015              [Page 30]
 
-Internet-Draft                  BFD Yang                      April 2015
+Internet-Draft                  BFD Yang                        May 2015
 
 
    Santosh Pallagatti
@@ -1733,4 +1733,4 @@ Internet-Draft                  BFD Yang                      April 2015
 
 
 
-Zheng, et al.           Expires October 17, 2015               [Page 31]
+Zheng, et al.           Expires November 26, 2015              [Page 31]
