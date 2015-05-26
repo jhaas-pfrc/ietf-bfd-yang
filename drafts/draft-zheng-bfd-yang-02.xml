@@ -1156,7 +1156,7 @@ module ietf-bfd {
                     <preamble/>
                     <artwork align="left">
 
-module bfd-routing-app {
+module example-bfd-routing-app {
    namespace "urn:cisco:params:xml:ns:yang:bfdroutingapp";
    prefix bfd-routing-app;
 

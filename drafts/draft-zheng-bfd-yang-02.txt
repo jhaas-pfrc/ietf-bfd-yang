@@ -1480,7 +1480,7 @@ Internet-Draft                  BFD Yang                      April 2015
 2.11.  BFD Client Example Configuration Yang Module
 
 
-   module bfd-routing-app {
+   module example-bfd-routing-app {
       namespace "urn:cisco:params:xml:ns:yang:bfdroutingapp";
       prefix bfd-routing-app;
 
