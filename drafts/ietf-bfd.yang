@@ -28,7 +28,7 @@ module ietf-bfd {
     "This module contains the YANG definition for BFD parameters as
      per RFC5880, RFC5881 and RFC5883";
 
-  revision 2015-04-14 {
+  revision 2015-05-25 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }

@@ -682,7 +682,7 @@ Internet-Draft                  BFD Yang                        May 2015
 
 2.10.  BFD Yang Module
 
-   <CODE BEGINS> file "ietf-bfd@2015-04-15.yang"
+   <CODE BEGINS> file "ietf-bfd@2015-05-25.yang"
    module ietf-bfd {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
      // replace with IANA namespace when assigned
@@ -713,7 +713,7 @@ Internet-Draft                  BFD Yang                        May 2015
        "This module contains the YANG definition for BFD parameters as
         per RFC5880, RFC5881 and RFC5883";
 
-     revision 2015-04-14 {
+     revision 2015-05-25 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD";
      }
