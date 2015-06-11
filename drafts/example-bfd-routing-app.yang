@@ -1,0 +1,57 @@
+module example-bfd-routing-app {
+   namespace "urn:ietf:params:xml:ns:yang:example-bfd-routing-app";
+   prefix bfd-routing-app;
+
+   import ietf-bfd-vrfcentric {
+     prefix "bfd";
+   }
+
+   import ietf-interfaces {
+     prefix "if";
+   }
+
+   organization
+     "ACME";
+   contact
+     "acme@acme.com";
+
+   description
+     "Testing BFD grouping (simulating a routing application)";
+
+   revision 2015-06-10 {
+     description "Initial revision.";
+     reference "RFC XXXX: An example BFD routing application";
+   }
+
+   feature routing-app-bfd {
+     description "BFD configuration under routing-app";
+   }
+
+   list area {
+     key "area-id";
+
+     description "Specify a routing area.";
+
+     leaf area-id {
+       type uint32;
+       description "Area";
+     }
+
+     uses bfd:bfd-client-base-cfg-parms {
+       if-feature routing-app-bfd;
+     }
+
+     list interface {
+       key "interface";
+       description "List of interfaces";
+       leaf interface {
+         type if:interface-ref;
+	 description "Interface";
+       }
+       uses bfd:bfd-client-base-cfg-parms {
+         if-feature routing-app-bfd;
+       }
+     }
+
+   }
+}
