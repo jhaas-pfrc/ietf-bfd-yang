@@ -1252,7 +1252,7 @@ module example-bfd-routing-app {
            <section title="Changes between versions -02 and -03">
               <t>
               <list style="symbols">
-                 <t>Fixed date mismatch"</t>
+                 <t>Fixed date mismatch</t>
                  <t>Updated authors</t>
               </list>
               </t>

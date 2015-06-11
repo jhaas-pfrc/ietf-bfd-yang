@@ -1644,7 +1644,7 @@ Appendix A.  Change log
 
 A.1.  Changes between versions -02 and -03
 
-   o  Fixed date mismatch"
+   o  Fixed date mismatch
 
    o  Updated authors
 
