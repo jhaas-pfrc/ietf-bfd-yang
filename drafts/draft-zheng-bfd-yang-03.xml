@@ -113,30 +113,30 @@
             <t>4) Two systems connected via a Link Aggregation Group (LAG) interface <xref target="RFC7130"/>
             </t>
 
-            <t>BFD typically does not operate on its own. Various control protocols, aka BFD clients, use the services provided by BFD for their own operation <xref target="RFC5882"/>. The obvious candidates which use BFD are those which do not have Hellos to detect failures (e.g. static routes) and routing protocols whose Hellos do not suport sub-second failure detection, e.g OSPF and IS-IS.
+            <t>BFD typically does not operate on its own. Various control protocols, also known as BFD clients, use the services provided by BFD for their own operation <xref target="RFC5882"/>. The obvious candidates which use BFD are those which do not have Hellos to detect failures, e.g. static routes, and routing protocols whose Hellos do not suport sub-second failure detection, e.g. OSPF and IS-IS.
 		</t>
             <section title="Contributors">
                 <t/>
             </section>
         </section>
-        <section title="Design of the Data Model  ">
+        <section title="Design of the Data Model">
             <t/>
-            <section title="Design of configuration model">
+            <section title="Design of Configuration Model">
                 <t/>
 
-                <t>The configuration model consists mainly of the parameters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, detection multiplier etc </t>
-                <t>Some implementations have BFD configuration under the BFD client, e.g. BFD configuration is under routing applications such as OSPF, IS-IS, BGP etc. Other implementations have BFD configuration centralized, i.e outside the multiple BFD clients. In the sections below we address both approaches.</t>
+                <t>The configuration model consists mainly of the parameters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, detection multiplier, etc.</t>
+                <t>Some implementations have BFD configuration under the BFD client. For example, BFD configuration is under routing applications such as OSPF, IS-IS, BGP etc. Other implementations have BFD configuration centralized, i.e. outside the various BFD clients. In the sections below, we address both approaches.</t>
                 <figure align="left">
                     <preamble/>
                     <artwork align="left">
           </artwork>
                 </figure>
-                <section title="Centralized BFD configuration">
-                    <t>The BFD data model consists of configuring BFD sessions of different types (e.g. single-hop IP, multi-hop IP etc). Since the different session types have different keys we have a list per session type, but we use a grouping to share the common  configuration data between the different session types.</t>
+                <section title="Centralized BFD Configuration">
+                    <t>The BFD data model consists of configuring BFD sessions of different types, e.g. single-hop IP, multi-hop IP, etc. Since the different session types have different keys, we have a list per session type, but we use a grouping to share the common configuration data between the different session types.</t>
                     <t/>
                     <section anchor="COMMON-BFD-CFG" title="Common BFD configuration">
 
-                        <t> The common BFD session configuration items are put in a grouping to be used in multiple places, these items are:
+                        <t> The common BFD session configuration items are placed in a grouping to be used in multiple places.  These items are:
           <list
                                 hangIndent="8" style="hanging">
                                 <t hangText="local-multiplier">
@@ -150,13 +150,13 @@
                                     <vspace/>This is the Required Min RX Interval as defined in <xref target="RFC5880"/>.</t>
                                 <t hangText="demand-enabled">
 
-                                    <vspace/>Set to True to enable demand mode as defined in <xref target="RFC5880"/>.</t>
+                                    <vspace/>Set to true to enable demand mode as defined in <xref target="RFC5880"/>.</t>
                                 <t hangText="enable-authentication">
-                                    <vspace/>Set to True to enable BFD authentication.</t>
+                                    <vspace/>Set to true to enable BFD authentication.</t>
                                 <t hangText="authentication-algorithm">
-                                    <vspace/>Authentication algorithm to use (if enabled).</t>
+                                    <vspace/>Authentication algorithm to use, if enabled.</t>
                                 <t hangText="key-chain-name">
-                                    <vspace/>Key-chain to be used for authentication (if enabled).</t>
+                                    <vspace/>Key-chain to be used for authentication, if enabled.</t>
                             </list>
                         </t>
                     </section>
@@ -166,10 +166,10 @@
           <list
                                 hangIndent="8" style="hanging">
                                 <t hangText="interface">
-                                    <vspace/>This is the interface on which the BFD packets for this session are transmitted and received. Examples of an interface are physical media, virtual circuit, tunnel etc.</t>
+                                    <vspace/>This is the interface on which the BFD packets for this session are transmitted and received. Examples of an interface are physical media, virtual circuit, tunnel, etc.</t>
                                 <t hangText="destination address">
 
-                                    <vspace/>Address belonging to the peer system as per <xref target="RFC5881"/>
+                                    <vspace/>Address belonging to the neighbor system as per <xref target="RFC5881"/>
                                 </t>
                             </list>
                         </t>
@@ -179,10 +179,10 @@
                                 hangIndent="8" style="hanging">
                                 <t hangText="desired-min-echo-tx-interval">
 
-                                    <vspace/>This is the minimum interval that the local system would like to use when transmitting BFD echo packets. If 0 the echo function as defined in <xref target="RFC5880"/> is disabled.</t>
+                                    <vspace/>This is the minimum interval that the local system would like to use when transmitting BFD echo packets. If 0, the echo function as defined in <xref target="RFC5880"/> is disabled.</t>
                                 <t hangText="required-min-echo-rx-interval">
 
-                                    <vspace/>The is the Required Min Echo RX Interval as defined in <xref target="RFC5880"/>.</t>
+                                    <vspace/>This is the Required Min Echo RX Interval as defined in <xref target="RFC5880"/>.</t>
                             </list>
                         </t>
                     </section>
@@ -199,16 +199,17 @@
 
                                     <vspace/>Address belonging to the remote system as per <xref target="RFC5883"/>
                                 </t>
+                                <!-- XXX JMH - you likely want to key this to routing-instance per draft-ietf-netmod-routing-cfg -->
                                 <t hangText="VRF name">
                                     <vspace/>VRF in which the BFD multi-hop session is running</t>
                             </list>
                         </t>
                         <t>The common configuration data in <xref
-                                target="COMMON-BFD-CFG"/> is used for multi-hop IP.On top of that common data, we also need TTL:
+                                target="COMMON-BFD-CFG"/> is used for multi-hop IP. On top of that common data, we also need Time-To-Live (TTL):
           <list
                                 hangIndent="8" style="hanging">
                                 <t hangText="ttl">
-                                    <vspace/>TTL of outgoing BFD control packets.</t>
+                                    <vspace/>TTL of outgoing BFD control packets</t>
                             </list>
                         </t>
                     </section>
@@ -218,9 +219,9 @@
                     <section title="Link Aggregation Group">
                         <t>TBD</t>
                     </section>
-                    <section anchor="IF-CFG" title="Per-interface configuration">
+                    <section anchor="IF-CFG" title="Per-interface Configuration">
 
-                        <t>For implementations which have multiplier and intervals configured under the BFD clients we still need a central location to configure authentication, demand mode etc. This can be done by configuring the following parameters per interface:
+                        <t>For implementations which have multiplier and intervals configured under the BFD clients, we still need a central location to configure authentication, demand mode, etc. This can be done by configuring the following parameters per interface:
           <list
                                 hangIndent="8" style="hanging">
                                 <t hangText="Common parameters">
@@ -235,16 +236,16 @@
                         </t>
                     </section>
                 </section>
-                <section title="Configuration in BFD clients">
-                    <t> When BFD is configured in BFD clients, it is highly desirable to have BFD configuration consistency between those  clients. In this approach we have a grouping for BFD configuration which applications can import in their YANG module:</t>
-                    <t>- This provides consistency since the same grouping is being used in all applications making use of BFD</t>
-                    <t>- Since not all implementations of those BFD clients have support for BFD, we must use if-feature in the respective YANG modules</t>
-                    <t>An application importing the BFD configuration grouping could do so in a hierarchical manner if it has multiple levels at which BFD configuration can be applied. In a subsequent section we provide an example of how a BFD client would use the grouping in such a way.</t>
+                <section title="Configuration in BFD Clients">
+                    <t> When BFD is configured in BFD clients, it is highly desirable to have the BFD configuration consistent between those clients. In this approach, we have a grouping for BFD configuration that applications can import in their YANG module:</t>
+                    <t>- This provides consistency since the same grouping is being used in all applications making use of BFD.</t>
+                    <t>- Since not all implementations of those BFD clients have support for BFD, we must use if-feature in the respective YANG modules.</t>
+                    <t>An application importing the BFD configuration grouping could do so in a hierarchical manner if it has multiple levels at which BFD configuration can be applied. In a subsequent section, we provide an example of how a BFD client would use the grouping in such a way.</t>
                     <t> The configuration items are:
           <list
                             hangIndent="8" style="hanging">
                             <t hangText="enabled">
-                                <vspace/>Set to True to enable BFD.</t>
+                                <vspace/>Set to true to enable BFD.</t>
                             <t hangText="local-multiplier">
 
                                 <vspace/>This the detection time multiplier as defined in <xref target="RFC5880"/>.</t>
@@ -258,8 +259,9 @@
                     </t>
                 </section>
             </section>
-            <section title="Design of operational model">
-                <t>The operational model contains both the overall statistics of BFD sessions running on the device and the per session operational statistics. Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. e.g. a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF.  For this reason, for per session operational statistics, we do not have a single list with different type BFD sessions.  Instead we have a container in which we have multiple lists, where each list corresponds to one specific path type for BFD.  For example we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP etc.  In each list, mainly three categories of operational items are shown.  The fundamental information of a BFD session such as the local discriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  A second category includes a BFD session running information, e.g. the FSM the device in and diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control packets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of this session, e.g. when the session went to up/down, how long it has been since the session is up/down.</t>
+            <section title="Design of Operational Model">
+                <t>The operational model contains both the overall statistics of BFD sessions running on the device and the per-session operational statistics. Since BFD is used for liveness detection of arbitrary paths, there is no uniform key to identify a BFD session. E.g., a BFD single-hop IP session is uniquely identified by the combination of destination IP address and interface whereas a multihop IP session is uniquely identified by the combination of source IP address, destination IP address and VRF.  For this reason, for per-session operational statistics, we do not have a single list with different type BFD sessions.  Instead, we have a container where we have multiple lists, where each list corresponds to one specific path type for BFD.  For example, we have one operational list for BFD single-hop IP, another list for BFD multi-hop IP, etc.</t>
+                <t>In each list, three categories of operational items are shown:  The fundamental information of a BFD session such as the local discriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  The second category includes a BFD session running information, e.g. the FSM the device in and diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control packets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of the session, e.g. when the session transitioned to up/down and how long it has been in that state.</t>
                 <figure align="left">
                     <preamble/>
                     <artwork align="left">
@@ -267,7 +269,7 @@
                 </figure>
             </section>
             <section title="Notifications">
-                <t>This YANG model defines a list of notifications to inform clients of BFD with important events detected during the protocol operation. Pair of local and remote discriminator identifies a BFD session on local system. Notification also give more important details about BFD sessions e.g. new state, time in previous state, VRF and reason for BFD session state changed.</t>
+                <t>This YANG model defines a list of notifications to inform clients of BFD of important events detected during the protocol operation. Pair of local and remote discriminator identifies a BFD session on local system. Notifications also give more important details about BFD sessions; e.g. new state, time in previous state, routing-instance and the reason that the BFD session state changed.</t>
                 <figure align="left">
                     <preamble/>
                     <artwork align="left">
@@ -278,7 +280,7 @@
                 <t>TBD</t>
             </section>
             <section title="BFD Configuration Data Hierarchy">
-                <section title="Centralized BFD configuration">
+                <section title="Centralized BFD Configuration">
                     <t>The following is the centralized configuration data hierarchy: </t>
                     <t>We have a container which contains a list for each session type</t>
                     <t>We have per-interface configuration</t>
@@ -334,11 +336,11 @@ module: ietf-bfd
                     </figure>
                 </section>
                 <section title="Configuration in BFD clients">
-                    <t>The following is the configuration data hierarchy for a hypothetical BFD client called bfd-routing-app, the BFD configuration is supported conditionally via use of if-feature. </t>
+                    <t>The following is the configuration data hierarchy for a hypothetical BFD client called bfd-routing-app. The BFD configuration is supported conditionally via use of if-feature. </t>
                     <t>We have a list of areas and in each area we have a list of interfaces. The BFD configuration grouping is used in a hierarchical fashion, it can be applied in "area" and "interface": </t>
-                    <t>- If BFD configuration is applied under an interface, that configuration takes precedence over any BFD configuration (if any) at the area level</t>
+                    <t>- If BFD configuration is applied under an interface, that configuration takes precedence over any BFD configuration, if any, at the area level</t>
                     <t>- If BFD configuration is applied under an "area" and none of the interfaces in that area has BFD configuration, then all interfaces belong to the "area" in question inherit the BFD configuration for the area in question.</t>
-                    <t>- If the BFD client implementation supports "interface all", then all the interfaces belonging to that area will inherit the BFD configuration under "interface all". Along with this if there are specific interface configuration then specific interface will override the "interface all" parameters.</t>
+                    <t>- If the BFD client implementation supports "interface all", then all the interfaces belonging to that area will inherit the BFD configuration under "interface all". Additionally, if there is specific interface configuration, then the specific interface will override the "interface all" parameters.</t>
                     <figure align="left">
                         <preamble/>
                         <artwork align="left">
@@ -522,6 +524,8 @@ module ietf-bfd {
     description "BFD discriminator";
   }
 
+  // XXX JMH - a number of items below will likely need to move to a separate module or modules for IANA maintenance.
+  // While they don't have to move out until you've reached a level of comfort with the module structure, I suggest you tag each component as to whether you think it should be split out.
   typedef diagnostic {    
     type enumeration {
       enum none {
@@ -536,11 +540,11 @@ module ietf-bfd {
         value 2;
         description "Echo failure";
       }
-      enum nborDown {
+      enum neighborDown {
         value 3;
         description "Neighbor down";
       }
-      enum fwdingReset {
+      enum forwardingReset {
         value 4;
         description "Forwarding reset";
       }
@@ -548,7 +552,7 @@ module ietf-bfd {
         value 5;
         description "Path down";
       }
-      enum concPathDown {
+      enum concatenatedPathDown {
         value 6;
         description "Concatenated path down";
       }
@@ -556,19 +560,20 @@ module ietf-bfd {
         value 7;
         description "Admin down";
       }
-      enum reverseConcPathDown {
+      enum reverseConcatenatedPathDown {
         value 8;
         description "Reverse concatenated path down";
       }
     }
     description "BFD diagnostic";
+    reference "https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml";
   }
 
   typedef state {    
     type enumeration {
       enum adminDown {
         value 0;
-        description "admindown";
+        description "admin down";
       }
       enum down {
         value 1;
@@ -597,39 +602,46 @@ module ietf-bfd {
     type uint8 {
       range 1..255;
     }
-    description "Time To Live";
+    description "IP Time To Live";
   }
 
   typedef bfd-auth-algorithm {
     type enumeration {
       enum simple-password {
+        value 1;
         description
           "Simple password";
       }
       
       enum keyed-md5 {
+        value 2;
         description
           "Keyed message Digest 5";
       }
       
       enum meticulous-keyed-md5 {
+        value 3;
         description
           "Meticulous keyed message Digest 5";
       }
                                                
       enum keyed-sha-1 {
+        value 4;
         description
           "Keyed secure hash algorithm (SHA1) ";
       }
                                                
       enum meticulous-keyed-sha-1 {
+        value 5;
         description
           "Meticulous keyed secure hash algorithm (SHA1) ";
       }
     }
     description "Authentication algorithm";
+    reference "https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml";
   }
 
+  // XXX JMH - I suggest replacing this with the appropriate reference to routing-instance in draft-ietf-netmod-routing-cfg
   typedef vrfName {
     type string;
     description "VRF Name";
@@ -673,7 +685,7 @@ module ietf-bfd {
     leaf demand-enabled {
       type boolean;
       default false;
-      description "To enbale demand mode";
+      description "To enable demand mode";
     }
 
     leaf enable-authentication {
@@ -681,14 +693,17 @@ module ietf-bfd {
       default false;
       description 
         "If set, the Authentication Section is present and the 
-         session is to be authenticated (see RFC5880 section 6.7 
-         for details).";
+         session is to be authenticated.";
+      reference "RFC 5880, section 6.7.";
     }
 
+    // XXX JMH - suggest consistency between parms and params.  You pick.
     container authentication-parms {
       if-feature bfd-authentication;
       description "Parameters for authentication";
       leaf key-chain-name {
+      // XXX JMH - this is obviously a placeholder.  I'd suggest putting some documentation here as to what you intend to do.  I believe there is work going on to standardize key-chaining in IETF, so you might be able to import that.
+      // draft-acee-rtg-yang-key-chain
         type string;
         must "../algorithm" {
           error-message
@@ -716,7 +731,7 @@ module ietf-bfd {
       type uint32;
       units microseconds;
       default 0;
-      description "Desired minumum transmit interval for echo";
+      description "Desired minimum transmit interval for echo";
     }
 
     leaf required-min-echo-rx-interval {
@@ -729,7 +744,7 @@ module ietf-bfd {
 
   grouping bfd-client-base-cfg-parms {
     description 
-      "BFD grouping for base config parameters which could be used 
+      "BFD grouping for base config parameters that could be used 
        by a protocol which is a client of BFD";
     
     container bfd-cfg {
@@ -788,6 +803,7 @@ module ietf-bfd {
     leaf sesssion-type {
       type enumeration {
         enum ip-single-hop {
+          // XXX JMH - what is the benefit of numbering these?
           value "0";
           description "IP single hop";
         }
@@ -797,7 +813,7 @@ module ietf-bfd {
         }
       }
       description 
-        "BFD session type, this indicates the path type that BFD is 
+        "BFD session type. This indicates the path type that BFD is 
         running on";
     }
     leaf local-discriminator {
@@ -816,7 +832,7 @@ module ietf-bfd {
       type if:interface-ref;
       description "Outgoing physical interface name";
     }                
-    leaf demand-capability{
+    leaf demand-capability {
       type boolean;
       description "Local demand mode capability";
     }                
@@ -839,9 +855,10 @@ module ietf-bfd {
         type diagnostic;
         description "Remote diagnostic";
       }
-      leaf detect-Mode {
+      leaf detection-mode {
         type enumeration {
           enum async-with-echo {
+            // XXX JMH - in this case you seem to be tracking the MIB.  I suggest keeping the same values.
             value "0";
             description "Async with echo";
           }
@@ -858,8 +875,9 @@ module ietf-bfd {
             description "Demand without echo";
           }
         }
-        description "Detect mode";
+        description "Detection mode";
       }
+      // XXX JMH - consider using "negotiated" instead of "actual" to be consistent with 5880.
       leaf actual-tx-interval {
         type uint32;
         units microseconds;
@@ -875,11 +893,12 @@ module ietf-bfd {
         units microseconds;
         description "Actual echo transmit interval";
       }
-      leaf detect-time {
+      leaf detection-time {
         type uint32;
         units microseconds;
-        description "Detect time";
+        description "Detection time";
       }
+    // XXX JMH - consider also including the bfdSessIndex value from the MIB.  This helps uniquely identify the session and provides the ability to cross-correlate between the systems.
     }
 
     list sesssion-statistics {
@@ -893,13 +912,14 @@ module ietf-bfd {
       leaf last-down-time {
         type yang:date-and-time;
         description 
-          "Time and date of last time the session went down";
+          "Time and date of the last time the session went down";
       }
       leaf last-up-time {
         type yang:date-and-time;
         description 
-          "Time and date of last time the session went up";
+          "Time and date of the last time the session went up";
       }
+      // XXX JMH - suggest calling these receive-packet-count/sent-packet-count
       leaf receive-pkt {
         type uint64;
         description "Received Packet Count";
@@ -908,10 +928,12 @@ module ietf-bfd {
         type uint64;
         description "Sent Packet Count";
       }
+      // XXX JMH - you should have a distinct adminDown counter.  This will help distinguish when sessions have been disabled vs. sessions that are enabled but down.
       leaf down-count {
         type uint32;
-        description "Session Down Count";
+        description "Sessions Down Count";
       }
+      // XXX JMH - s/pkt/packet/
       leaf receive-bad-pkt {
         type uint64;
         description "Received bad packet count";
@@ -920,6 +942,7 @@ module ietf-bfd {
         type uint64;
         description "Packet Failed to Send Count";
       }
+      // XXX JMH - I have no idea what this is.
       leaf short-break-count {
         type uint32;
         default "0";
@@ -1043,6 +1066,7 @@ module ietf-bfd {
           type uint32;
           description "Session down number";
         }
+        // XXX JMH admin down is a good stat.
       }
     
       container bfd-session-lists {
@@ -1055,6 +1079,7 @@ module ietf-bfd {
             description 
               "Interface on which the BFD session is running.";
           }
+          // XXX JMH - src address is useful here as well. 
           leaf dest-addr {
             type inet:ip-address;
             description "BFD peer address";
@@ -1125,6 +1150,8 @@ module ietf-bfd {
     }
   }
     
+  // XXX JMH - the mechanism by which BFD is rate-limited should be described here.
+  // XXX JMH - consider also whether you want to provide session summarization like the MIB.
   notification bfd-singlehop-notification {
     description 
       "Notitification for BFD single-hop session state change";
