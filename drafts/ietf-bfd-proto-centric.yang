@@ -1,5 +1,5 @@
-module ietf-bfd-vrfcentric {
-  namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-vrfcentric";
+module ietf-bfd {
+  namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
   // replace with IANA namespace when assigned
   prefix "bfd";
    
@@ -15,10 +15,6 @@ module ietf-bfd-vrfcentric {
     prefix "yang";
   }
 
-  import ietf-routing {
-    prefix "rt";
-  }
-
   organization "IETF BFD Working Group";
 
   contact 
@@ -32,14 +28,9 @@ module ietf-bfd-vrfcentric {
     "This module contains the YANG definition for BFD parameters as
      per RFC5880, RFC5881 and RFC5883";
 
-  revision 2015-06-10 {
+  revision 2015-06-09 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
-  }
-
-  identity bfd {
-    base "rt:routing-protocol";
-    description "BFD protocol";
   }
 
   typedef discriminator {
@@ -172,51 +163,30 @@ module ietf-bfd-vrfcentric {
     description "BFD authentication supported";
   }
 
-  grouping bfd-grouping-base-cfg-parms {
-    description "BFD grouping for base config parameters";
-    leaf local-multiplier {
-      type multiplier;
-      default 3;
-      description "Multiplier transmitted by local system";
-    }
-
-    choice interval-config-type {
-      description 
-	"Two interval values or 1 value used for both tx and rx";
-      case tx-rx-intervals {
-	leaf desired-min-tx-interval {
-	  type uint32;
-	  units microseconds;
-	  mandatory true;
-	  description 
-	    "Desired minimum transmit interval of control packets";
-	}
-
-	leaf required-min-rx-interval {
-	  type uint32;
-	  units microseconds;
-	  mandatory true;
-	  description 
-	    "Required minimum receive interval of control packets";
-	}
-      }
-      case single-interval {
-	leaf min-interval {
-	  type uint32;
-	  units microseconds;
-	  mandatory true;
-	  description 
-	    "Desired minimum transmit interval and required minimum receive
-               interval of control packets";
-	}
-      }
-    }
-  }
-
   grouping bfd-grouping-common-cfg-parms {
     description "BFD grouping for common config parameters";
     
-    uses bfd-grouping-base-cfg-parms;
+    leaf local-multiplier {
+      type multiplier;
+      default 3;
+      description "Local multiplier";
+    }
+
+    leaf desired-min-tx-interval {
+      type uint32;
+      units microseconds;
+      mandatory true;
+      description 
+        "Desired minimum transmit interval of control packets";
+    }
+
+    leaf required-min-rx-interval {
+      type uint32;
+      units microseconds;
+      mandatory true;
+      description 
+        "Required minimum receive interval of control packets";
+    }
 
     leaf demand-enabled {
       type boolean;
@@ -288,8 +258,46 @@ module ietf-bfd-vrfcentric {
         description "True if BFD is enabled";
       }
 
-      uses bfd-grouping-base-cfg-parms;
+      leaf local-multiplier {
+        type multiplier;
+        default 3;
+        description "Multiplier transmitted by local system";
+      }
 
+      leaf desired-min-tx-interval {
+        type uint32;
+        units microseconds;
+        mandatory true;
+        description 
+          "Desired minimum transmit interval of control packets";
+      }
+
+      leaf required-min-rx-interval {
+        type uint32;
+        units microseconds;
+        mandatory true;
+        description 
+          "Required minimum receive interval of control packets";
+      }
+    }
+  }
+
+  grouping bfd-client-full-cfg-parms {
+    description 
+      "BFD grouping for complete config parameters which could be
+       used by a protocol which is a client of BFD.";
+    
+    container bfd-cfg {
+      description "BFD configuration";
+      leaf enabled {
+        type boolean;
+        default false;
+        description "True if BFD is enabled";
+      }
+
+      uses bfd-grouping-common-cfg-parms;
+
+      uses bfd-grouping-echo-cfg-parms;
     }
   }
 
@@ -438,143 +446,164 @@ module ietf-bfd-vrfcentric {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
-    + "rt:routing-protocol" {
-    when "rt:type = 'bfd:bfd'" {
-      description
-        "This augment is only valid for a protocol instance
-        of LDP.";
-    }
-    description "BFD augmentation.";
+  container bfd {
+    description "BFD top-level container";
+    container bfd-cfg {
+      description "BFD configuration";
+      container bfd-session-cfg {
+        if-feature bfd-centralized-session-config;
+        description "BFD session configuration";
+        list session-ip-sh {
+          key "interface dest-addr";
+          description "List of IP single-hop sessions";
+          leaf interface {
+            type if:interface-ref;
+            description 
+              "Interface on which the IP single-hop session is 
+             running.";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description
+              "IP address of the peer";
+          }
+          leaf admin-down {
+            type boolean;
+            default false;
+            description 
+              "Is the BFD session administratively down";
+          }
+          uses bfd-grouping-common-cfg-parms;
 
-    container bfd {
-      description "BFD top-level container";
-      container bfd-cfg {
-	description "BFD configuration";
-	container bfd-session-cfg {
-	  if-feature bfd-centralized-session-config;
-	  description "BFD session configuration";
+          uses bfd-grouping-echo-cfg-parms;
+        }
 
-	  list session-ip-mh {
-	    key "source-addr dest-addr";
-	    description "List of IP multi-hop sessions";
+        list session-ip-mh {
+          key "vrf-name source-addr dest-addr";
+          description "List of IP multi-hop sessions";
 
-	    leaf source-addr {
-	      type inet:ip-address;
-	      description 
-		"Local IP address";
-	    }
-	    leaf dest-addr {
-	      type inet:ip-address;
-	      description
-		"IP address of the peer";
-	    }
-	    leaf admin-down {
-	      type boolean;
-	      default false;
-	      description 
-		"Is the BFD session administratively down";
-	    }
-	    uses bfd-grouping-common-cfg-parms;
+          leaf vrf-name {
+            type vrf-name;
+            description "Routing instance";
+          }
+          leaf source-addr {
+            type inet:ip-address;
+            description 
+              "Local IP address";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description
+              "IP address of the peer";
+          }
+          leaf admin-down {
+            type boolean;
+            default false;
+            description 
+              "Is the BFD session administratively down";
+          }
+          uses bfd-grouping-common-cfg-parms;
 
-	    leaf tx-ttl {
-	      type ttl;
-	      default 255;
-	      description "TTL of outgoing BFD control packets";
-	    }
-	    leaf rx-ttl {
-	      type ttl;
-	      mandatory true;
-	      description 
-		"Minimum allowed TTL value for incoming BFD control 
+          leaf tx-ttl {
+            type ttl;
+            default 255;
+            description "TTL of outgoing BFD control packets";
+          }
+          leaf rx-ttl {
+            type ttl;
+            mandatory true;
+            description 
+              "Minimum allowed TTL value for incoming BFD control 
             packets";
-	    }
-	  }
-	}
-
-	list bfd-interface-cfg {
-	  if-feature bfd-interface-config;
-	  key interface;
-
-	  description "Per-interface BFD configuration";
-	  leaf interface {
-	    type if:interface-ref;
-	    description "Interface";
-
-	  }
-	  uses bfd-grouping-common-cfg-parms;
-
-	  uses bfd-grouping-echo-cfg-parms;   
-
-	}
+          }
+        }
       }
 
-      container bfd-oper {
-	config "false";      
-	description "BFD operational container";
-	container bfd-session-statistics {      
-	  description "BFD session counters";
-	  leaf ip-sh-session-num {
-	    type uint32;
-	    description "IP single hop session number";
-	  }
-	  leaf ip-mh-session-num {
-	    type uint32;
-	    description "IP multi hop session Number";
-	  }
-	  leaf total-session-num {
-	    type uint32;
-	    description "Total session number";
-	  }
-	  leaf session-up-num {
-	    type uint32;
-	    description "Session up number";
-	  }
-	  leaf sess-down-num {
-	    type uint32;
-	    description "Session down number";
-	  }
-	}
-    
-	container bfd-session-lists {
-	  description "Contains multiple session lists, one per type";
-	  list session-ip-sh {
-	    key "interface dest-addr";
-	    description "BFD IP single-hop sessions";
-	    leaf interface {
-	      type if:interface-ref;
-	      description 
-		"Interface on which the BFD session is running.";
-	    }
-	    leaf dest-addr {
-	      type inet:ip-address;
-	      description "BFD peer address";
-	    }
+      list bfd-interface-cfg {
+        if-feature bfd-interface-config;
+        key interface;
 
-	    uses bfd-all-session;
-	  }
+        description "Per-interface BFD configuration";
+        leaf interface {
+          type if:interface-ref;
+          description "Interface";
 
-	  list session-ip-mh {
-	    key "source-addr dest-addr";
-	    description "BFD IP multi-hop sessions";
-	    leaf source-addr {
-	      type inet:ip-address;
-	      description "BFD source address";
-	    }
-	    leaf dest-addr {
-	      type inet:ip-address;
-	      description "BFD peer address";
-	    }
-	    leaf ttl {
-	      type ttl;
-	      description "TTL of session";
-	    }
-	    uses bfd-all-session;
-	  }
-	}
+        }
+        uses bfd-grouping-common-cfg-parms;
+
+        uses bfd-grouping-echo-cfg-parms;   
+
       }
     }
 
+    container bfd-oper {
+      config "false";      
+      description "BFD operational container";
+      container bfd-session-statistics {      
+        description "BFD session counters";
+        leaf ip-sh-session-num {
+          type uint32;
+          description "IP single hop session number";
+        }
+        leaf ip-mh-session-num {
+          type uint32;
+          description "IP multi hop session Number";
+        }
+        leaf total-session-num {
+          type uint32;
+          description "Total session number";
+        }
+        leaf session-up-num {
+          type uint32;
+          description "Session up number";
+        }
+        leaf sess-down-num {
+          type uint32;
+          description "Session down number";
+        }
+      }
+    
+      container bfd-session-lists {
+        description "Contains multiple session lists, one per type";
+        list session-ip-sh {
+          key "interface dest-addr";
+          description "BFD IP single-hop sessions";
+          leaf interface {
+            type if:interface-ref;
+            description 
+              "Interface on which the BFD session is running.";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description "BFD peer address";
+          }
+
+          uses bfd-all-session;
+        }
+
+        list session-ip-mh {
+          key "vrf-name source-addr dest-addr";
+          description "BFD IP multi-hop sessions";
+          leaf vrf-name {
+            type vrf-name;
+            description "VRF";
+          }
+          leaf source-addr {
+            type inet:ip-address;
+            description "BFD source address";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description "BFD peer address";
+          }
+          leaf ttl {
+            type ttl;
+            description "TTL of session";
+          }
+          uses bfd-all-session;
+        }
+      }
+    }
   }
   
   grouping bfd-notification-params {
@@ -648,5 +677,4 @@ module ietf-bfd-vrfcentric {
       description "BFD local address";
     }
   }
-
 }
