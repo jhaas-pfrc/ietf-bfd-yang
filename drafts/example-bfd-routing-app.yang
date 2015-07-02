@@ -2,7 +2,7 @@ module example-bfd-routing-app {
    namespace "urn:ietf:params:xml:ns:yang:example-bfd-routing-app";
    prefix bfd-routing-app;
 
-   import ietf-bfd-vrfcentric {
+   import ietf-bfd {
      prefix "bfd";
    }
 
@@ -18,7 +18,7 @@ module example-bfd-routing-app {
    description
      "Testing BFD grouping (simulating a routing application)";
 
-   revision 2015-06-10 {
+   revision 2015-07-01 {
      description "Initial revision.";
      reference "RFC XXXX: An example BFD routing application";
    }
