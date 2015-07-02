@@ -2,7 +2,7 @@ module: ietf-bfd
 augment /rt:routing/rt:routing-instance/rt:routing-protocols/rt:routing-protocol:
    +--rw bfd
       +--rw bfd-cfg
-      |  +--rw bfd-session-cfg {bfd-centralized-session-config}?
+      |  +--rw bfd-session-cfg
       |  |  +--rw session-ip-mh* [source-addr dest-addr]
       |  |     +--rw source-addr                 inet:ip-address
       |  |     +--rw dest-addr                   inet:ip-address

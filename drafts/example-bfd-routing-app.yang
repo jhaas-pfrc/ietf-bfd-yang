@@ -46,7 +46,7 @@ module example-bfd-routing-app {
        description "List of interfaces";
        leaf interface {
          type if:interface-ref;
-	 description "Interface";
+         description "Interface";
        }
        uses bfd:bfd-client-base-cfg-parms {
          if-feature routing-app-bfd;
