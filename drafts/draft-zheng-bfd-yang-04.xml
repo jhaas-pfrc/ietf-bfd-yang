@@ -74,7 +74,7 @@
                 <email>gregory.mirsky@ericsson.com</email>
             </address>
         </author>
-        <date day="01" month="July" year="2015"/>
+        <date day="05" month="July" year="2015"/>
         <abstract>
             <t>This document defines a YANG data model that can be used to configure
       and manage Bidirectional Forwarding Detection (BFD).</t>
@@ -113,7 +113,7 @@
             <t>4) Two systems connected via a Link Aggregation Group (LAG) interface <xref target="RFC7130"/>
             </t>
 
-            <t>BFD typically does not operate on its own. Various control protocols, also known aa BFD clients, use the services provided by BFD for their own operation <xref target="RFC5882"/>. The obvious candidates which use BFD are those which do not have Hellos to detect failures, e.g. static routes, and routing protocols whose Hellos do not suport sub-second failure detection, e.g. OSPF and IS-IS.
+            <t>BFD typically does not operate on its own. Various control protocols, also known as BFD clients, use the services provided by BFD for their own operation <xref target="RFC5882"/>. The obvious candidates which use BFD are those which do not have Hellos to detect failures, e.g. static routes, and routing protocols whose Hellos do not suport sub-second failure detection, e.g. OSPF and IS-IS.
 		</t>
             <section title="Contributors">
                 <t/>
@@ -139,7 +139,7 @@
                 <section  anchor="IP-SH-CFG"  title="Single-hop IP">
                    <t>For single-hop IP, the BFD multiplier and interval(s) are configured in BFD clients. It is highly desirable to have the BFD configuration consistent between those clients. Therefore, we have a grouping for BFD configuration that applications can import in their YANG module:</t>
                     <t>- This provides consistency since the same grouping is being used in all applications making use of BFD.</t>
-                    <t>- Since not all implementations of those BFD clients have support for BFD, we must use if-feature in the respective YANG modules.</t>
+                    <t>- Not all implementations of those BFD clients have support for BFD, we must use if-feature in the respective YANG modules.</t>
                     <t>An application importing the BFD configuration grouping could do so in a hierarchical manner if it has multiple levels at which BFD configuration can be applied. In a subsequent section, we provide an example of how a BFD client would use the grouping in such a way.</t>
                     <t> The configuration items are:
           <list
@@ -209,13 +209,13 @@
                 </section>
                 
                 <section title="Traffic Engineering Tunnels">
-                   <t>For Traffic Engineering (TE) tunnels, BFD is configured under the TE tunnel since the state of the TE tunnel and actions on the TE tunnel are determined by the state of the BFD session. The grouping for BFD clients in <xref target="IP-SH-CFG"/> can be used by the TE application for the basic BFD parameters. For BFD parameters which are specific to the TE application, e.g. whether to tear down the tunnel in the event of a BFD session failure, these parameters will be defined in the YANG model of the TE application.</t>
+                   <t>For Traffic Engineering (TE) tunnels, BFD is configured under the TE tunnel since it is the Traffic Enginnering application which knows the desired failure detection parameters. The grouping for BFD clients in <xref target="IP-SH-CFG"/> can be used by the TE application for the basic BFD parameters. For BFD parameters which are specific to the TE application, e.g. whether to tear down the tunnel in the event of a BFD session failure, these parameters will be defined in the YANG model of the TE application.</t>
                 </section>
                 <section title="LDP Label Switched Paths">
                    <t>For LDP LSPs, BFD is configured under the LDP FEC. The grouping for BFD clients in <xref target="IP-SH-CFG"/> can be used by the LDP application for the basic BFD parameters. For BFD parameters which are specific to the LDP application, if any, these parameters will be defined in the YANG model of the LDP application.</t>
                 </section>       
                 <section title="Link Aggregation Groups">
-                   <t>Per <xref target="RFC7130"/>, this consists of having micro-BFD sessions on each LAG member link. The grouping for BFD clients in <xref target="IP-SH-CFG"/> can be used by the LAG application for the basic BFD parameters, this grouping can be used per-LAG or per member-link. For BFD parameters which are specific to the LAG application, e.g. the IP address of the peer system which can be reached by the LAG, these parameters will be defined in the YANG model of the LAG application. </t>
+                   <t>Per <xref target="RFC7130"/>, configuring BFD on LAG consists of having micro-BFD sessions on each LAG member link. The grouping for BFD clients in <xref target="IP-SH-CFG"/> can be used by the LAG application for the basic BFD parameters. This grouping can be used per-LAG or per member-link. For BFD parameters which are specific to the LAG application, e.g. the IP address of the peer system which can be reached by the LAG, the parameters will be defined in the YANG model of the LAG application. </t>
                 </section>         
                 
                 <section anchor="INTF-CFG" title="Per-interface Configuration">

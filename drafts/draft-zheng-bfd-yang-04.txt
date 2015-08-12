@@ -5,14 +5,14 @@
 Network Working Group                                      L. Zheng, Ed.
 Internet-Draft                                       Huawei Technologies
 Intended status: Standards Track                          R. Rahman, Ed.
-Expires: January 2, 2016                                   Cisco Systems
+Expires: January 6, 2016                                   Cisco Systems
                                                            S. Pallagatti
                                                         Juniper Networks
                                                          M. Jethanandani
                                                            Cisco Systems
                                                                G. Mirsky
                                                                 Ericsson
-                                                           July 01, 2015
+                                                           July 05, 2015
 
 
       Yang Data Model for Bidirectional Forwarding Detection (BFD)
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on January 2, 2016.
+   This Internet-Draft will expire on January 6, 2016.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 1]
+Zheng, et al.            Expires January 6, 2016                [Page 1]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 2]
+Zheng, et al.            Expires January 6, 2016                [Page 2]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -147,7 +147,7 @@ Internet-Draft                  BFD Yang                       July 2015
    [RFC7130]
 
    BFD typically does not operate on its own.  Various control
-   protocols, also known aa BFD clients, use the services provided by
+   protocols, also known as BFD clients, use the services provided by
    BFD for their own operation [RFC5882].  The obvious candidates which
    use BFD are those which do not have Hellos to detect failures, e.g.
    static routes, and routing protocols whose Hellos do not suport sub-
@@ -165,7 +165,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 3]
+Zheng, et al.            Expires January 6, 2016                [Page 3]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -213,15 +213,15 @@ Internet-Draft                  BFD Yang                       July 2015
    - This provides consistency since the same grouping is being used in
    all applications making use of BFD.
 
-   - Since not all implementations of those BFD clients have support for
-   BFD, we must use if-feature in the respective YANG modules.
+   - Not all implementations of those BFD clients have support for BFD,
+   we must use if-feature in the respective YANG modules.
 
    An application importing the BFD configuration grouping could do so
    in a hierarchical manner if it has multiple levels at which BFD
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 4]
+Zheng, et al.            Expires January 6, 2016                [Page 4]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -277,7 +277,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 5]
+Zheng, et al.            Expires January 6, 2016                [Page 5]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -305,8 +305,8 @@ Internet-Draft                  BFD Yang                       July 2015
 2.1.3.  Traffic Engineering Tunnels
 
    For Traffic Engineering (TE) tunnels, BFD is configured under the TE
-   tunnel since the state of the TE tunnel and actions on the TE tunnel
-   are determined by the state of the BFD session.  The grouping for BFD
+   tunnel since it is the Traffic Enginnering application which knows
+   the desired failure detection parameters.  The grouping for BFD
    clients in Section 2.1.1 can be used by the TE application for the
    basic BFD parameters.  For BFD parameters which are specific to the
    TE application, e.g. whether to tear down the tunnel in the event of
@@ -323,20 +323,23 @@ Internet-Draft                  BFD Yang                       July 2015
 
 2.1.5.  Link Aggregation Groups
 
-   Per [RFC7130], this consists of having micro-BFD sessions on each LAG
-   member link.  The grouping for BFD clients in Section 2.1.1 can be
-   used by the LAG application for the basic BFD parameters, this
-   grouping can be used per-LAG or per member-link.  For BFD parameters
-   which are specific to the LAG application, e.g. the IP address of the
-   peer system which can be reached by the LAG, these parameters will be
-   defined in the YANG model of the LAG application.
+   Per [RFC7130], configuring BFD on LAG consists of having micro-BFD
+   sessions on each LAG member link.  The grouping for BFD clients in
+   Section 2.1.1 can be used by the LAG application for the basic BFD
+   parameters.  This grouping can be used per-LAG or per member-link.
+   For BFD parameters which are specific to the LAG application, e.g.
+   the IP address of the peer system which can be reached by the LAG,
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 6]
+
+Zheng, et al.            Expires January 6, 2016                [Page 6]
 
 Internet-Draft                  BFD Yang                       July 2015
 
+
+   the parameters will be defined in the YANG model of the LAG
+   application.
 
 2.1.6.  Per-interface Configuration
 
@@ -383,17 +386,17 @@ Internet-Draft                  BFD Yang                       July 2015
    single-hop IP, another list for BFD multi-hop IP, etc.  In each list,
    mainly three categories of operational items are shown.  The
    fundamental information of a BFD session such as the local
-   discriminator, remote discriminator and the capability of supporting
-   demand detect mode are shown in the first category.  The second
-   category includes a BFD session running information, e.g. the FSM the
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 7]
+Zheng, et al.            Expires January 6, 2016                [Page 7]
 
 Internet-Draft                  BFD Yang                       July 2015
 
 
+   discriminator, remote discriminator and the capability of supporting
+   demand detect mode are shown in the first category.  The second
+   category includes a BFD session running information, e.g. the FSM the
    device in and diagnostic code received.  Another example is the
    actual transmit interval between the control packets, which may be
    different from the desired minimum transmit interval configured, is
@@ -442,10 +445,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-
-
-
-Zheng, et al.            Expires January 2, 2016                [Page 8]
+Zheng, et al.            Expires January 6, 2016                [Page 8]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -501,7 +501,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016                [Page 9]
+Zheng, et al.            Expires January 6, 2016                [Page 9]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -557,7 +557,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 10]
+Zheng, et al.            Expires January 6, 2016               [Page 10]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -613,7 +613,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 11]
+Zheng, et al.            Expires January 6, 2016               [Page 11]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -669,7 +669,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 12]
+Zheng, et al.            Expires January 6, 2016               [Page 12]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -725,7 +725,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 13]
+Zheng, et al.            Expires January 6, 2016               [Page 13]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -781,7 +781,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 14]
+Zheng, et al.            Expires January 6, 2016               [Page 14]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -837,7 +837,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 15]
+Zheng, et al.            Expires January 6, 2016               [Page 15]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -893,7 +893,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 16]
+Zheng, et al.            Expires January 6, 2016               [Page 16]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -949,7 +949,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 17]
+Zheng, et al.            Expires January 6, 2016               [Page 17]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1005,7 +1005,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 18]
+Zheng, et al.            Expires January 6, 2016               [Page 18]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 19]
+Zheng, et al.            Expires January 6, 2016               [Page 19]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 20]
+Zheng, et al.            Expires January 6, 2016               [Page 20]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1173,7 +1173,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 21]
+Zheng, et al.            Expires January 6, 2016               [Page 21]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1229,7 +1229,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 22]
+Zheng, et al.            Expires January 6, 2016               [Page 22]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1285,7 +1285,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 23]
+Zheng, et al.            Expires January 6, 2016               [Page 23]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 24]
+Zheng, et al.            Expires January 6, 2016               [Page 24]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1397,7 +1397,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 25]
+Zheng, et al.            Expires January 6, 2016               [Page 25]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 26]
+Zheng, et al.            Expires January 6, 2016               [Page 26]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 27]
+Zheng, et al.            Expires January 6, 2016               [Page 27]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 28]
+Zheng, et al.            Expires January 6, 2016               [Page 28]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 29]
+Zheng, et al.            Expires January 6, 2016               [Page 29]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1677,7 +1677,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 30]
+Zheng, et al.            Expires January 6, 2016               [Page 30]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1733,7 +1733,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 31]
+Zheng, et al.            Expires January 6, 2016               [Page 31]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 32]
+Zheng, et al.            Expires January 6, 2016               [Page 32]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 33]
+Zheng, et al.            Expires January 6, 2016               [Page 33]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 34]
+Zheng, et al.            Expires January 6, 2016               [Page 34]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -1957,7 +1957,7 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 35]
+Zheng, et al.            Expires January 6, 2016               [Page 35]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -2013,7 +2013,7 @@ Authors' Addresses
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 36]
+Zheng, et al.            Expires January 6, 2016               [Page 36]
 
 Internet-Draft                  BFD Yang                       July 2015
 
@@ -2069,4 +2069,4 @@ Internet-Draft                  BFD Yang                       July 2015
 
 
 
-Zheng, et al.            Expires January 2, 2016               [Page 37]
+Zheng, et al.            Expires January 6, 2016               [Page 37]
