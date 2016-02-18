@@ -19,18 +19,30 @@ module ietf-bfd {
     prefix "rt";
   }
 
+  import ietf-key-chain {
+    prefix "kc";
+  }
+
   organization "IETF BFD Working Group";
 
   contact 
     "WG Web:   <http://tools.ietf.org/wg/bfd>
      WG List:  <rtg-bfd@ietf.org>
      WG Chair: Jeff Haas
-     WG Chair: Nobo Akiya
+     WG Chair: Reshad Rahman
      Editor:   Lianshu Zheng and Reshad Rahman";
 
   description 
     "This module contains the YANG definition for BFD parameters as
-     per RFC5880, RFC5881 and RFC5883";
+     per RFC5880.";
+
+  revision 2016-02-17 {
+    description 
+      "* Split in several modules
+       * This module contains common definitions and 
+         summary information.";
+    reference "RFC XXXX: A YANG data model for BFD";
+  }
 
   revision 2015-07-01 {
     description "Initial revision.";
@@ -42,14 +54,14 @@ module ietf-bfd {
     description "BFD protocol";
   }
 
-  typedef discriminator {
+  typedef bfd-discriminator {
     type uint32 {
       range 1..4294967295;
     }
     description "BFD discriminator";
   }
 
-  typedef diagnostic {    
+  typedef bfd-diagnostic {    
     type enumeration {
       enum none {
         value 0;
@@ -91,7 +103,7 @@ module ietf-bfd {
     description "BFD diagnostic";
   }
 
-  typedef state {    
+  typedef bfd-state {    
     type enumeration {
       enum adminDown {
         value 0;
@@ -113,7 +125,7 @@ module ietf-bfd {
     description "BFD state";
   }
 
-  typedef multiplier {
+  typedef bfd-multiplier {
     type uint8 {
       range 1..255;
     }
@@ -127,70 +139,88 @@ module ietf-bfd {
     description "Time To Live";
   }
 
-  typedef bfd-session-type {
-    type enumeration {
-      enum ip-single-hop {
-        description "IP single hop";
-      }
-      enum ip-multi-hop {
-        description "IP multi hop";
-      }
-      enum te-tunnel {
-        description "Traffic Engineering tunnes";
-      }
-      enum ldp-lsp {
-        description "LDP Label Switched Path";
-      }
-      enum lag {
-        description "Micro-BFD on LAG member links";
-      }
-    }
+  identity bfd-path-type {
     description 
-      "BFD session type, this indicates the path type that BFD is
-       running on";
+      "Base identity for BFD path type. The session type indicates
+       the type of path on which BFD is running";
+  }
+  identity bfd-path-ip-sh {
+    base bfd-path-type;
+    description "BFD on IP single hop";
+  }
+  identity bfd-path-ip-mh {
+    base bfd-path-type;
+    description "BFD on IP multi hop";
+  }
+  identity bfd-path-mpls-te {
+    base bfd-path-type;
+    description "BFD on MPLS Traffic Engineering";
+  }
+  identity bfd-path-mpls-lsp {
+    base bfd-path-type;
+    description "BFD on MPLS Label Switched Path";
+  }
+  identity bfd-path-lag {
+    base bfd-path-type;
+    description "Micro-BFD on LAG member links";
   }
 
-  typedef bfd-auth-algorithm {
-    type enumeration {
-      enum simple-password {
-        description
-          "Simple password";
-      }
-      
-      enum keyed-md5 {
-        description
-          "Keyed message Digest 5";
-      }
-      
-      enum meticulous-keyed-md5 {
-        description
-          "Meticulous keyed message Digest 5";
-      }
-                                               
-      enum keyed-sha-1 {
-        description
-          "Keyed secure hash algorithm (SHA1) ";
-      }
-                                               
-      enum meticulous-keyed-sha-1 {
-        description
-          "Meticulous keyed secure hash algorithm (SHA1) ";
-      }
-    }
-    description "Authentication algorithm";
+  identity bfd-encap-type {
+    description 
+      "Base identity for BFD encapsulation type.";
   }
-
-  feature bfd-interface-config {
-    description "BFD per-interface config supported";
+  identity bfd-encap-ip {
+    base bfd-encap-type;
+    description "BFD with IP encapsulation.";
   }
+    
   feature bfd-authentication {
     description "BFD authentication supported";
   }
 
+  identity bfd-auth-replay-protection {
+    description
+      "Base identity for BFD authentication replay protection";
+  }
+  identity bfd-auth-replay-protection-non-meticulous {
+    base bfd-auth-replay-protection;
+    description "Non-meticulous (see RFC5880)";
+  }
+  identity bfd-auth-replay-protection-meticulous {
+    base bfd-auth-replay-protection;
+    description "Meticulous (see RFC5880)";
+  }
+
+  grouping bfd-auth-parms {
+    description 
+      "Grouping for BFD authentication parameters  
+       (see section 6.7 of RFC5880).";
+    container authentication-parms {
+      if-feature bfd-authentication;
+      presence 
+        "Enables BFD authentication (see section 6.7 of RFC5880).";
+      description "Parameters for BFD authentication";
+
+      leaf key-chain {
+        type kc:key-chain-ref;
+        description "Name of key-chain";
+      }
+
+      leaf replay-protection {
+        type identityref {
+          base bfd-auth-replay-protection;
+        }
+        description
+          "Protection against replays";
+      }
+    }
+  }
+
+
   grouping bfd-grouping-base-cfg-parms {
     description "BFD grouping for base config parameters";
     leaf local-multiplier {
-      type multiplier;
+      type bfd-multiplier;
       default 3;
       description "Multiplier transmitted by local system";
     }
@@ -236,41 +266,16 @@ module ietf-bfd {
     leaf demand-enabled {
       type boolean;
       default false;
-      description "To enbale demand mode";
+      description "To enable demand mode";
     }
 
-    leaf enable-authentication {
+    leaf admin-down {
       type boolean;
       default false;
       description 
-        "If set, the Authentication Section is present and the 
-         session is to be authenticated (see RFC5880 section 6.7 
-         for details).";
+        "Is the BFD session administratively down";
     }
-
-    container authentication-parms {
-      if-feature bfd-authentication;
-      description "Parameters for authentication";
-      leaf key-chain-name {
-        type string;
-        must "../algorithm" {
-          error-message
-            "May not be configured without algorithm";
-          description "Requires algorithm";
-        }
-        description
-          "Key chain name";
-      }
-      leaf algorithm {
-        type bfd-auth-algorithm;
-        must "../key-chain" {
-          error-message
-            "May not be configured without key-chain";
-          description "Requires key-chain";
-        }
-        description "Authentication algorithm to be used";
-      }
-    }
+    uses bfd-auth-parms;
   }
 
   grouping bfd-grouping-echo-cfg-parms {
@@ -292,8 +297,8 @@ module ietf-bfd {
 
   grouping bfd-client-base-cfg-parms {
     description 
-      "BFD grouping for base config parameters which could be used 
-       by a protocol which is a client of BFD";
+      "BFD grouping which could be used by a protocol which 
+       is a client of BFD to enable its use of BFD";
     
     container bfd-cfg {
       description "BFD configuration";
@@ -302,30 +307,29 @@ module ietf-bfd {
         default false;
         description "True if BFD is enabled";
       }
-
-      uses bfd-grouping-base-cfg-parms;
-
     }
   }
 
   grouping bfd-all-session {
     description "BFD session operational information";
-    leaf session-type {
-      type bfd-session-type;
+    leaf path-type {
+      type identityref {
+        base bfd-path-type;
+      }
       description 
         "BFD session type, this indicates the path type that BFD is 
         running on";
     }
     leaf local-discriminator {
-      type discriminator;
+      type bfd-discriminator;
       description "Local discriminator";
     }
     leaf remote-discriminator {
-      type discriminator;
+      type bfd-discriminator;
       description "Remote discriminator";
     }
     leaf remote-multiplier {
-      type multiplier;
+      type bfd-multiplier;
       description "Remote multiplier";
     }
     leaf out-interface {
@@ -345,7 +349,7 @@ module ietf-bfd {
       description "Destination UDP port";
     }
 
-    list session-running {
+    container session-running {
       description "BFD session running information";
       leaf session-index {
         type uint32;
@@ -353,19 +357,19 @@ module ietf-bfd {
           "An index used to uniquely identify BFD sessions";
       }
       leaf local-state {
-        type state;
+        type bfd-state;
         description "Local state";
       }
       leaf remote-state {
-        type state;
+        type bfd-state;
         description "Remote state";
       } 
       leaf local-diagnostic {
-        type diagnostic;
+        type bfd-diagnostic;
         description "Local diagnostic";
       }
       leaf remote-diagnostic {
-        type diagnostic;
+        type bfd-diagnostic;
         description "Remote diagnostic";
       }
       leaf detection-mode {
@@ -399,10 +403,14 @@ module ietf-bfd {
         units microseconds;
         description "Negotiated receive interval";
       }
-      leaf negotiated-echo-tx-interval {
+      leaf echo-tx-interval-in-use {
+        when "../../path-type = 'bfd-path-ip-sh'" {
+          description
+            "Echo is supported for IP single-hop only.";
+        }
         type uint32;
         units microseconds;
-        description "Negotiated echo transmit interval";
+        description "Echo transmit interval in use";
       }
       leaf detection-time {
         type uint32;
@@ -411,8 +419,8 @@ module ietf-bfd {
       }
     }
 
-    list sesssion-statistics {
-      description "BFD session statistics";
+    container sesssion-statistics {
+      description "BFD per-session statistics";
 
       leaf create-time {
         type yang:date-and-time;
@@ -456,240 +464,46 @@ module ietf-bfd {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
-    + "rt:routing-protocol" {
-    when "rt:type = 'bfd:bfd'" {
-      description
-        "This augment is only valid for a protocol instance
-        of BFD.";
-    }
-    description "BFD augmentation.";
-
-    container bfd {
-      description "BFD top-level container";
-      container bfd-cfg {
-        description "BFD configuration";
-        container bfd-session-cfg {
-          description "BFD session configuration";
-
-          list session-ip-mh {
-            key "source-addr dest-addr";
-            description "List of IP multi-hop sessions";
-
-            leaf source-addr {
-              type inet:ip-address;
-              description 
-                "Local IP address";
-            }
-            leaf dest-addr {
-              type inet:ip-address;
-              description
-                "IP address of the peer";
-            }
-            leaf admin-down {
-              type boolean;
-              default false;
-              description 
-                "Is the BFD session administratively down";
-            }
-            uses bfd-grouping-common-cfg-parms;
-
-            leaf tx-ttl {
-              type ttl;
-              default 255;
-              description "TTL of outgoing BFD control packets";
-            }
-            leaf rx-ttl {
-              type ttl;
-              mandatory true;
-              description 
-                "Minimum allowed TTL value for incoming BFD control 
-                 packets";
-            }
-          }
-        }
-
-        list bfd-interface-cfg {
-          if-feature bfd-interface-config;
-          key interface;
-
-          description "Per-interface BFD configuration";
-          leaf interface {
-            type if:interface-ref;
-            description "Interface";
-
-          }
-          uses bfd-grouping-common-cfg-parms;
-
-          uses bfd-grouping-echo-cfg-parms;   
-
-        }
+  grouping bfd-session-statistics {
+    description "Grouping for session counters";
+    container bfd-session-statistics {
+      description "BFD session counters";
+      leaf session-count {
+        type uint32;
+        description "Number of sessions";
       }
-
-      container bfd-oper {
-        config "false";      
-        description "BFD operational container";
-        container bfd-session-statistics {      
-          description "BFD session counters";
-          leaf ip-sh-session-num {
-            type uint32;
-            description "IP single hop session number";
-          }
-          leaf ip-mh-session-num {
-            type uint32;
-            description "IP multi hop session Number";
-          }
-          leaf total-session-num {
-            type uint32;
-            description "Total session number";
-          }
-          leaf session-up-num {
-            type uint32;
-            description "Session up number";
-          }
-          leaf sess-down-num {
-            type uint32;
-            description "Session down number";
-          }
-          leaf sess-admin-down-num {
-            type uint32;
-            description "Session admin-down number";
-          }
-        }
-    
-        container bfd-session-lists {
-          description 
-            "Contains multiple session lists, one per type";
-          list session-ip-sh {
-            key "interface dest-addr";
-            description "BFD IP single-hop sessions";
-            leaf interface {
-              type if:interface-ref;
-              description 
-                "Interface on which the BFD session is running.";
-            }
-            leaf dest-addr {
-              type inet:ip-address;
-              description "BFD peer address";
-            }
-            leaf source-addr {
-              type inet:ip-address;
-              description "BFD source address";
-            }
-
-            uses bfd-all-session;
-          }
-
-          list session-ip-mh-group {
-            key "source-addr dest-addr";
-            description 
-              "BFD IP multi-hop group of sessions. A group of " +
-              "sessions is between 1 source and 1 destination, " +
-              "each session uses a different source UDP port for " +
-              "ECMP.";
-            leaf source-addr {
-              type inet:ip-address;
-              description "BFD source address";
-            }
-            leaf dest-addr {
-              type inet:ip-address;
-              description "BFD peer address";
-            }
-            list session-ip-mh {
-              key "source-port";
-              description 
-                "The BFD sessions between a source and a. " +
-                "destination. Source UDP port is unique for " +
-                "each session in the group.";
-              leaf ttl {
-                type ttl;
-                description "TTL of outgoing packets";
-              }
-              uses bfd-all-session;
-            }
-          }
-
-          list session-te-tunnel {
-            key "tunnel-name";
-            description "BFD over TE tunnel";
-
-            leaf tunnel-name {
-              type string;
-              description "Name of TE tunnel";
-            }
-            uses bfd-all-session;
-          }
-
-          list session-ldp-lsp-group {
-            key "ldp-fec";
-            description
-              "BFD over LDP LSP group of sessions. A group of " +
-              "sessions is to one LDP FEC, each session uses a " +
-              "different source UDP port for ECMP.";
-
-            leaf ldp-fec {
-              type inet:ip-prefix;
-              description "LDP FEC";
-            }
-            list session-ldp-lsp {
-              key "source-port";
-              description 
-                "The BFD sessions on an LDP FEC. Source UDP " +
-                "port is unique for each session in the group.";
-              leaf ttl {
-                type ttl;
-                description "TTL of outgoing packets";
-              }
-              uses bfd-all-session;
-            }
-          }
-
-          list session-lag {
-            key "lag-name";
-            description "A LAG interface on which BFD is running";
-            leaf lag-name {
-              type if:interface-ref ;
-              description "Name of the LAG";
-            }
-
-            list session-lag-micro {
-            key "member-link";
-              description 
-                "Micro-BFD over LAG. This represents BFD " +
-                "over one member link";
-
-              leaf member-link {
-                type if:interface-ref;
-                description 
-                  "Member link on which micro-BFD is running";
-              }
-              uses bfd-all-session;
-            }
-          }
-
-        }
+      leaf session-up-count {
+        type uint32;
+        description "Count of sessions which are up";
+      }
+      leaf session-down-count {
+        type uint32;
+        description "Count of sessions which are down";
+      }
+      leaf session-admin-down-count {
+        type uint32;
+        description "Count of sessions which are admin-down";
       }
     }
-
   }
-  
+
   grouping bfd-notification-parms {
     description
       "This group describes common parameters that will be sent " +
       "as part of BFD notification";
         
     leaf local-discr {
-      type discriminator;
+      type bfd-discriminator;
       description "BFD local discriminator";
     }
         
     leaf remote-discr {
-      type discriminator;
+      type bfd-discriminator;
       description "BFD remote discriminator";
     }
         
     leaf new-state {
-      type state;
+      type bfd-state;
       description "Current BFD state";
     }
         
@@ -719,90 +533,50 @@ module ietf-bfd {
       description "An index used to uniquely identify BFD sessions";
     }
 
-    leaf session-type {
-      type bfd-session-type;
-      description "BFD session type";
-    }
-  }
-    
-  notification bfd-singlehop-notification {
-    description 
-      "Notification for BFD single-hop session state change. An " +
-      "implementation may rate-limit notifications, e.g. when a" +
-      "session is continuously changing state.";
-
-    uses bfd-notification-parms;
-        
-    leaf interface {
-      type if:interface-ref;
-      description "Interface to which this BFD session belongs to";
-    }
-        
-    leaf echo-enabled {
-      type boolean;
-      description "Was echo enabled for BFD";
-    }
-  }
-    
-    
-  notification bfd-multihop-notification {
-    description 
-      "Notification for BFD multi-hop session state change. An " +
-      "implementation may rate-limit notifications, e.g. when a" +
-      "session is continuously changing state.";
-
-    uses bfd-notification-parms;        
-  }
-
-  notification bfd-te-tunnel-notification {
-    description 
-      "Notification for BFD over TE tunnel session state change. " +
-      "An implementation may rate-limit notifications, e.g. when a" +
-      "session is continuously changing state.";
-
-    uses bfd-notification-parms;
-        
-    leaf tunnel-name {
-      type string;
-      description "TE tunnel to which this BFD session belongs to";
+    leaf path-type {
+      type identityref {
+        base bfd-path-type;
+      }
+      description "BFD path type";
     }
   }
 
-
-  notification bfd-ldp-lsp-notification {
-    description 
-      "Notification for BFD over LDP LSP session state change. " +
-      "An implementation may rate-limit notifications, e.g. when a" +
-      "session is continuously changing state.";
-
-    uses bfd-notification-parms;
-        
-    leaf ldp-fec {
-      type inet:ip-prefix;
-      description "LDP FEC";
+  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
+    + "rt:routing-protocol" {
+    when "rt:type = 'bfd:bfd'" {
+      description
+        "This augment is only valid for a protocol instance
+        of BFD.";
     }
-    leaf source-port {
-      type inet:port-number;
-      description "Source UDP port";
+    description "BFD augmentation.";
+
+    container bfd {
+      presence "BFD";
+      description "BFD top level container";
+      container config {
+        description "BFD configuration container";
+      }
+     
+      container oper {
+        config "false";      
+        description 
+          "BFD operational container for this routing instance";
+        uses bfd-session-statistics;
+      }
     }
   }
 
-  notification bfd-lag-notification {
-    description 
-      "Notification for BFD over LAG session state change. " +
-      "An implementation may rate-limit notifications, e.g. when a" +
-      "session is continuously changing state.";
-
-    uses bfd-notification-parms;
-        
-    leaf lag-name {
-      type if:interface-ref;
-      description "LAG interface name";
+  container bfd {
+    presence "BFD";
+    description "BFD top level container";
+    container config {
+      description "BFD configuration container";
     }
-
-    leaf member-link {
-      type if:interface-ref;
-      description "Member link on which BFD is running";
+     
+    container oper {
+      config "false";      
+      description "BFD operational container.";
+      uses bfd-session-statistics;
     }
   }
 }
