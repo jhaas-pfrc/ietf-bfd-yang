@@ -11,9 +11,10 @@ module ietf-bfd-mpls {
     prefix "inet";
   }
 
-  import ietf-routing {
-    prefix "rt";
+  import ietf-network-instance {
+    prefix "ni";
   }
+
   organization "IETF BFD Working Group";
 
   contact 
@@ -27,7 +28,7 @@ module ietf-bfd-mpls {
     "This module contains the YANG definition for BFD parameters for 
      MPLS LSPs as per RFC5884.";
 
-  revision 2016-02-17 {
+  revision 2016-07-04 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
@@ -94,10 +95,8 @@ module ietf-bfd-mpls {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
-    + "rt:routing-protocol/bfd:bfd" {
+  augment "/ni:network-instances/ni:network-instance/bfd:bfd" {
     description "BFD augmentation for MPLS.";
-
 
     container mpls {
       description "BFD MPLS container";
@@ -158,9 +157,9 @@ module ietf-bfd-mpls {
 
     uses bfd:bfd-notification-parms;
         
-    leaf routing-instance {
-      type rt:routing-instance-ref;
-      description "Routing instance";
+    leaf network-instance {
+      type string;
+      description "Network instance";
     }
 
     leaf mpls-dest-address {

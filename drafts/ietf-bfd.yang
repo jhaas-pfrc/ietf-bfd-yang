@@ -19,6 +19,10 @@ module ietf-bfd {
     prefix "rt";
   }
 
+  import ietf-network-instance {
+    prefix "ni";
+  }
+
   import ietf-key-chain {
     prefix "kc";
   }
@@ -36,15 +40,7 @@ module ietf-bfd {
     "This module contains the YANG definition for BFD parameters as
      per RFC5880.";
 
-  revision 2016-02-17 {
-    description 
-      "* Split in several modules
-       * This module contains common definitions and 
-         summary information.";
-    reference "RFC XXXX: A YANG data model for BFD";
-  }
-
-  revision 2015-07-01 {
+  revision 2016-07-04 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
@@ -541,13 +537,7 @@ module ietf-bfd {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
-    + "rt:routing-protocol" {
-    when "rt:type = 'bfd:bfd'" {
-      description
-        "This augment is only valid for a protocol instance
-        of BFD.";
-    }
+  augment "/ni:network-instances/ni:network-instance" {
     description "BFD augmentation.";
 
     container bfd {

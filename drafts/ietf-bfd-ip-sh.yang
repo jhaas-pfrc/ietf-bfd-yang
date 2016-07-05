@@ -15,8 +15,8 @@ module ietf-bfd-ip-sh {
     prefix "inet";
   }
 
-  import ietf-routing {
-    prefix "rt";
+  import ietf-network-instance {
+    prefix "ni";
   }
 
   organization "IETF BFD Working Group";
@@ -32,7 +32,7 @@ module ietf-bfd-ip-sh {
     "This module contains the YANG definition for BFD IP single-hop
      as per RFC5881.";
 
-  revision 2016-02-17 {
+  revision 2016-07-04 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP single-hop";
   }
@@ -53,8 +53,7 @@ module ietf-bfd-ip-sh {
     }
   }
 
-  augment "/rt:routing/rt:routing-instance/rt:routing-protocols/"
-    + "rt:routing-protocol/bfd:bfd" {
+  augment "/ni:network-instances/ni:network-instance/bfd:bfd" {
     description "BFD augmentation for IP single-hop.";
 
     container ip-sh {
