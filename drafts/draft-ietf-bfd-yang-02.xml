@@ -1829,7 +1829,7 @@ module ietf-bfd-lag {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls@2016-04-07.yang"
+<CODE BEGINS> file "ietf-bfd-mpls@2016-07-04.yang"
 module ietf-bfd-mpls {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls";
   // replace with IANA namespace when assigned
