@@ -28,6 +28,14 @@ module ietf-bfd-lag {
     "This module contains the YANG definition for BFD over LAG
      interfaces as per RFC7130.";
 
+  revision 2017-01-07 {
+    description
+      "* Update author information
+       * Fixed error in when use-ipv4/use-ipv6 statements
+      ";
+    reference "RFC XXXX: A YANG data model for BFD over LAG";
+  }
+
   revision 2016-02-17 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
@@ -105,7 +113,7 @@ module ietf-bfd-lag {
                 "Member link on which micro-BFD is running";
             }
             container micro-bfd-ipv4 {
-              when "../use-ipv4 = 'true'" {
+              when "../../use-ipv4 = 'true'" {
                 description "Needed only if IPv4 is used.";
               }
               description 
@@ -113,7 +121,7 @@ module ietf-bfd-lag {
               uses bfd:bfd-all-session;
             }
             container micro-bfd-ipv6 {
-              when "../use-ipv6 = 'true'" {
+              when "../../use-ipv6 = 'true'" {
                 description "Needed only if IPv6 is used.";
               }
               description 
