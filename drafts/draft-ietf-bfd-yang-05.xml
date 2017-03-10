@@ -61,7 +61,7 @@
             </address>
         </author>
         <author fullname="Greg Mirsky" initials="G." surname="Mirsky">
-            <organization>Ericsson</organization>
+            <organization>ZTE Corporation</organization>
             <address>
                 <postal>
                     <street/>
@@ -118,19 +118,19 @@
             <t>BFD typically does not operate on its own. Various control protocols, also known as BFD clients, use the services provided by BFD for their own operation <xref target="RFC5882"/>. The obvious candidates which use BFD are those which do not have Hellos to detect failures, e.g. static routes, and routing protocols whose Hellos do not support sub-second failure detection, e.g. OSPF and IS-IS.
 		</t>
             <section title="Contributors">
-                <t>We would like to thank Acee Lindem for his contribution to this document.</t>
+               <t/>
             </section>
         </section>
         <section anchor="DESIGN-DATA" title="Design of the Data Model">
            <t>Since BFD is used for liveliness detection of various forwarding paths, there is no uniform key to identify a BFD session. So the BFD data model is split in multiple YANG modules where each module corresponds to one type of forwarding path. For example, BFD for IP single-hop is in one YANG module and BFD for MPLS-TE is in another YANG module. The main difference between these modules is how a BFD session is uniquely identified, i.e the key for the list containing the BFD sessions for that forwarding path. To avoid duplication of BFD definitions, we have common types and groupings which are used by all the modules.</t>
-           <t>The new top-level container "bfd" is augmented by all the YANG modules for their respective specific information. Each BFD YANG module which augments the top-level "bfd" node contains a "config" node and an "oper" node.</t>
-           <t>BFD can operate in the following contexts:</t>
+           <t>A new control-plane protocol "bfdv1" is defined and a "bfd" container is created under control-plane-protocol as specified in <xref target="RFC8022"/>. This new "bfd" node is augmented by all the YANG modules for their respective specific information.  Each BFD YANG module which augments the "bfd" node contains a "config" node and an "oper" node.</t>
+           <t>BFD can operate in the following contexts:
            <list  style="numbers">
               <t>Network devices as described in <xref target="I-D.ietf-rtgwg-device-model"/></t>
               <t>Logical Network Elements as described in <xref target="I-D.ietf-rtgwg-lne-model"/> </t>
               <t>Network instances as described in <xref target="I-D.ietf-rtgwg-ni-model"/></t>
            </list>
-           <t>The approach taken is to do a schema-mount (see <xref target="I-D.ietf-netmod-schema-mount"/>) of the BFD model in the appropriate locations. For example, if an implementation supports BFD IP multi-hop in network instances, the implementation would do schema-mount of the BFD IP multi-hop model in a mount-point which resides in a network instance.</t>
+           The approach taken is to do a schema-mount (see <xref target="I-D.ietf-netmod-schema-mount"/>) of the BFD model in the appropriate locations. For example, if an implementation supports BFD IP multi-hop in network instances, the implementation would do schema-mount of the BFD IP multi-hop model in a mount-point which resides in a network instance.</t>
             <section title="Design of Configuration Model">
                 <t/>
                 <t>The configuration model consists mainly of the parameters specified in <xref target="RFC5880"/>. Some examples are desired minimum transmit interval, required minimum receive interval, detection multiplier, etc </t>
@@ -208,22 +208,22 @@
                                 <vspace/>Encapsulation for the BFD packets: choice between IP, G-ACh and IP with G-ACh as per <xref target="RFC5586"/></t>
                         </list>
                     </t>
-                    <t>For general MPLS-TE data, "mpls-te" data node is added under the top-level "bfd" node in <xref target="DESIGN-DATA"/>. Since some MPLS-TE tunnels are uni-directional there is no MPLS-TE configuration for these tunnels on the egress node (note that this does not apply to bi-directional MPLS-TP tunnels). The BFD parameters for the egress node are added under "mpls-te".</t>
+                    <t>For general MPLS-TE data, "mpls-te" data node is added under the "bfd" node in <xref target="DESIGN-DATA"/>. Since some MPLS-TE tunnels are uni-directional there is no MPLS-TE configuration for these tunnels on the egress node (note that this does not apply to bi-directional MPLS-TP tunnels). The BFD parameters for the egress node are added under "mpls-te".</t>
 
                 </section>
                 <section title="MPLS Label Switched Paths">
-                   <t>Here we address MPLS LSPs whose FEC is an IP address. The top-level "bfd" node in <xref target="DESIGN-DATA"/> is augmented with "mpls" which contains a list of sessions uniquely identified by an IP address.</t>
+                   <t>Here we address MPLS LSPs whose FEC is an IP address. The "bfd" node in <xref target="DESIGN-DATA"/> is augmented with "mpls" which contains a list of sessions uniquely identified by an IP address.</t>
                    <t>Since these LSPs are uni-directional there is no LSP configuration on the egress node. The BFD parameters for the egress node are added under "mpls".</t>
                 </section>       
                 <section title="Link Aggregation Groups">
-                   <t>Per <xref target="RFC7130"/>, configuring BFD on LAG consists of having micro-BFD sessions on each LAG member link. Since the BFD parameters are an attribute of the LAG, they should be under the LAG. However there is no LAG YANG model which we can augment. So a "lag" data node is added to the top-level "bfd" node in <xref target="DESIGN-DATA"/>, the configuration is per-LAG: we have a list of LAGs. The destination IP address of the micro-BFD sessions is configured per-LAG and per address-family (IPv4 and IPv6)</t>
+                   <t>Per <xref target="RFC7130"/>, configuring BFD on LAG consists of having micro-BFD sessions on each LAG member link. Since the BFD parameters are an attribute of the LAG, they should be under the LAG. However there is no LAG YANG model which we can augment. So a "lag" data node is added to the "bfd" node in <xref target="DESIGN-DATA"/>, the configuration is per-LAG: we have a list of LAGs. The destination IP address of the micro-BFD sessions is configured per-LAG and per address-family (IPv4 and IPv6)</t>
                 </section>         
                 
                 
             </section>
             <section title="Design of Operational Model">
                 <t>The operational model contains both the overall statistics of BFD sessions running on the device and the per session operational information.</t>
-                <t>The overall statistics of BFD sessions consist of number of BFD sessions, number of BFD sessions up etc. This information is available globally (i.e. for all BFD sessions) under the top level "bfd" node in <xref target="DESIGN-DATA"/> and also per type of forwarding path.</t>
+                <t>The overall statistics of BFD sessions consist of number of BFD sessions, number of BFD sessions up etc. This information is available globally (i.e. for all BFD sessions) under the "bfd" node in <xref target="DESIGN-DATA"/> and also per type of forwarding path.</t>
                 <t>For each BFD session, mainly three categories of operational items are shown.  The fundamental information of a BFD session such as the local discriminator, remote discriminator and the capability of supporting demand detect mode are shown in the first category.  The second category includes a BFD session running information, e.g. the remote BFD state and the diagnostic code received.  Another example is the actual transmit interval between the control packets, which may be different from the desired minimum transmit interval configured, is shown in this category.  Similar examples are actual received interval between the control packets and the actual transmit interval between the echo packets.  The third category contains the detailed statistics of the session, e.g. when the session transitioned up/down and how long it has been in that state.</t>
                 <t>For some session types, there may be more than 1 session on the virtual path to the destination. For example, with IP multi-hop there could be multiple BFD sessions from the source to the same destination to test the various paths (ECMP) to the destination. Each of the BFD sessions on the same virtual path is uniquely identified by the local discriminator.</t>
                 <figure align="left">
@@ -244,12 +244,14 @@
                 <t>TBD</t>
             </section>
             <section title="BFD top level hierarchy">
-               <t>At the top level there is no configuration data, only operational data. The operational data consist of overall BFD session statistics globally and per network-instance</t>
+               <t>At the "bfd" node under control-plane-protocol, there is no configuration data, only operational data. The operational data consist of overall BFD session statistics, i.e. for BFD on all types of forwarding paths. The "bfd" node under control-plane-protocol can be mounted in a network device (top-level), in an LNE or in a network instance.</t>
                <figure align="left">
                   <preamble/>
                   <artwork align="left">
 module: ietf-bfd
-   +--rw bfd!
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol:
+   +--rw bfd
       +--rw config
       +--ro oper
          +--ro bfd-session-statistics
@@ -264,29 +266,21 @@ module: ietf-bfd
             
 
             <section title="BFD IP single-hop hierarchy">
-               <t>An "ip-sh" node is added under the top-level "bfd" node. The configuration and operational data for each BFD IP single-hop session is under this "ip-sh" node. The "ip-sh" node can be mounted Overall BFD IP single-hop session statistics are available per network-instance and globally (for all network instances).</t>
+               <t>An "ip-sh" node is added under "bfd" node in control-plane-protocol. The configuration and operational data for each BFD IP single-hop session is under this "ip-sh" node. The "ip-sh" node can be mounted in a network device (top-level), in an LNE or in a network instance.</t>
                <figure align="left">
                   <preamble/>
                   <artwork align="left">
 module: ietf-bfd-ip-sh
-augment /bfd:bfd:
-   +--rw ip-sh
-      +--rw config
-      +--ro oper
-         +--ro bfd-session-statistics
-            +--ro session-count?              uint32
-            +--ro session-up-count?           uint32
-            +--ro session-down-count?         uint32
-            +--ro session-admin-down-count?   uint32
-augment /ni:network-instances/ni:network-instance/bfd:bfd:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/bfd:bfd:
    +--rw ip-sh
       +--rw config
       |  +--rw session-cfg
       |     +--rw sessions* [interface dest-addr]
-      |        +--rw interface                        if:interface-ref
-      |        +--rw dest-addr                        inet:ip-address
-      |        +--rw source-addr?                     inet:ip-address
-      |        +--rw local-multiplier?                bfd-multiplier
+      |        +--rw interface                       if:interface-ref
+      |        +--rw dest-addr                       inet:ip-address
+      |        +--rw source-addr?                    inet:ip-address
+      |        +--rw local-multiplier?               bfd-multiplier
       |        +--rw (interval-config-type)?
       |        |  +--:(tx-rx-intervals)
       |        |  |  +--rw desired-min-tx-interval          uint32
@@ -360,21 +354,13 @@ notifications:
 
 
             <section title="BFD IP multi-hop hierarchy">
-               <t>The configuration and operational data for each BFD IP multi-hop session is under "ip-mh" node under network-instance. In the operational model we support multiple BFD multi-hop sessions per remote address (ECMP), the local discriminator is used as key. Overall BFD IP multi-hop session statistics are available per network-instance and globally (for all network instances).</t>
+               <t>An "ip-mh" node is added under the "bfd" node in cntrol-plane-protocol. The configuration and operational data for each BFD IP multi-hop session is under this "ip-mh" node. In the operational model we support multiple BFD multi-hop sessions per remote address (ECMP), the local discriminator is used as key. The "ip-mh" node can be mounted in a network device (top-level), in an LNE or in a network instance.</t>
                <figure align="left">
                   <preamble/>
                   <artwork align="left">
 module: ietf-bfd-ip-mh
-augment /bfd:bfd:
-   +--rw ip-mh
-      +--rw config
-      +--ro oper
-         +--ro bfd-session-statistics
-            +--ro session-count?              uint32
-            +--ro session-up-count?           uint32
-            +--ro session-down-count?         uint32
-            +--ro session-admin-down-count?   uint32
-augment /ni:network-instances/ni:network-instance/bfd:bfd:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/bfd:bfd:
    +--rw ip-mh
       +--rw config
       |  +--rw session-cfg
@@ -397,11 +383,10 @@ augment /ni:network-instances/ni:network-instance/bfd:bfd:
       |        +--rw rx-ttl                      bfd:ttl
       +--ro oper
          +--ro bfd-session-statistics
-         |  +--ro bfd-session-statistics
-         |     +--ro session-count?              uint32
-         |     +--ro session-up-count?           uint32
-         |     +--ro session-down-count?         uint32
-         |     +--ro session-admin-down-count?   uint32
+         |  +--ro session-count?              uint32
+         |  +--ro session-up-count?           uint32
+         |  +--ro session-down-count?         uint32
+         |  +--ro session-admin-down-count?   uint32
          +--ro session-group* [source-addr dest-addr]
             +--ro source-addr    inet:ip-address
             +--ro dest-addr      inet:ip-address
@@ -447,19 +432,19 @@ notifications:
       +--ro source-addr?              inet:ip-address
       +--ro session-index?            uint32
       +--ro path-type?                identityref
-      +--ro network-instance?         string
                      </artwork>
                      </figure>
             </section>
 
 
             <section title="BFD over LAG hierarchy">
-               <t>The configuration and operational data for each BFD LAG session is under "lag" node. Overall BFD LAG session statistics are available globally.</t>
+               <t>A "lag" node is added under the "bfd" node in control-plane-protocol. The configuration and operational data for each BFD LAG session is under this "lag" node. The "lag" node can be mounted in a network device (top-level), in an LNE or in a network instance.</t>
                <figure align="left">
                   <preamble/>
                      <artwork align="left">
 module: ietf-bfd-lag
-augment /bfd:bfd:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/bfd:bfd:
    +--rw lag
       +--rw config
       |  +--rw session-cfg
@@ -576,35 +561,26 @@ notifications:
             </section>
 
             <section title="BFD over MPLS LSPs hierarchy">
-               <t>The configuration is per MPLS FEC under "mpls". In the operational model we support multiple BFD sessions per MPLS FEC (ECMP), the local discriminator is used as key.</t>
+               <t>An "mpls" node is added under the "bfd" node in control-plane-protocol. The configuration is per MPLS FEC under this "mpls" node. In the operational model we support multiple BFD sessions per MPLS FEC (ECMP), the local discriminator is used as key. The "mpls" node can be mounted in a network device (top-level), in an LNE or in a network instance.</t>
                <figure align="left">
                   <preamble/>
                   <artwork align="left">
-                     module: ietf-bfd-mpls
 module: ietf-bfd-mpls
-augment /bfd:bfd:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/bfd:bfd:
    +--rw mpls
       +--rw config
       |  +--rw egress
-      |     +--rw local-multiplier?           bfd-multiplier
-      |     +--rw (interval-config-type)?
-      |     |  +--:(tx-rx-intervals)
-      |     |  |  +--rw desired-min-tx-interval     uint32
-      |     |  |  +--rw required-min-rx-interval    uint32
-      |     |  +--:(single-interval)
-      |     |     +--rw min-interval                uint32
-      |     +--rw authentication-parms! {bfd-authentication}?
-      |        +--rw key-chain?           kc:key-chain-ref
-      |        +--rw replay-protection?   identityref
-      +--ro oper
-         +--ro bfd-session-statistics
-            +--ro session-count?              uint32
-            +--ro session-up-count?           uint32
-            +--ro session-down-count?         uint32
-            +--ro session-admin-down-count?   uint32
-augment /ni:network-instances/ni:network-instance/bfd:bfd:
-   +--rw mpls
-      +--rw config
+      |  |  +--rw local-multiplier?           bfd-multiplier
+      |  |  +--rw (interval-config-type)?
+      |  |  |  +--:(tx-rx-intervals)
+      |  |  |  |  +--rw desired-min-tx-interval     uint32
+      |  |  |  |  +--rw required-min-rx-interval    uint32
+      |  |  |  +--:(single-interval)
+      |  |  |     +--rw min-interval                uint32
+      |  |  +--rw authentication-parms! {bfd-authentication}?
+      |  |     +--rw key-chain?           kc:key-chain-ref
+      |  |     +--rw replay-protection?   identityref
       |  +--rw session-cfg
       |     +--rw sessions* [mpls-fec]
       |        +--rw mpls-fec                    inet:ip-address
@@ -670,19 +646,19 @@ notifications:
       +--ro source-addr?              inet:ip-address
       +--ro session-index?            uint32
       +--ro path-type?                identityref
-      +--ro network-instance?         string
       +--ro mpls-dest-address?        inet:ip-address
                      </artwork>
                      </figure>
             </section>
 
             <section title="BFD over MPLS-TE hierarchy">
-               <t>The MPLS-TE YANG model <xref target="I-D.ietf-teas-yang-te"/> is augmented. BFD is configured per MPLS-TE tunnel, and BFD session operational data is provided per MPLS-TE LSP.</t>
+               <t>The MPLS-TE YANG model <xref target="I-D.ietf-teas-yang-te"/> is augmented. BFD is configured per MPLS-TE tunnel, and BFD session operational data is provided per MPLS-TE LSP. </t>
                <figure align="left">
                   <preamble/>
                   <artwork align="left">
 module: ietf-bfd-mpls-te
-augment /bfd:bfd:
+augment /rt:routing/rt:control-plane-protocols
+        /rt:control-plane-protocol/bfd:bfd:
    +--rw mpls-te
       +--rw config
       |  +--rw egress
@@ -769,14 +745,57 @@ notifications:
                 <t/>
             </section>
             <section title="Interaction with other YANG modules">
-                <t>TBD.</t>
+               <t><xref target="I-D.ietf-lime-yang-connectionless-oam"/> describes how the LIME connectionless OAM model could be extended to support BFD.</t>
+               <t>Also, the operation of the BFD data model depends on configuration parameters that are defined in other YANG modules.</t>
+                  <section title="Module ietf-interfaces">
+                     <t>The following boolean configuration is defined in the "ietf-interfaces" YANG module <xref target="RFC7223"/>:
+                       <list
+                            hangIndent="8" style="hanging">
+                            <t hangText="/if:interfaces/if:interface/if:enabled">
+                                <vspace/>If this configuration is set to "false", no BFD packets can be transmitted or received on that interface.</t>
+                        </list>
+                     </t>
+                  </section>  
+                  <section title="Module ietf-ip">
+                     <t>The following boolean configuration is defined in the "ietf-ip" YANG module <xref target="RFC7277"/>:
+                       <list
+                            hangIndent="8" style="hanging">
+                            <t hangText="/if:interfaces/if:interface/ip:ipv4/ip:enabled">
+                                <vspace/>If this configuration is set to "false", no BFD IPv4 packets can be transmitted or received on that interface.</t>
+                            <t hangText="/if:interfaces/if:interface/ip:ipv4/ip:forwarding">
+                                <vspace/>If this configuration is set to "false", no BFD IPv4 packets can be transmitted or received on that interface.</t>
+                            <t hangText="/if:interfaces/if:interface/ip:ipv6/ip:enabled">
+                                <vspace/>If this configuration is set to "false", no BFD IPv6 packets can be transmitted or received on that interface.</t>
+                            <t hangText="/if:interfaces/if:interface/ip:ipv6/ip:forwarding">
+                                <vspace/>If this configuration is set to "false", no BFD IPv6 packets can be transmitted or received on that interface.</t>
+                        </list>
+                     </t>
+                  </section>  
+                  <section title="Module ietf-mpls">
+                     <t>The following boolean configuration is defined in the "ietf-mpls" YANG module <xref target="I-D.ietf-mpls-base-yang"/>:
+                       <list
+                            hangIndent="8" style="hanging">
+                            <t hangText="/rt:routing/mpls:mpls/mpls:interface/mpls:config/mpls:enabled">
+                                <vspace/>If this configuration is set to "false", no BFD MPLS packets can be transmitted or received on that interface.</t>
+                        </list>
+                     </t>
+                  </section>  
+                  <section title="Module ietf-te">
+                     <t>The following configuration is defined in the "ietf-te" YANG module <xref target="I-D.ietf-teas-yang-te"/>:
+                       <list
+                            hangIndent="8" style="hanging">
+                            <t hangText="/ietf-te:te/ietf-te:tunnels/ietf-te:tunnel/ietf-te:config/ietf-te:admin-status">
+                                <vspace/>If this configuration is not set to "state-up", no BFD MPLS packets can be transmitted or received on that tunnel.</t>
+                        </list>
+                     </t>
+                  </section>  
             </section>
 
             <section title="BFD top-level Yang Module">
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd@2016-07-04.yang"
+<CODE BEGINS> file "ietf-bfd@2017-03-07.yang"
 module ietf-bfd {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
   // replace with IANA namespace when assigned
@@ -798,10 +817,6 @@ module ietf-bfd {
     prefix "rt";
   }
 
-  import ietf-network-instance {
-    prefix "ni";
-  }
-
   import ietf-key-chain {
     prefix "kc";
   }
@@ -817,16 +832,32 @@ module ietf-bfd {
 
   description 
     "This module contains the YANG definition for BFD parameters as
-     per RFC5880.";
+     per RFC5880.
 
-  revision 2016-07-04 {
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
+  
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
 
-  identity bfd {
-    base "rt:routing-protocol";
-    description "BFD protocol";
+  identity bfdv1 {
+    base "rt:control-plane-protocol";
+    description "BFD protocol version 1 as per RFC5880.";
   }
 
   typedef bfd-discriminator {
@@ -990,7 +1021,6 @@ module ietf-bfd {
       }
     }
   }
-
 
   grouping bfd-grouping-base-cfg-parms {
     description "BFD grouping for base config parameters";
@@ -1316,11 +1346,16 @@ module ietf-bfd {
     }
   }
 
-  augment "/ni:network-instances/ni:network-instance" {
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol" {
+     when "rt:type = 'bfd:bfdv1'" {
+      description
+        "This augmentation is only valid for a control-plane protocol
+         instance of BFD (type 'bfdv1').";
+    }
     description "BFD augmentation.";
-
+    
     container bfd {
-      presence "BFD";
       description "BFD top level container";
       container config {
         description "BFD configuration container";
@@ -1328,24 +1363,9 @@ module ietf-bfd {
      
       container oper {
         config "false";      
-        description 
-          "BFD operational container for this routing instance";
+        description "BFD operational container.";
         uses bfd-session-statistics;
       }
-    }
-  }
-
-  container bfd {
-    presence "BFD";
-    description "BFD top level container";
-    container config {
-      description "BFD configuration container";
-    }
-     
-    container oper {
-      config "false";      
-      description "BFD operational container.";
-      uses bfd-session-statistics;
     }
   }
 }
@@ -1358,7 +1378,7 @@ module ietf-bfd {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-sh@2016-07-04.yang"
+<CODE BEGINS> file "ietf-bfd-ip-sh@2017-03-07.yang"
 module ietf-bfd-ip-sh {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh";
   // replace with IANA namespace when assigned
@@ -1376,8 +1396,8 @@ module ietf-bfd-ip-sh {
     prefix "inet";
   }
 
-  import ietf-network-instance {
-    prefix "ni";
+  import ietf-routing {
+    prefix "rt";
   }
 
   organization "IETF BFD Working Group";
@@ -1391,36 +1411,37 @@ module ietf-bfd-ip-sh {
 
   description 
     "This module contains the YANG definition for BFD IP single-hop
-     as per RFC5881.";
+     as per RFC5881.
 
-  revision 2016-07-04 {
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP single-hop";
   }
 
-  augment "/bfd:bfd" {
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for IP single-hop";
     container ip-sh {
       description "BFD IP single-hop top level container";
 
       container config {
         description "BFD IP single-hop configuration container";
-      }
-      container oper {
-        config "false";      
-        description "BFD IP single-hop operational container";
-        uses bfd:bfd-session-statistics;
-      }
-    }
-  }
-
-  augment "/ni:network-instances/ni:network-instance/bfd:bfd" {
-    description "BFD augmentation for IP single-hop.";
-
-    container ip-sh {
-      description "BFD IP single-hop container";
-      container config {
-        description "BFD configuration";
         container session-cfg {
           description "BFD IP single-hop session configuration";
 
@@ -1450,8 +1471,8 @@ module ietf-bfd-ip-sh {
 
       container oper {
         config "false";      
-        description "BFD operational container";
-    
+        description "BFD IP single-hop operational container";
+
         uses bfd:bfd-session-statistics;
 
         list sessions {
@@ -1506,7 +1527,7 @@ module ietf-bfd-ip-sh {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-mh@2016-07-04.yang"
+<CODE BEGINS> file "ietf-bfd-ip-mh@2017-03-07.yang"
 module ietf-bfd-ip-mh {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-ip-mh";
   // replace with IANA namespace when assigned
@@ -1520,8 +1541,8 @@ module ietf-bfd-ip-mh {
     prefix "inet";
   }
 
-  import ietf-network-instance {
-    prefix "ni";
+  import ietf-routing {
+    prefix "rt";
   }
 
   organization "IETF BFD Working Group";
@@ -1535,36 +1556,37 @@ module ietf-bfd-ip-mh {
 
   description 
     "This module contains the YANG definition for BFD IP multi-hop
-     asper RFC5883.";
+     as per RFC5883.
 
-  revision 2016-07-04 {
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multi-hop";
   }
 
-  augment "/bfd:bfd" {
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for IP multi-hop";
     container ip-mh {
       description "BFD IP multi-hop top level container";
 
       container config {
         description "BFD IP multi-hop configuration container";
-      }
-      container oper {
-        config "false";      
-        description "BFD IP multi-hop operational container";
-        uses bfd:bfd-session-statistics;
-      }
-    }
-  }
-
-  augment "/ni:network-instances/ni:network-instance/bfd:bfd" {
-    description "BFD augmentation for IP multi-hop.";
-
-    container ip-mh {
-      description "BFD IP multi-hop container";
-      container config {
-        description "BFD configuration";
         container session-cfg {
           description "BFD IP multi-hop session configuration";
 
@@ -1599,15 +1621,12 @@ module ietf-bfd-ip-mh {
           }
         }
       }
-
       container oper {
-        config "false";      
-        description "BFD operational container";
+        config "false";
 
-        container bfd-session-statistics {
-          description "BFD session counters";
-          uses bfd:bfd-session-statistics;
-        }
+        description "BFD IP multi-hop operational container";
+
+        uses bfd:bfd-session-statistics;
 
         list session-group {
           key "source-addr dest-addr";
@@ -1648,11 +1667,6 @@ module ietf-bfd-ip-mh {
       "session is continuously changing state.";
 
     uses bfd:bfd-notification-parms;  
-
-    leaf network-instance {
-      type string;
-      description "Network instance";
-    }
   }
 }
 <CODE ENDS>
@@ -1665,8 +1679,7 @@ module ietf-bfd-ip-mh {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-lag@2017-01-07.yang"
-module ietf-bfd-lag {
+<CODE BEGINS> file "ietf-bfd-lag@2017-03-07.yang"
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-lag";
   // replace with IANA namespace when assigned
   prefix "bfd-lag";
@@ -1683,6 +1696,10 @@ module ietf-bfd-lag {
     prefix "inet";
   }
 
+  import ietf-routing {
+    prefix "rt";
+  }
+
   organization "IETF BFD Working Group";
 
   contact 
@@ -1694,22 +1711,31 @@ module ietf-bfd-lag {
 
   description 
     "This module contains the YANG definition for BFD over LAG
-     interfaces as per RFC7130.";
+     interfaces as per RFC7130.
 
-  revision 2017-01-07 {
-    description
-      "* Update author information
-       * Fixed error in when use-ipv4/use-ipv6 statements
-      ";
-    reference "RFC XXXX: A YANG data model for BFD over LAG";
-  }
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
 
-  revision 2016-02-17 {
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
 
-  augment "/bfd:bfd" {
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for LAG";
     container lag {
       description "BFD over LAG top level container";
@@ -1830,7 +1856,7 @@ module ietf-bfd-lag {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls@2016-07-04.yang"
+<CODE BEGINS> file "ietf-bfd-mpls@2017-03-07.yang"
 module ietf-bfd-mpls {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls";
   // replace with IANA namespace when assigned
@@ -1844,8 +1870,8 @@ module ietf-bfd-mpls {
     prefix "inet";
   }
 
-  import ietf-network-instance {
-    prefix "ni";
+  import ietf-routing {
+    prefix "rt";
   }
 
   organization "IETF BFD Working Group";
@@ -1859,12 +1885,28 @@ module ietf-bfd-mpls {
 
   description 
     "This module contains the YANG definition for BFD parameters for 
-     MPLS LSPs as per RFC5884.";
+     MPLS LSPs as per RFC5884.
 
-  revision 2016-07-04 {
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
+
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
 
   identity bfd-encap-gach {
     base bfd:bfd-encap-type;
@@ -1903,7 +1945,8 @@ module ietf-bfd-mpls {
   }
 
 
-  augment "/bfd:bfd" {
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for MPLS";
     container mpls {
       description "BFD MPLS top level container";
@@ -1918,24 +1961,6 @@ module ietf-bfd-mpls {
 
           uses bfd:bfd-auth-parms;
         }
-      }
-
-      container oper {
-        config "false";      
-        description "BFD MPLS operational container";
-        uses bfd:bfd-session-statistics;
-      }
-    }
-  }
-
-  augment "/ni:network-instances/ni:network-instance/bfd:bfd" {
-    description "BFD augmentation for MPLS.";
-
-    container mpls {
-      description "BFD MPLS container";
-
-      container config {
-        description "BFD MPLS configuration container";
 
         container session-cfg {
           description "BFD MPLS session configuration";
@@ -1953,8 +1978,10 @@ module ietf-bfd-mpls {
       }
 
       container oper {
-        config "false";      
+        config "false";
+
         description "BFD MPLS operational container";
+
         uses bfd:bfd-session-statistics;
 
         list session-group {
@@ -1978,6 +2005,7 @@ module ietf-bfd-mpls {
             uses bfd-mpls:bfd-mpls-dest-address;
           }
         }
+
       }
     }
   }
@@ -1989,11 +2017,6 @@ module ietf-bfd-mpls {
       "session is continuously changing state.";
 
     uses bfd:bfd-notification-parms;
-        
-    leaf network-instance {
-      type string;
-      description "Network instance";
-    }
 
     leaf mpls-dest-address {
       type inet:ip-address;
@@ -2012,7 +2035,7 @@ module ietf-bfd-mpls {
                 <figure align="left">
                     <preamble/>
                     <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls-te@2016-02-04.yang"
+<CODE BEGINS> file "ietf-bfd-mpls-te@2017-03-07.yang"
 module ietf-bfd-mpls-te {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te";
   // replace with IANA namespace when assigned
@@ -2030,6 +2053,10 @@ module ietf-bfd-mpls-te {
     prefix "te";
   }
 
+  import ietf-routing {
+    prefix "rt";
+  }
+
   organization "IETF BFD Working Group";
 
   contact 
@@ -2041,14 +2068,31 @@ module ietf-bfd-mpls-te {
 
   description 
     "This module contains the YANG definition for BFD parameters for 
-     MPLS Traffic Engineering as per RFC5884.";
+     MPLS Traffic Engineering as per RFC5884.
 
-  revision 2016-02-04 {
+     Copyright (c) 2017 IETF Trust and the persons
+     identified as authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Simplified BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (http://trustee.ietf.org/license-info).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2017-03-07 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
   }
 
-  augment "/bfd:bfd" {
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  augment "/rt:routing/rt:control-plane-protocols/"
+        + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for MPLS-TE";
     container mpls-te {
       description "BFD MPLS-TE top level container";
@@ -2125,12 +2169,12 @@ module ietf-bfd-mpls-te {
             </section>
             <section title="Acknowledgements">
                 <t>We would also like to thank Nobo Akiya and Jeff Haas for their
-      encouragement on this work. We would also like to thank Rakesh Gandhi and Tarek Saad for their help on the MPLS-TE model.</t>
+      encouragement on this work. We would also like to thank Rakesh Gandhi and Tarek Saad for their help on the MPLS-TE model. We would also like to thank Acee Lindem for his guidance.</t>
             </section>
         </section>
     </middle>
     <back>
-        <references title="Normative References"><?rfc include="reference.RFC.2119"?><?rfc include='reference.RFC.6020'?><?rfc include='reference.RFC.6241'?><?rfc include='reference.RFC.5880'?><?rfc include='reference.RFC.5881'?><?rfc include='reference.RFC.5882'?><?rfc include='reference.RFC.5883'?><?rfc include='reference.RFC.5884'?><?rfc include='reference.RFC.7130'?><?rfc include='reference.RFC.5885'?><?rfc include='reference.RFC.5586'?><?rfc include='reference.RFC.8022'?>
+        <references title="Normative References"><?rfc include="reference.RFC.2119"?><?rfc include='reference.RFC.6020'?><?rfc include='reference.RFC.6241'?><?rfc include='reference.RFC.5880'?><?rfc include='reference.RFC.5881'?><?rfc include='reference.RFC.5882'?><?rfc include='reference.RFC.5883'?><?rfc include='reference.RFC.5884'?><?rfc include='reference.RFC.7130'?><?rfc include='reference.RFC.5885'?><?rfc include='reference.RFC.5586'?><?rfc include='reference.RFC.8022'?><?rfc include='reference.RFC.7223'?><?rfc include='reference.RFC.7277'?>
         </references>
         <references title="Informative References">
            <?rfc include="reference.I-D.ietf-netconf-restconf"?>
@@ -2141,13 +2185,17 @@ module ietf-bfd-mpls-te {
            <?rfc include="reference.I-D.ietf-netmod-schema-mount"?>
            <?rfc include="reference.I-D.ietf-rtgwg-device-model"?>
            <?rfc include="reference.I-D.ietf-rtgwg-lne-model"?>
+           <?rfc include="reference.I-D.ietf-lime-yang-connectionless-oam"?>
+           <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
         </references>
         <section title="Change log">
            <t>RFC Editor: Remove this section upon publication as an RFC.</t>
            <section title="Changes between versions -04 and -05">
               <t>
               <list style="symbols">
+                 <t>"bfd" node in augment of control-plane-protocol as per <xref target="RFC8022"/>.</t>
                  <t>Removed augment of network-instance. Replaced by schema-mount.</t>
+                 <t>Added information on interaction with other YANG modules.</t>
               </list>
               </t>
            </section>
