@@ -41,7 +41,7 @@ module ietf-bfd-mpls {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-03-07 {
+  revision 2017-06-21 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
@@ -92,61 +92,40 @@ module ietf-bfd-mpls {
     container mpls {
       description "BFD MPLS top level container";
 
-      container config {
-        description "BFD MPLS configuration container";
+      uses bfd:bfd-session-statistics;
+      
+      container egress {
+        description "Egress configuration";
 
-        container egress {
-          description "Egress configuration";
+        uses bfd:bfd-grouping-base-cfg-parms;
 
-          uses bfd:bfd-grouping-base-cfg-parms;
-
-          uses bfd:bfd-auth-parms;
-        }
-
-        container session-cfg {
-          description "BFD MPLS session configuration";
-          list sessions {
-            key "mpls-fec";
-            description "List of BFD MPLS sessions";
-            leaf mpls-fec {
-              type inet:ip-address;
-              description "MPLS FEC";
-            }
-
-            uses bfd:bfd-grouping-common-cfg-parms;
-          }
-        }
+        uses bfd:bfd-auth-parms;
       }
 
-      container oper {
-        config "false";
-
-        description "BFD MPLS operational container";
-
-        uses bfd:bfd-session-statistics;
-
-        list session-group {
-          key "mpls-fec";
-          description 
-            "BFD MPLS group of sessions. A group of sessions is" +
-            "for 1 FEC, each session has a different field in " +
-            "UDP/IP hdr for ECMP.";
-          leaf mpls-fec {
-            type inet:ip-address;
-            description "MPLS-FEC";
-          }
-          list sessions {
-            key "local-discriminator";
-            description 
-              "The BFD sessions for an MPLS FEC. Local " +
-              "discriminator is unique for each session in the " +
-              "group.";
-            uses bfd:bfd-all-session;
-
-            uses bfd-mpls:bfd-mpls-dest-address;
-          }
+      list session-group {
+        key "mpls-fec";
+        description
+          "BFD MPLS group of sessions. A group of sessions is" +
+          "for 1 FEC, each session has a different field in " +
+          "UDP/IP hdr for ECMP.";
+        leaf mpls-fec {
+          type inet:ip-address;
+          description "MPLS FEC";
         }
 
+        uses bfd:bfd-grouping-common-cfg-parms;
+	
+        list sessions {
+          key "local-discriminator";
+	  config false;
+          description 
+            "The BFD sessions for an MPLS FEC. Local " +
+            "discriminator is unique for each session in the " +
+            "group.";
+          uses bfd:bfd-all-session;
+
+          uses bfd-mpls:bfd-mpls-dest-address;
+        }
       }
     }
   }

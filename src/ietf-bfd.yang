@@ -3,10 +3,6 @@ module ietf-bfd {
   // replace with IANA namespace when assigned
   prefix "bfd";
    
-  import ietf-interfaces {
-    prefix "if";
-  }
-
   import ietf-inet-types {
     prefix "inet";
   }
@@ -49,7 +45,7 @@ module ietf-bfd {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-03-07 {
+  revision 2017-06-21 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
@@ -199,6 +195,14 @@ module ietf-bfd {
     description "Meticulous (see RFC5880)";
   }
 
+  feature bfd-demand-mode {
+    description "BFD demand mode supported";
+  }
+  
+  feature bfd-echo-mode {
+    description "BFD echo mode supported";
+  }
+  
   grouping bfd-auth-parms {
     description 
       "Grouping for BFD authentication parameters  
@@ -271,6 +275,7 @@ module ietf-bfd {
     uses bfd-grouping-base-cfg-parms;
 
     leaf demand-enabled {
+      if-feature bfd-demand-mode;
       type boolean;
       default false;
       description "To enable demand mode";
@@ -323,40 +328,45 @@ module ietf-bfd {
       type identityref {
         base bfd-path-type;
       }
+      config "false";      
       description 
         "BFD session type, this indicates the path type that BFD is 
         running on";
     }
     leaf local-discriminator {
       type bfd-discriminator;
+      config "false";      
       description "Local discriminator";
     }
     leaf remote-discriminator {
       type bfd-discriminator;
+      config "false";      
       description "Remote discriminator";
     }
     leaf remote-multiplier {
       type bfd-multiplier;
+      config "false";      
       description "Remote multiplier";
     }
-    leaf out-interface {
-      type if:interface-ref;
-      description "Outgoing physical interface name";
-    }                
     leaf demand-capability {
+      if-feature bfd-demand-mode;
       type boolean;
+      config "false";      
       description "Local demand mode capability";
-    }    
+    }
     leaf source-port {
       type inet:port-number;
+      config "false";      
       description "Source UDP port";
     }
     leaf dest-port {
       type inet:port-number;
+      config "false";      
       description "Destination UDP port";
     }
 
     container session-running {
+      config "false";      
       description "BFD session running information";
       leaf session-index {
         type uint32;
@@ -410,23 +420,25 @@ module ietf-bfd {
         units microseconds;
         description "Negotiated receive interval";
       }
-      leaf echo-tx-interval-in-use {
-        when "../../path-type = 'bfd-path-ip-sh'" {
-          description
-            "Echo is supported for IP single-hop only.";
-        }
-        type uint32;
-        units microseconds;
-        description "Echo transmit interval in use";
-      }
       leaf detection-time {
         type uint32;
         units microseconds;
         description "Detection time";
       }
+      leaf echo-tx-interval-in-use {
+        when "../../../path-type = 'bfd-path-ip-sh'" {
+          description
+            "Echo is supported for IP single-hop only.";
+        }
+        if-feature bfd-echo-mode;
+        type uint32;
+        units microseconds;
+        description "Echo transmit interval in use";
+      }
     }
 
     container sesssion-statistics {
+      config "false";      
       description "BFD per-session statistics";
 
       leaf create-time {
@@ -474,6 +486,7 @@ module ietf-bfd {
   grouping bfd-session-statistics {
     description "Grouping for session counters";
     container bfd-session-statistics {
+      config false;
       description "BFD session counters";
       leaf session-count {
         type uint32;
@@ -559,15 +572,8 @@ module ietf-bfd {
     
     container bfd {
       description "BFD top level container";
-      container config {
-        description "BFD configuration container";
-      }
      
-      container oper {
-        config "false";      
-        description "BFD operational container.";
-        uses bfd-session-statistics;
-      }
+      uses bfd-session-statistics;
     }
   }
 }
