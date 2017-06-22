@@ -79,7 +79,7 @@ module ietf-bfd {
         value 2;
         description "Echo failure";
       }
-      enum nborDown {
+      enum neighborDown {
         value 3;
         description "Neighbor down";
       }
@@ -99,7 +99,7 @@ module ietf-bfd {
         value 7;
         description "Admin down";
       }
-      enum reverseConcPathDown {
+      enum reverseConcatenatedPathDown {
         value 8;
         description "Reverse concatenated path down";
       }
@@ -184,15 +184,16 @@ module ietf-bfd {
 
   identity bfd-auth-replay-protection {
     description
-      "Base identity for BFD authentication replay protection";
+      "Base identity for BFD authentication replay protection. " +
+      "See section 6.7 of RFC5880.";
   }
   identity bfd-auth-replay-protection-non-meticulous {
     base bfd-auth-replay-protection;
-    description "Non-meticulous (see RFC5880)";
+    description "Non-meticulous (see section 6.7.3 of RFC5880)";
   }
   identity bfd-auth-replay-protection-meticulous {
     base bfd-auth-replay-protection;
-    description "Meticulous (see RFC5880)";
+    description "Meticulous (see section 6.7.3 of RFC5880)";
   }
 
   feature bfd-demand-mode {
@@ -426,7 +427,7 @@ module ietf-bfd {
         description "Detection time";
       }
       leaf echo-tx-interval-in-use {
-        when "../../../path-type = 'bfd-path-ip-sh'" {
+        when "../../path-type = 'bfd-path-ip-sh'" {
           description
             "Echo is supported for IP single-hop only.";
         }

@@ -109,7 +109,7 @@ module ietf-bfd-mpls {
           "for 1 FEC, each session has a different field in " +
           "UDP/IP hdr for ECMP.";
         leaf mpls-fec {
-          type inet:ip-address;
+          type inet:ip-prefix;
           description "MPLS FEC";
         }
 

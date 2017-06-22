@@ -742,7 +742,7 @@ module ietf-te {
     }
 
     container downstream-info {
-      when "../../origin-type != 'egress'" {
+      when "../origin-type != 'egress'" {
         description "Applicable to ingress LSPs only";
       }
       description
@@ -768,7 +768,7 @@ module ietf-te {
     }
 
     container upstream-info {
-      when "../../origin-type != 'ingress'" {
+      when "../origin-type != 'ingress'" {
         description "Applicable to ingress LSPs only";
       }
       description
