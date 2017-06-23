@@ -1,0 +1,16 @@
+This github documents the process of publishing the YANG model for BFD in IETF.
+
+To github is divided between the src and draft folders. The former contain the sources needed to build the draft, including the YANG files that need to be included. To modify the YANG files, directly edit the YANG models in the src/yang directory. The updated model will be included in the draft when the draft is built.
+
+To build the draft you need to have tools, all of which you will use before you submit the model. Make sure these tools are installed on the machine where you build the model.
+
+# https://pypi.python.org/pypi/xml2rfc
+# https://github.com/cabo/kramdown-rfc2629
+# https://github.com/Juniper/libslax/tree/master/doc/oxtradoc
+# https://tools.ietf.org/tools/idnits/
+
+Once you have installed these tools, go the drafts directory and type:
+
+% make
+
+The result of the build will be the latest version of the draft, complete with models inserted in all the right places. If the version of the draft comes out incorrect, just update the version number in Makefile.

@@ -1,6 +1,6 @@
 module ietf-bfd {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
-  // replace with IANA namespace when assigned
+
   prefix "bfd";
    
   import ietf-inet-types {
@@ -24,9 +24,10 @@ module ietf-bfd {
   contact 
     "WG Web:   <http://tools.ietf.org/wg/bfd>
      WG List:  <rtg-bfd@ietf.org>
-     WG Chair: Jeff Haas
-     WG Chair: Reshad Rahman
-     Editor:   Lianshu Zheng and Reshad Rahman";
+
+     Editors:  Reshad Rahman (rrahman@cisco.com),
+               Lianshu Zheng (vero.zheng@huawei.com),
+               Mahesh Jethanandani (mjethanandani@gmail.com)";
 
   description 
     "This module contains the YANG definition for BFD parameters as
@@ -45,7 +46,7 @@ module ietf-bfd {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-06-21 {
+  revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
@@ -71,35 +72,35 @@ module ietf-bfd {
         value 0;
         description "None";
       }
-      enum controlExpiry {
+      enum control-expiry {
         value 1;
         description "Control timer expiry";
       }
-      enum echoFailed {
+      enum echo-failed {
         value 2;
         description "Echo failure";
       }
-      enum neighborDown {
+      enum neighbor-down {
         value 3;
         description "Neighbor down";
       }
-      enum fwdingReset {
+      enum forwading-reset {
         value 4;
         description "Forwarding reset";
       }
-      enum pathDown {
+      enum path-down {
         value 5;
         description "Path down";
       }
-      enum concPathDown {
+      enum concatenated-path-down {
         value 6;
         description "Concatenated path down";
       }
-      enum adminDown {
+      enum admin-down {
         value 7;
         description "Admin down";
       }
-      enum reverseConcatenatedPathDown {
+      enum reverse-concatenated-path-down {
         value 8;
         description "Reverse concatenated path down";
       }
@@ -143,6 +144,9 @@ module ietf-bfd {
     description "Time To Live";
   }
 
+  /*
+   * Identity definitions
+   */
   identity bfd-path-type {
     description 
       "Base identity for BFD path type. The session type indicates
@@ -178,10 +182,6 @@ module ietf-bfd {
     description "BFD with IP encapsulation.";
   }
     
-  feature bfd-authentication {
-    description "BFD authentication supported";
-  }
-
   identity bfd-auth-replay-protection {
     description
       "Base identity for BFD authentication replay protection. " +
@@ -196,6 +196,13 @@ module ietf-bfd {
     description "Meticulous (see section 6.7.3 of RFC5880)";
   }
 
+  /*
+   * Feature definitions.
+   */
+  feature bfd-authentication {
+	    description "BFD authentication supported";
+	  }
+
   feature bfd-demand-mode {
     description "BFD demand mode supported";
   }
@@ -204,6 +211,9 @@ module ietf-bfd {
     description "BFD echo mode supported";
   }
   
+  /*
+   * Groupings
+   */
   grouping bfd-auth-parms {
     description 
       "Grouping for BFD authentication parameters  

@@ -20,9 +20,10 @@ module ietf-bfd-ip-mh {
   contact 
     "WG Web:   <http://tools.ietf.org/wg/bfd>
      WG List:  <rtg-bfd@ietf.org>
-     WG Chair: Jeff Haas
-     WG Chair: Reshad Rahman
-     Editor:   Lianshu Zheng and Reshad Rahman";
+
+     Editors:  Reshad Rahman (rrahman@cisco.com),
+               Lianshu Zheng (vero.zheng@huawei.com),
+               Mahesh Jethanandani (mjethanandani@gmail.com)";
 
   description 
     "This module contains the YANG definition for BFD IP multi-hop
@@ -41,7 +42,7 @@ module ietf-bfd-ip-mh {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-06-21 {
+  revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multi-hop";
   }

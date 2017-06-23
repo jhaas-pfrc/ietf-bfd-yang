@@ -59,7 +59,7 @@ module ietf-te-topology {
 
   description "TE topology model";
   
-  revision "2016-01-08" {
+  revision "YYYY-MM-DD" {
     description "Initial revision";
     reference "TBD";
   }
