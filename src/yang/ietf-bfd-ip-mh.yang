@@ -88,7 +88,8 @@ module ietf-bfd-ip-mh {
           mandatory true;
           description 
             "Minimum allowed TTL value for incoming BFD control 
-             packets";
+             packets. Control packets whose TTL is lower than this
+	     value are dropped.";
         }
         list sessions {
 	  config false;

@@ -344,6 +344,11 @@ module ietf-bfd {
         "BFD session type, this indicates the path type that BFD is 
         running on";
     }
+    leaf ip-encapsulation {
+      type boolean;
+      config "false";
+      description "Whether BFD encapsulation uses IP";
+    }
     leaf local-discriminator {
       type bfd-discriminator;
       config "false";      
@@ -366,11 +371,19 @@ module ietf-bfd {
       description "Local demand mode capability";
     }
     leaf source-port {
+      when "../ip-encapsulation = 'true'" {
+        description
+          "Source port valid only when IP encapsulation is used";
+      }
       type inet:port-number;
       config "false";      
       description "Source UDP port";
     }
     leaf dest-port {
+      when "../ip-encapsulation = 'true'" {
+        description
+          "Destination port valid only when IP encapsulation is used";
+      }
       type inet:port-number;
       config "false";      
       description "Destination UDP port";
