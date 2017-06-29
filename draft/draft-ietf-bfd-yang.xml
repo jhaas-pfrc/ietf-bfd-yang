@@ -582,7 +582,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD-tree.txt)
         <figure align="left">
           <preamble/>
 
-          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types-bfd@YYYY-MM-DD.yang"
+          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@YYYY-MM-DD.yang"
 
 INSERT_TEXT_FROM_FILE(../src/yang/iana-bfd-types@YYYY-MM-DD.yang)
 
