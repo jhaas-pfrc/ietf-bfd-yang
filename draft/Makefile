@@ -20,7 +20,7 @@ draft_type := $(suffix $(firstword $(wildcard $(draft).md $(draft).org $(draft).
 
 current_ver := $(shell git tag | grep '$(draft)-[0-9][0-9]' | tail -1 | sed -e"s/.*-//")
 ifeq "${current_ver}" ""
-next_ver ?= 05
+next_ver ?= 06
 else
 next_ver ?= $(shell printf "%.2d" $$((1$(current_ver)-99)))
 endif
@@ -46,7 +46,7 @@ ifeq (org,$(draft_type))
 	-rm -f $(draft).xml
 endif
 
-$(next).xml: $(draft).xml ../src/yang/ietf-bfd-ip-mh.yang ../src/yang/ietf-bfd-ip-sh.yang ../src/yang/ietf-bfd-lag.yang ../src/yang/ietf-bfd-mpls-te.yang ../src/yang/ietf-bfd-mpls.yang ../src/yang/ietf-bfd.yang
+$(next).xml: $(draft).xml ../src/yang/iana-bfd-types.yang ../src/yang/ietf-bfd-ip-mh.yang ../src/yang/ietf-bfd-ip-sh.yang ../src/yang/ietf-bfd-lag.yang ../src/yang/ietf-bfd-mpls-te.yang ../src/yang/ietf-bfd-mpls.yang ../src/yang/ietf-bfd.yang
 	sed -e"s/$(basename $<)-latest/$(basename $@)/" -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" $< > $@
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-ip-mh.yang > ../src/yang/ietf-bfd-ip-mh\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-ip-sh.yang > ../src/yang/ietf-bfd-ip-sh\@$(shell date +%Y-%m-%d).yang
@@ -54,11 +54,15 @@ $(next).xml: $(draft).xml ../src/yang/ietf-bfd-ip-mh.yang ../src/yang/ietf-bfd-i
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-mpls-te.yang > ../src/yang/ietf-bfd-mpls-te\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-mpls.yang > ../src/yang/ietf-bfd-mpls\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd.yang > ../src/yang/ietf-bfd\@$(shell date +%Y-%m-%d).yang
+	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/iana-bfd-types.yang > ../src/yang/iana-bfd-types\@$(shell date +%Y-%m-%d).yang
+	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/example-bfd-echo.yang > ../src/yang/example-bfd-echo\@$(shell date +%Y-%m-%d).yang
 
 	cd ../src; ./gen-trees.sh; cd ..;
 	../src/insert-figures.sh $@ > tmp; mv tmp $@
 	rm ../src/yang/*-tree.txt
 	rm ../src/yang/ietf-*\@$(shell date +%Y-%m-%d).yang
+	rm ../src/yang/iana-*\@$(shell date +%Y-%m-%d).yang
+	rm ../src/yang/example-*\@$(shell date +%Y-%m-%d).yang
 
 .INTERMEDIATE: $(draft).xml
 %.xml: %.md

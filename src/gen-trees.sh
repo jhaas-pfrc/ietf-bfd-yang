@@ -1,4 +1,4 @@
-for i in yang/ietf-*\@$(date +%Y-%m-%d).yang
+for i in yang/*-bfd*\@$(date +%Y-%m-%d).yang
 do
 	name=$(echo $i | cut -f 1 -d '.')
 	echo $name
