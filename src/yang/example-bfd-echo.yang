@@ -78,6 +78,8 @@ module example-bfd-echo {
     description "Augmentation for BFD echo fucntion.";
 
     container echo {
+      if-feature bfd-echo-mode;
+      
       description "BFD echo function container";
 
       uses bfd-grouping-echo-cfg-parms;

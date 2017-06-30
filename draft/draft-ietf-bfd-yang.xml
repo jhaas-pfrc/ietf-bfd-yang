@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="28" month="June" year="2017"/>
+    <date day="30" month="June" year="2017"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -177,8 +177,7 @@
       is created under control-plane-protocol as specified in <xref
       target="RFC8022">A YANG Data Model for Routing Management </xref>. This
       new "bfd" node is augmented by all the YANG modules for their respective
-      specific information. Each BFD YANG module which augments the "bfd" node
-      contains a "config" node and an "oper" node.</t>
+      specific information.</t>
 
       <t>BFD can operate in the following contexts: <list style="numbers">
           <t>Network devices as described in <xref
