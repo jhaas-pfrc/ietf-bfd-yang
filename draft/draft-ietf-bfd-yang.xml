@@ -149,7 +149,7 @@
 
       <t>5) Two systems connected via pseudowires (PWs), this is known as
       Virtual Circuit Connectivity Verification (VCCV) as described in <xref
-      target="RFC5885">BFD for PW VCCV </xref>. This is not addressed in this 
+      target="RFC5885">BFD for PW VCCV </xref>. This is not addressed in this
       document.</t>
 
       <t>BFD typically does not operate on its own. Various control protocols,
@@ -198,10 +198,10 @@
       do schema-mount of the BFD IP multi-hop model in a mount-point which
       resides in a network instance.</t>
 
-      <t>The data models in this document strive to follow the "Network Management 
-      Datastore Architecture" (NMDA) guidelines  described in 
+      <t>The data models in this document strive to follow the "Network Management
+      Datastore Architecture" (NMDA) guidelines  described in
       <xref target="I-D.dsdt-nmda-guidelines"></xref>. This means that the data
-      models do NOT have separate top-level or sibling containers for configuration 
+      models do NOT have separate top-level or sibling containers for configuration
       and operational data. One exception at the moment is the model for MPLS-TE
       in <xref target="BFD-MPLS-TE-CFG"></xref></t>
 
@@ -252,8 +252,8 @@
           there is a choice between "min-interval", used for both transmit and
           receive intervals, and "desired-min-tx-interval" and
           "required-min-rx-interval". This is supported via a grouping which
-          is used by the YANG modules for the various forwarding paths. 
-            
+          is used by the YANG modules for the various forwarding paths.
+
           For BFD authentication we have: <list hangIndent="8"
               style="hanging">
               <t hangText="key-chain"><vspace/>This is a reference to
@@ -273,16 +273,16 @@
           sessions where each session is uniquely identified by the interface
           and destination address pair. For the configuration parameters we
           use what is defined in <xref target="BFD-COMMON-CFG"/></t>
-          <t><xref target="RFC5880"></xref> and <xref target="RFC5881"></xref> do not 
-          specify whether echo function is continuous or on demand. Therefore the 
-          mechanism used to start and stop echo function is implementation specific 
+          <t><xref target="RFC5880"></xref> and <xref target="RFC5881"></xref> do not
+          specify whether echo function is continuous or on demand. Therefore the
+          mechanism used to start and stop echo function is implementation specific
           and should be done by augmentation:
           <list>
              <t>1) Configuration. This is suitable for continuous echo function.
                 An example is provided in <xref target="ECHO-CONFIG"/>.</t>
              <t>2) RPC. This is suitable for on-demand echo function.</t>
           </list>
-          
+
           </t>
         </section>
 
@@ -291,7 +291,7 @@
           <xref target="DESIGN-DATA"/>.</t>
 
           <t>Because of multiple paths, there could be multiple multi-hop IP sessions
-          between a source and a destination address. We identify this as a "session-group". 
+          between a source and a destination address. We identify this as a "session-group".
           The key for each "session-group" consists of: <list hangIndent="8" style="hanging">
               <t hangText="source address"><vspace/>Address belonging to the
               local system as per <xref target="RFC5883">BFD for Multiple Hops
@@ -390,9 +390,9 @@
         long it has been in that state.</t>
 
         <t>For some session types, there may be more than 1 session on the
-        virtual path to the destination. For example, with IP multi-hop and 
-        MPLS LSPs, there could be multiple BFD sessions from the source to the 
-        same destination to test the various paths (ECMP) to the destination. 
+        virtual path to the destination. For example, with IP multi-hop and
+        MPLS LSPs, there could be multiple BFD sessions from the source to the
+        same destination to test the various paths (ECMP) to the destination.
         This is represented by having multiple "sessions" under each "session-group".</t>
       </section>
 
@@ -584,6 +584,20 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD-tree.txt)
           <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@YYYY-MM-DD.yang"
 
 INSERT_TEXT_FROM_FILE(../src/yang/iana-bfd-types@YYYY-MM-DD.yang)
+
+<CODE ENDS>
+        ]]></artwork>
+        </figure>
+      </section>
+
+      <section title="BFD types YANG Module">
+        <figure align="left">
+          <preamble/>
+
+          <artwork align="left"><![CDATA[
+<CODE BEGINS> file "ietf-bfd-types@YYYY-MM-DD.yang"
+
+INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-types@YYYY-MM-DD.yang)
 
 <CODE ENDS>
         ]]></artwork>
@@ -820,7 +834,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
               target="RFC5880">BFD </xref>.</t>
               </list>
               </t>
-              
+
                       <figure align="left">
           <preamble/>
 
@@ -841,7 +855,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
         </figure>
       </section>
 
-              
+
     </section>
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>

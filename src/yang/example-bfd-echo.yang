@@ -3,6 +3,10 @@ module example-bfd-echo {
 
   prefix "example-bfd-echo";
 
+  import ietf-bfd-types {
+    prefix "bfd-types";
+  }
+
   import ietf-bfd {
     prefix "bfd";
   }
@@ -78,8 +82,8 @@ module example-bfd-echo {
     description "Augmentation for BFD echo fucntion.";
 
     container echo {
-      if-feature bfd-echo-mode;
-      
+      if-feature bfd-types:bfd-echo-mode;
+
       description "BFD echo function container";
 
       uses bfd-grouping-echo-cfg-parms;

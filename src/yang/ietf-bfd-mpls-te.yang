@@ -2,7 +2,11 @@ module ietf-bfd-mpls-te {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te";
   // replace with IANA namespace when assigned
   prefix "bfd-mpls-te";
-   
+
+  import ietf-bfd-types {
+    prefix "bfd-types";
+  }
+
   import ietf-bfd {
     prefix "bfd";
   }
@@ -21,7 +25,7 @@ module ietf-bfd-mpls-te {
 
   organization "IETF BFD Working Group";
 
-  contact 
+  contact
     "WG Web:   <http://tools.ietf.org/wg/bfd>
      WG List:  <rtg-bfd@ietf.org>
 
@@ -29,8 +33,8 @@ module ietf-bfd-mpls-te {
                Lianshu Zheng (vero.zheng@huawei.com),
                Mahesh Jethanandani (mjethanandani@gmail.com)";
 
-  description 
-    "This module contains the YANG definition for BFD parameters for 
+  description
+    "This module contains the YANG definition for BFD parameters for
      MPLS Traffic Engineering as per RFC5884.
 
      Copyright (c) 2017 IETF Trust and the persons
@@ -66,24 +70,24 @@ module ietf-bfd-mpls-te {
         container egress {
           description "Egress configuration";
 
-          uses bfd:bfd-grouping-base-cfg-parms;
+          uses bfd-types:bfd-grouping-base-cfg-parms;
 
-          uses bfd:bfd-auth-parms;
+          uses bfd-types:bfd-auth-parms;
         }
       }
 
       container oper {
-        config "false";      
+        config "false";
         description "BFD operational container";
-        uses bfd:bfd-session-statistics;
+        uses bfd-types:bfd-session-statistics;
       }
     }
   }
 
   augment "/te:te/te:tunnels/te:tunnel/te:config" {
     description "BFD configuration on MPLS-TE tunnel.";
-    
-    uses bfd:bfd-grouping-common-cfg-parms;
+
+    uses bfd-types:bfd-grouping-common-cfg-parms;
 
     uses bfd-mpls:bfd-encap-cfg;
   }
@@ -94,21 +98,21 @@ module ietf-bfd-mpls-te {
     }
     description "BFD state information on MPLS-TE LSP.";
 
-    uses bfd:bfd-all-session;
+    uses bfd-types:bfd-all-session;
 
     uses bfd-mpls:bfd-mpls-dest-address;
   }
 
 
   notification bfd-mpls-te-notification {
-    description 
+    description
       "Notification for BFD over MPLS-TE session state change. " +
       "An implementation may rate-limit notifications, e.g. when a" +
       "session is continuously changing state.";
 
-    uses bfd:bfd-notification-parms;
+    uses bfd-types:bfd-notification-parms;
 
-    uses bfd-mpls:bfd-mpls-dest-address;  
+    uses bfd-mpls:bfd-mpls-dest-address;
 
     leaf tunnel-name {
       type string;

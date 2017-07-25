@@ -3,6 +3,10 @@ module ietf-bfd-mpls {
   // replace with IANA namespace when assigned
   prefix "bfd-mpls";
 
+  import ietf-bfd-types {
+    prefix "bfd-types";
+  }
+
   import ietf-bfd {
     prefix "bfd";
   }
@@ -51,13 +55,13 @@ module ietf-bfd-mpls {
   // note
 
   identity bfd-encap-gach {
-    base bfd:bfd-encap-type;
+    base bfd-types:bfd-encap-type;
     description
       "BFD with G-ACh encapsulation as per RFC5586.";
   }
 
   identity bfd-encap-ip-gach {
-    base bfd:bfd-encap-type;
+    base bfd-types:bfd-encap-type;
     description
       "BFD with IP and G-ACh encapsulation as per RFC5586.";
   }
@@ -67,9 +71,9 @@ module ietf-bfd-mpls {
 
     leaf encap {
       type identityref {
-        base bfd:bfd-encap-type;
+        base bfd-types:bfd-encap-type;
       }
-      default bfd:bfd-encap-ip;
+      default bfd-types:bfd-encap-ip;
       description "BFD encapsulation";
     }
   }
@@ -93,14 +97,14 @@ module ietf-bfd-mpls {
     container mpls {
       description "BFD MPLS top level container";
 
-      uses bfd:bfd-session-statistics;
+      uses bfd-types:bfd-session-statistics;
 
       container egress {
         description "Egress configuration";
 
-        uses bfd:bfd-grouping-base-cfg-parms;
+        uses bfd-types:bfd-grouping-base-cfg-parms;
 
-        uses bfd:bfd-auth-parms;
+        uses bfd-types:bfd-auth-parms;
       }
 
       list session-group {
@@ -114,7 +118,7 @@ module ietf-bfd-mpls {
           description "MPLS FEC";
         }
 
-        uses bfd:bfd-grouping-common-cfg-parms;
+        uses bfd-types:bfd-grouping-common-cfg-parms;
 
         list sessions {
 	        config false;
@@ -122,7 +126,7 @@ module ietf-bfd-mpls {
             "The BFD sessions for an MPLS FEC. Local " +
             "discriminator is unique for each session in the " +
             "group.";
-          uses bfd:bfd-all-session;
+          uses bfd-types:bfd-all-session;
 
           uses bfd-mpls:bfd-mpls-dest-address;
         }
@@ -136,7 +140,7 @@ module ietf-bfd-mpls {
       "An implementation may rate-limit notifications, e.g. when a" +
       "session is continuously changing state.";
 
-    uses bfd:bfd-notification-parms;
+    uses bfd-types:bfd-notification-parms;
 
     leaf mpls-dest-address {
       type inet:ip-address;

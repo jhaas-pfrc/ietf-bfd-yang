@@ -3,6 +3,10 @@ module ietf-bfd-ip-mh {
   // replace with IANA namespace when assigned
   prefix "bfd-ip-mh";
 
+  import ietf-bfd-types {
+    prefix "bfd-types";
+  }
+
   import ietf-bfd {
     prefix "bfd";
   }
@@ -56,7 +60,7 @@ module ietf-bfd-ip-mh {
     container ip-mh {
       description "BFD IP multi-hop top level container";
 
-      uses bfd:bfd-session-statistics;
+      uses bfd-types:bfd-session-statistics;
 
       list session-group {
         key "source-addr dest-addr";
@@ -76,15 +80,15 @@ module ietf-bfd-ip-mh {
           description
             "IP address of the peer";
         }
-        uses bfd:bfd-grouping-common-cfg-parms;
+        uses bfd-types:bfd-grouping-common-cfg-parms;
 
         leaf tx-ttl {
-          type bfd:hops;
+          type bfd-types:hops;
           default 255;
           description "Hop count of outgoing BFD control packets";
         }
         leaf rx-ttl {
-          type bfd:hops;
+          type bfd-types:hops;
           mandatory true;
           description
             "Minimum allowed hop count value for incoming BFD control
@@ -96,7 +100,7 @@ module ietf-bfd-ip-mh {
           description
             "The multiple BFD sessions between a source and a " +
             "destination.";
-          uses bfd:bfd-all-session;
+          uses bfd-types:bfd-all-session;
         }
       }
     }
@@ -108,6 +112,6 @@ module ietf-bfd-ip-mh {
       "implementation may rate-limit notifications, e.g. when a" +
       "session is continuously changing state.";
 
-    uses bfd:bfd-notification-parms;
+    uses bfd-types:bfd-notification-parms;
   }
 }
