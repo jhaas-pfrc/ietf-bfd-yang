@@ -857,9 +857,6 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
       </section>
     </section>
 
-    <section title="BFD client configuration example test">
-    </section>
-
     <section title="BFD client configuration example">
        <t>TBD modify text The following intervals are added for the echo function (if supported): <list
               hangIndent="8" style="hanging">
@@ -895,7 +892,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
       </section>
     </section>
 
-    <section title="Change log test">
+    <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
       <section title="Changes between versions -06 and -07">

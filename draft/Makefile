@@ -24,6 +24,8 @@ next_ver ?= 07
 else
 next_ver ?= $(shell printf "%.2d" $$((1$(current_ver)-99)))
 endif
+#Hardcoding 07 for now
+next_ver := 07
 next := $(draft)-$(next_ver)
 
 .PHONY: latest submit clean
