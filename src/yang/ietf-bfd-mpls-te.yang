@@ -70,7 +70,7 @@ module ietf-bfd-mpls-te {
         container egress {
           description "Egress configuration";
 
-          uses bfd-types:base-cfg-parms;
+          uses bfd-types:client-cfg-parms;
 
           uses bfd-types:auth-parms;
         }

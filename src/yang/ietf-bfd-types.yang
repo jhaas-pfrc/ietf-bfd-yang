@@ -203,8 +203,10 @@ module ietf-bfd-types {
     }
   }
 
-  grouping base-cfg-parms {
-    description "BFD grouping for base config parameters";
+  grouping client-cfg-parms {
+    description 
+      "BFD grouping for config parameters
+       used by clients of BFD, e.g. IGP or MPLS";
     leaf local-multiplier {
       type multiplier;
       default 3;
@@ -247,7 +249,7 @@ module ietf-bfd-types {
   grouping common-cfg-parms {
     description "BFD grouping for common config parameters";
 
-    uses base-cfg-parms;
+    uses client-cfg-parms;
 
     leaf demand-enabled {
       if-feature demand-mode;
@@ -310,7 +312,7 @@ module ietf-bfd-types {
        description "True if BFD is enabled";
       }
 
-      uses bfd-types:base-cfg-parms;
+      uses bfd-types:client-cfg-parms;
     }
   }
 
