@@ -58,7 +58,7 @@ module ietf-bfd {
     container bfd {
       description "BFD top level container";
 
-      uses bfd-types:bfd-session-statistics;
+      uses bfd-types:session-statistics;
     }
   }
 }

@@ -41,7 +41,7 @@ module iana-bfd-types {
   // note
 
 
-  typedef bfd-diagnostic {
+  typedef diagnostic {
     type enumeration {
       enum none {
         value 0;
@@ -88,7 +88,7 @@ module iana-bfd-types {
       "BFD diagnostic as defined in RFC5880. Range is 0 to 31.";
   }
 
-  typedef bfd-auth-type {
+  typedef auth-type {
     type enumeration {
       enum reserved {
         value 0;
@@ -119,5 +119,4 @@ module iana-bfd-types {
       "BFD authentication type as defined in RFC5880. Range is 0 to
        255.";
   }
-
 }

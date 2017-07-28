@@ -59,7 +59,7 @@ module example-bfd-echo {
   /*
    * Groupings
    */
-  grouping bfd-grouping-echo-cfg-parms {
+  grouping echo-cfg-parms {
     description "BFD grouping for echo config parameters";
     leaf desired-min-echo-tx-interval {
       type uint32;
@@ -82,11 +82,11 @@ module example-bfd-echo {
     description "Augmentation for BFD echo fucntion.";
 
     container echo {
-      if-feature bfd-types:bfd-echo-mode;
+      if-feature bfd-types:echo-mode;
 
       description "BFD echo function container";
 
-      uses bfd-grouping-echo-cfg-parms;
+      uses echo-cfg-parms;
     }
   }
 }

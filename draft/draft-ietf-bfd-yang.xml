@@ -198,12 +198,12 @@
       do schema-mount of the BFD IP multi-hop model in a mount-point which
       resides in a network instance.</t>
 
-      <t>The data models in this document strive to follow the "Network Management
-      Datastore Architecture" (NMDA) guidelines  described in
-      <xref target="I-D.dsdt-nmda-guidelines"></xref>. This means that the data
-      models do NOT have separate top-level or sibling containers for configuration
-      and operational data. One exception at the moment is the model for MPLS-TE
-      in <xref target="BFD-MPLS-TE-CFG"></xref></t>
+      <t>The data models in this document strive to follow the "Network
+      Management Datastore Architecture" (NMDA) guidelines described in <xref
+      target="I-D.dsdt-nmda-guidelines"/>. This means that the data models do
+      NOT have separate top-level or sibling containers for configuration and
+      operational data. One exception at the moment is the model for MPLS-TE
+      in <xref target="BFD-MPLS-TE-CFG"/></t>
 
       <section title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified
@@ -224,9 +224,9 @@
         parameters such as BFD authentication are not specific to the
         requirements of the BFD client. To avoid splitting the BFD
         configuration between BFD clients and this centralized model of BFD,
-        all the configuration is kept under this centralized model of BFD.
-        The only BFD configuration under BFD clients should be an "enable"
-        knob which makes those clients react to BFD liveliness detection
+        all the configuration is kept under this centralized model of BFD. The
+        only BFD configuration under BFD clients should be an "enable" knob
+        which makes those clients react to BFD liveliness detection
         events.</t>
 
         <section anchor="BFD-COMMON-CFG"
@@ -252,10 +252,8 @@
           there is a choice between "min-interval", used for both transmit and
           receive intervals, and "desired-min-tx-interval" and
           "required-min-rx-interval". This is supported via a grouping which
-          is used by the YANG modules for the various forwarding paths.
-
-          For BFD authentication we have: <list hangIndent="8"
-              style="hanging">
+          is used by the YANG modules for the various forwarding paths. For
+          BFD authentication we have: <list hangIndent="8" style="hanging">
               <t hangText="key-chain"><vspace/>This is a reference to
               key-chain defined in <xref target="RFC8177">YANG Data Model for
               Key Chains </xref>. The keys, cryptographic algotihms, key
@@ -269,30 +267,32 @@
 
         <section anchor="IP-SH-CFG" title="Single-hop IP">
           <t>For single-hop IP, there is an augment of the "bfd" data node in
-          <xref target="DESIGN-DATA"/>. The "ip-sh" node contains a list of IP single-hop
-          sessions where each session is uniquely identified by the interface
-          and destination address pair. For the configuration parameters we
-          use what is defined in <xref target="BFD-COMMON-CFG"/></t>
-          <t><xref target="RFC5880"></xref> and <xref target="RFC5881"></xref> do not
-          specify whether echo function is continuous or on demand. Therefore the
-          mechanism used to start and stop echo function is implementation specific
-          and should be done by augmentation:
-          <list>
-             <t>1) Configuration. This is suitable for continuous echo function.
-                An example is provided in <xref target="ECHO-CONFIG"/>.</t>
-             <t>2) RPC. This is suitable for on-demand echo function.</t>
-          </list>
+          <xref target="DESIGN-DATA"/>. The "ip-sh" node contains a list of IP
+          single-hop sessions where each session is uniquely identified by the
+          interface and destination address pair. For the configuration
+          parameters we use what is defined in <xref
+          target="BFD-COMMON-CFG"/></t>
 
-          </t>
+          <t><xref target="RFC5880"/> and <xref target="RFC5881"/> do not
+          specify whether echo function is continuous or on demand. Therefore
+          the mechanism used to start and stop echo function is implementation
+          specific and should be done by augmentation: <list>
+              <t>1) Configuration. This is suitable for continuous echo
+              function. An example is provided in <xref
+              target="ECHO-CONFIG"/>.</t>
+
+              <t>2) RPC. This is suitable for on-demand echo function.</t>
+            </list></t>
         </section>
 
         <section title="Multi-hop IP">
           <t>For multi-hop IP, there is an augment of the "bfd" data node in
           <xref target="DESIGN-DATA"/>.</t>
 
-          <t>Because of multiple paths, there could be multiple multi-hop IP sessions
-          between a source and a destination address. We identify this as a "session-group".
-          The key for each "session-group" consists of: <list hangIndent="8" style="hanging">
+          <t>Because of multiple paths, there could be multiple multi-hop IP
+          sessions between a source and a destination address. We identify
+          this as a "session-group". The key for each "session-group" consists
+          of: <list hangIndent="8" style="hanging">
               <t hangText="source address"><vspace/>Address belonging to the
               local system as per <xref target="RFC5883">BFD for Multiple Hops
               </xref></t>
@@ -315,7 +315,8 @@
             </list></t>
         </section>
 
-        <section anchor="BFD-MPLS-TE-CFG" title="MPLS Traffic Engineering Tunnels">
+        <section anchor="BFD-MPLS-TE-CFG"
+                 title="MPLS Traffic Engineering Tunnels">
           <t>For MPLS-TE tunnels, BFD is configured under the MPLS-TE tunnel
           since the desired failure detection parameters is a property of the
           MPLS-TE tunnel. This is achieved by augmenting the MPLS-TE data
@@ -343,13 +344,15 @@
         <section title="MPLS Label Switched Paths">
           <t>Here we address MPLS LSPs whose FEC is an IP address. The "bfd"
           node in <xref target="DESIGN-DATA"/> is augmented with "mpls" which
-          contains a list of sessions uniquely identified by an IP
-          prefix. Because of multiple paths, there could be multiple MPLS sessions
-          to an MPLS FEC. We identify this as a "session-group".</t>
+          contains a list of sessions uniquely identified by an IP prefix.
+          Because of multiple paths, there could be multiple MPLS sessions to
+          an MPLS FEC. We identify this as a "session-group".</t>
 
           <t>Since these LSPs are uni-directional there is no LSP
-          configuration on the egress node. </t>
-          <t>The BFD parameters for the egress node are added under "mpls".</t>
+          configuration on the egress node.</t>
+
+          <t>The BFD parameters for the egress node are added under
+          "mpls".</t>
         </section>
 
         <section title="Link Aggregation Groups">
@@ -393,7 +396,8 @@
         virtual path to the destination. For example, with IP multi-hop and
         MPLS LSPs, there could be multiple BFD sessions from the source to the
         same destination to test the various paths (ECMP) to the destination.
-        This is represented by having multiple "sessions" under each "session-group".</t>
+        This is represented by having multiple "sessions" under each
+        "session-group".</t>
       </section>
 
       <section title="Notifications">
@@ -416,8 +420,8 @@
         configuration data, only operational data. The operational data
         consist of overall BFD session statistics, i.e. for BFD on all types
         of forwarding paths. The "bfd" node under control-plane-protocol can
-        be used in a network device (top-level), or mounted in an LNE or in a network
-        instance.</t>
+        be used in a network device (top-level), or mounted in an LNE or in a
+        network instance.</t>
 
         <figure align="left">
           <preamble/>
@@ -432,8 +436,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd@YYYY-MM-DD-tree.txt)
         <t>An "ip-sh" node is added under "bfd" node in
         control-plane-protocol. The configuration and operational data for
         each BFD IP single-hop session is under this "ip-sh" node. The "ip-sh"
-        node can be used in a network device (top-level), or mounted in an LNE or in a
-        network instance.</t>
+        node can be used in a network device (top-level), or mounted in an LNE
+        or in a network instance.</t>
 
         <figure align="left">
           <preamble/>
@@ -451,8 +455,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD-tree.txt)
         BFD IP multi-hop session is under this "ip-mh" node. In the
         operational model we support multiple BFD multi-hop sessions per
         remote address (ECMP), the local discriminator is used as key. The
-        "ip-mh" node can be used in a network device (top-level), or mounted in an LNE
-        or in a network instance.</t>
+        "ip-mh" node can be used in a network device (top-level), or mounted
+        in an LNE or in a network instance.</t>
 
         <figure align="left">
           <preamble/>
@@ -467,8 +471,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD-tree.txt)
         <t>A "lag" node is added under the "bfd" node in
         control-plane-protocol. The configuration and operational data for
         each BFD LAG session is under this "lag" node. The "lag" node can be
-        used in a network device (top-level), or mounted in an LNE or in a network
-        instance.</t>
+        used in a network device (top-level), or mounted in an LNE or in a
+        network instance.</t>
 
         <figure align="left">
           <preamble/>
@@ -484,8 +488,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-lag@YYYY-MM-DD-tree.txt)
         control-plane-protocol. The configuration is per MPLS FEC under this
         "mpls" node. In the operational model we support multiple BFD sessions
         per MPLS FEC (ECMP), the local discriminator is used as key. The
-        "mpls" node can be used in a network device (top-level), or mounted in an LNE
-        or in a network instance.</t>
+        "mpls" node can be used in a network device (top-level), or mounted in
+        an LNE or in a network instance.</t>
 
         <figure align="left">
           <preamble/>
@@ -706,54 +710,93 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
       </section>
 
       <section title="IANA Considerations">
-        <t>The IANA is requested to as assign a new  namespace URI from the
+        <t>The IANA is requested to as assign a new namespace URI from the
         IETF XML registry.</t>
+
         <t>This document registers the following namesace URIs in the IETF XML
-        registry <xref target="RFC3688"></xref>:</t>
-        <t></t>
+        registry <xref target="RFC3688"/>:</t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-        <t></t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-        <t></t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mh</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-        <t></t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-lag</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-        <t></t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-        <t></t>
+
+        <t/>
+
         <t>--------------------------------------------------------------------</t>
+
         <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te</t>
+
         <t>Registrant Contact: The IESG.</t>
+
         <t>XML: N/A, the requested URI is an XML namespace.</t>
+
         <t>--------------------------------------------------------------------</t>
-          <section title="IANA-Maintained iana-bfd-types module">
-            <t>This document defines the initial version of the IANA-maintained
-               iana-bfd-types YANG module.</t>
-            <t>The iana-bfd-types YANG module is intended to reflect the "BFD
-              Diagnostic Codes" registry and "BFD Authentication Types" registry
-              at https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml
-            </t>
-          </section>
+
+        <section title="IANA-Maintained iana-bfd-types module">
+          <t>This document defines the initial version of the IANA-maintained
+          iana-bfd-types YANG module.</t>
+
+          <t>The iana-bfd-types YANG module is intended to reflect the "BFD
+          Diagnostic Codes" registry and "BFD Authentication Types" registry
+          at
+          https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml</t>
+        </section>
       </section>
 
       <section title="Acknowledgements">
@@ -770,10 +813,6 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
       <?rfc include="reference.RFC.2119"?>
 
       <?rfc include="reference.RFC.3688"?>
-
-      <?rfc include='reference.RFC.6020'?>
-
-      <?rfc include='reference.RFC.6241'?>
 
       <?rfc include='reference.RFC.5880'?>
 
@@ -796,12 +835,9 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
       <?rfc include='reference.RFC.7223'?>
 
       <?rfc include='reference.RFC.7277'?>
-
     </references>
 
     <references title="Informative References">
-      <?rfc include="reference.RFC.8040"?>
-
       <?rfc include="reference.I-D.ietf-rtgwg-ni-model"?>
 
       <?rfc include="reference.RFC.8177"?>
@@ -822,28 +858,26 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
-       <t>TBD make sure desired-min-echo not in IP_SH.
-         The following intervals are added for the echo function (if supported): <list
-              hangIndent="8" style="hanging">
-              <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
-              minimum interval that the local system would like to use when
-              transmitting BFD echo packets. If 0, the echo function as
-              defined in <xref target="RFC5880">BFD </xref> is disabled.</t>
+      <t>TBD make sure desired-min-echo not in IP_SH. The following intervals
+      are added for the echo function (if supported): <list hangIndent="8"
+          style="hanging">
+          <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
+          minimum interval that the local system would like to use when
+          transmitting BFD echo packets. If 0, the echo function as defined in
+          <xref target="RFC5880">BFD </xref> is disabled.</t>
 
-              <t hangText="required-min-echo-rx-interval"><vspace/>This is the
-              Required Min Echo RX Interval as defined in <xref
-              target="RFC5880">BFD </xref>.</t>
-              </list>
-              </t>
+          <t hangText="required-min-echo-rx-interval"><vspace/>This is the
+          Required Min Echo RX Interval as defined in <xref
+          target="RFC5880">BFD </xref>.</t>
+        </list></t>
 
-                      <figure align="left">
-          <preamble/>
+      <figure align="left">
+        <preamble/>
 
-          <artwork align="left"><![CDATA[
+        <artwork align="left"><![CDATA[
 INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD-tree.txt)
                      ]]></artwork>
-        </figure>
-
+      </figure>
 
       <section title="Example YANG module for BFD echo function">
         <figure align="left">
@@ -858,27 +892,25 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
     </section>
 
     <section title="BFD client configuration example">
-       <t>TBD modify text The following intervals are added for the echo function (if supported): <list
-              hangIndent="8" style="hanging">
-              <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
-              minimum interval that the local system would like to use when
-              transmitting BFD echo packets. If 0, the echo function as
-              defined in <xref target="RFC5880">BFD </xref> is disabled.</t>
+      <t>TBD modify text The following intervals are added for the echo
+      function (if supported): <list hangIndent="8" style="hanging">
+          <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
+          minimum interval that the local system would like to use when
+          transmitting BFD echo packets. If 0, the echo function as defined in
+          <xref target="RFC5880">BFD </xref> is disabled.</t>
 
-              <t hangText="required-min-echo-rx-interval"><vspace/>This is the
-              Required Min Echo RX Interval as defined in <xref
-              target="RFC5880">BFD </xref>.</t>
-              </list>
-              </t>
+          <t hangText="required-min-echo-rx-interval"><vspace/>This is the
+          Required Min Echo RX Interval as defined in <xref
+          target="RFC5880">BFD </xref>.</t>
+        </list></t>
 
-                      <figure align="left">
-          <preamble/>
+      <figure align="left">
+        <preamble/>
 
-          <artwork align="left"><![CDATA[
+        <artwork align="left"><![CDATA[
 INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD-tree.txt)
                      ]]></artwork>
-        </figure>
-
+      </figure>
 
       <section title="Example YANG module for BFD client">
         <figure align="left">
@@ -899,7 +931,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
         <t><list style="symbols">
             <t>New ietf-bfd-types module.</t>
 
-            <t>Grouping for BFD clients to have BFD multiplier and timer values.</t>
+            <t>Grouping for BFD clients to have BFD multiplier and timer
+            values.</t>
           </list></t>
       </section>
 
