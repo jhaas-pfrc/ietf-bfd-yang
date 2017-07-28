@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-06.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-07.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="30" month="June" year="2017"/>
+    <date day="28" month="July" year="2017"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -822,7 +822,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
-       <t>The following intervals are added for the echo function (if supported): <list
+       <t>TBD make sure desired-min-echo not in IP_SH.
+         The following intervals are added for the echo function (if supported): <list
               hangIndent="8" style="hanging">
               <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
               minimum interval that the local system would like to use when
@@ -854,11 +855,56 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
         ]]></artwork>
         </figure>
       </section>
-
-
     </section>
-    <section title="Change log">
+
+    <section title="BFD client configuration example test">
+    </section>
+
+    <section title="BFD client configuration example">
+       <t>TBD modify text The following intervals are added for the echo function (if supported): <list
+              hangIndent="8" style="hanging">
+              <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
+              minimum interval that the local system would like to use when
+              transmitting BFD echo packets. If 0, the echo function as
+              defined in <xref target="RFC5880">BFD </xref> is disabled.</t>
+
+              <t hangText="required-min-echo-rx-interval"><vspace/>This is the
+              Required Min Echo RX Interval as defined in <xref
+              target="RFC5880">BFD </xref>.</t>
+              </list>
+              </t>
+
+                      <figure align="left">
+          <preamble/>
+
+          <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD-tree.txt)
+                     ]]></artwork>
+        </figure>
+
+
+      <section title="Example YANG module for BFD client">
+        <figure align="left">
+          <preamble/>
+
+          <artwork align="left"><![CDATA[
+
+INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
+        ]]></artwork>
+        </figure>
+      </section>
+    </section>
+
+    <section title="Change log test">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -06 and -07">
+        <t><list style="symbols">
+            <t>New ietf-bfd-types module.</t>
+
+            <t>Grouping for BFD clients to have BFD multiplier and timer values.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -05 and -06">
         <t><list style="symbols">
