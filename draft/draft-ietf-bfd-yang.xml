@@ -891,39 +891,6 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
       </section>
     </section>
 
-    <section title="BFD client configuration example">
-      <t>TBD modify text The following intervals are added for the echo
-      function (if supported): <list hangIndent="8" style="hanging">
-          <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
-          minimum interval that the local system would like to use when
-          transmitting BFD echo packets. If 0, the echo function as defined in
-          <xref target="RFC5880">BFD </xref> is disabled.</t>
-
-          <t hangText="required-min-echo-rx-interval"><vspace/>This is the
-          Required Min Echo RX Interval as defined in <xref
-          target="RFC5880">BFD </xref>.</t>
-        </list></t>
-
-      <figure align="left">
-        <preamble/>
-
-        <artwork align="left"><![CDATA[
-INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD-tree.txt)
-                     ]]></artwork>
-      </figure>
-
-      <section title="Example YANG module for BFD client">
-        <figure align="left">
-          <preamble/>
-
-          <artwork align="left"><![CDATA[
-
-INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
-        ]]></artwork>
-        </figure>
-      </section>
-    </section>
-
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
