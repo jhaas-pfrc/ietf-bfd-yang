@@ -85,8 +85,6 @@ module ietf-bfd-ip-sh {
 
         uses bfd-types:common-cfg-parms;
 
-        uses bfd-types:echo-cfg-parms;
-
         uses bfd-types:all-session;
       }
     }

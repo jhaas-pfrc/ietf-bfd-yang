@@ -207,47 +207,52 @@ module ietf-bfd-types {
     description 
       "BFD grouping for config parameters
        used by clients of BFD, e.g. IGP or MPLS";
+    
+    leaf enabled {
+      type boolean;
+      default false;
+      description 
+        "Indicates whether the session is enabled.";
+    }
+    
     leaf local-multiplier {
       type multiplier;
       default 3;
       description "Multiplier transmitted by local system";
     }
 
-    choice interval-config-type {
+    leaf desired-min-tx-interval {
+      type uint32;
+      units microseconds;
+      mandatory true;
       description
-        "Two interval values or 1 value used for both tx and rx";
-      case tx-rx-intervals {
-        leaf desired-min-tx-interval {
-          type uint32;
-          units microseconds;
-          mandatory true;
-          description
-            "Desired minimum transmit interval of control packets";
-        }
+        "Desired minimum transmit interval of control packets";
+    }
 
-        leaf required-min-rx-interval {
-          type uint32;
-          units microseconds;
-          mandatory true;
-          description
-            "Required minimum receive interval of control packets";
-        }
-      }
-      case single-interval {
-        leaf min-interval {
-          type uint32;
-          units microseconds;
-          mandatory true;
-          description
-            "Desired minimum transmit interval and required " +
-            "minimum receive interval of control packets";
-        }
+    leaf required-min-rx-interval {
+      type uint32;
+      units microseconds;
+      mandatory true;
+      description
+        "Required minimum receive interval of control packets";
+    }
+    
+    container echo-mode {
+      if-feature echo-mode;
+      leaf echo-mode-enabled {
+        type boolean;
+        default false;
+        description
+          "Should be set to true if echo-mode is enabled for this
+           session. Set to false by default because defining the
+           feature should not enable echo-mode by default.";
       }
     }
   }
 
   grouping common-cfg-parms {
-    description "BFD grouping for common config parameters";
+    description 
+      "BFD grouping for common config parameters";
 
     uses client-cfg-parms;
 
@@ -255,7 +260,8 @@ module ietf-bfd-types {
       if-feature demand-mode;
       type boolean;
       default false;
-      description "To enable demand mode";
+      description 
+        "To enable demand mode";
     }
 
     leaf admin-down {
@@ -265,55 +271,6 @@ module ietf-bfd-types {
         "Is the BFD session administratively down";
     }
     uses auth-parms;
-  }
-
-  grouping echo-cfg-parms {
-    description "BFD grouping for echo config parameters";
-    leaf desired-min-echo-tx-interval {
-      type uint32;
-      units microseconds;
-      default 0;
-      description "Desired minumum transmit interval for echo";
-    }
-
-    leaf required-min-echo-rx-interval {
-      type uint32;
-      units microseconds;
-      default 0;
-      description "Required minimum receive interval for echo";
-    }
-  }
-
-  grouping client-base-cfg-parms {
-    description
-      "BFD grouping which could be used by a protocol which
-       is a client of BFD to enable its use of BFD";
-
-    container cfg {
-      description "BFD configuration";
-      leaf enabled {
-        type boolean;
-        default false;
-        description "True if BFD is enabled";
-      }
-    }
-  }
-
-  grouping client-ext-cfg-parms {
-    description
-      "BFD grouping which could be used by a protocol which
-       is a client of BFD to enable its use of BFD and the BFD
-       parameters it desires.";
-    container cfg {
-      description "BFD configuration";
-      leaf enabled {
-       type boolean;
-       default false;
-       description "True if BFD is enabled";
-      }
-
-      uses bfd-types:client-cfg-parms;
-    }
   }
 
   grouping all-session {
