@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="28" month="July" year="2017"/>
+    <date day="27" month="October" year="2017"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -222,12 +222,17 @@
         multiplier and interval(s) since those parameters impact the
         convergence time of the BFD clients when a failure occurs. Other
         parameters such as BFD authentication are not specific to the
-        requirements of the BFD client. To avoid splitting the BFD
-        configuration between BFD clients and this centralized model of BFD,
-        all the configuration is kept under this centralized model of BFD. The
-        only BFD configuration under BFD clients should be an "enable" knob
-        which makes those clients react to BFD liveliness detection
-        events.</t>
+        requirements of the BFD client. Ideally all configuration should be 
+        centralized under BFD. However, this is a problem for clients 
+        of BFD which auto-discover their peers. For example, IGPs do not have the peer address 
+        configured, instead the IGP is enabled on an interface and the IGP peers are
+        auto-discovered. So for an operator to configure BFD to an IGP peer, the operator
+        would first have to determine the peer addresses. And when a new peer is discovered, 
+        BFD configuration would need to be added. To avoid this issue, we define grouping client-cfg-parms 
+        in <xref target="BFD-TYPES"/> for BFD clients to configure BFD: this allows BFD clients such as the IGPs
+        to have configuration (multipler and intervals) for the BFD sessions they need. 
+        The mechanism how the BFD sessions are created by the BFD clients is outside the scope of this document.
+        </t>
 
         <section anchor="BFD-COMMON-CFG"
                  title="Common BFD configuration parameters">
@@ -594,7 +599,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/iana-bfd-types@YYYY-MM-DD.yang)
         </figure>
       </section>
 
-      <section title="BFD types YANG Module">
+      <section anchor="BFD-TYPES" title="BFD types YANG Module">
         <figure align="left">
           <preamble/>
 
@@ -858,7 +863,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
-      <t>TBD make sure desired-min-echo not in IP_SH. The following intervals
+      <t>The following intervals
       are added for the echo function (if supported): <list hangIndent="8"
           style="hanging">
           <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
@@ -891,6 +896,30 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
       </section>
     </section>
 
+    <section title="BFD client configuration example">
+       <t>The following is an example of how a BFD client could use the grouping client-cfg-parms.</t>
+
+                      <figure align="left">
+          <preamble/>
+
+          <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD-tree.txt)
+                     ]]></artwork>
+        </figure>
+
+
+      <section title="Example YANG module for BFD client">
+        <figure align="left">
+          <preamble/>
+
+          <artwork align="left"><![CDATA[
+
+INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
+        ]]></artwork>
+        </figure>
+      </section>
+    </section>
+
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
@@ -898,8 +927,10 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
         <t><list style="symbols">
             <t>New ietf-bfd-types module.</t>
 
-            <t>Grouping for BFD clients to have BFD multiplier and timer
+            <t>Grouping for BFD clients to have BFD multiplier and interval
             values.</t>
+            
+            <t>Removed bfd- prefix from many names.</t>
           </list></t>
       </section>
 
