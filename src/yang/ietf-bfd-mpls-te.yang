@@ -84,7 +84,7 @@ module ietf-bfd-mpls-te {
     }
   }
 
-  augment "/te:te/te:tunnels/te:tunnel/te:config" {
+  augment "/te:te/te:tunnels/te:tunnel" {
     description "BFD configuration on MPLS-TE tunnel.";
 
     uses bfd-types:common-cfg-parms;

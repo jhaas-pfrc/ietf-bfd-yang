@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="29" month="October" year="2017"/>
+    <date day="30" month="October" year="2017"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -929,6 +929,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
 
             <t>Grouping for BFD clients to have BFD multiplier and interval
             values.</t>
+            
+            <t>Change in ietf-bfd-mpls-te since MPLS-TE model changed.</t>
             
             <t>Removed bfd- prefix from many names.</t>
           </list></t>

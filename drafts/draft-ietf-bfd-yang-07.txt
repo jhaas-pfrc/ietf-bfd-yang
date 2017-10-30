@@ -5,14 +5,14 @@
 Network Working Group                                     R. Rahman, Ed.
 Internet-Draft                                             Cisco Systems
 Intended status: Standards Track                           L. Zheng, Ed.
-Expires: May 2, 2018                                 Huawei Technologies
+Expires: May 3, 2018                                 Huawei Technologies
                                                     M. Jethanandani, Ed.
                                                            Cisco Systems
                                                            S. Pallagatti
 
                                                                G. Mirsky
                                                          ZTE Corporation
-                                                        October 29, 2017
+                                                        October 30, 2017
 
 
       YANG Data Model for Bidirectional Forwarding Detection (BFD)
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 2, 2018.
+   This Internet-Draft will expire on May 3, 2018.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 1]
+Rahman, et al.             Expires May 3, 2018                  [Page 1]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 2]
+Rahman, et al.             Expires May 3, 2018                  [Page 2]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -165,7 +165,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 3]
+Rahman, et al.             Expires May 3, 2018                  [Page 3]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -221,7 +221,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 4]
+Rahman, et al.             Expires May 3, 2018                  [Page 4]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -277,7 +277,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 5]
+Rahman, et al.             Expires May 3, 2018                  [Page 5]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -333,7 +333,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 6]
+Rahman, et al.             Expires May 3, 2018                  [Page 6]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -389,7 +389,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 7]
+Rahman, et al.             Expires May 3, 2018                  [Page 7]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -445,7 +445,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 8]
+Rahman, et al.             Expires May 3, 2018                  [Page 8]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -501,7 +501,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                  [Page 9]
+Rahman, et al.             Expires May 3, 2018                  [Page 9]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -557,7 +557,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 10]
+Rahman, et al.             Expires May 3, 2018                 [Page 10]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -613,7 +613,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 11]
+Rahman, et al.             Expires May 3, 2018                 [Page 11]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -669,7 +669,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 12]
+Rahman, et al.             Expires May 3, 2018                 [Page 12]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -725,7 +725,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 13]
+Rahman, et al.             Expires May 3, 2018                 [Page 13]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -781,7 +781,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 14]
+Rahman, et al.             Expires May 3, 2018                 [Page 14]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -837,7 +837,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 15]
+Rahman, et al.             Expires May 3, 2018                 [Page 15]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -893,7 +893,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 16]
+Rahman, et al.             Expires May 3, 2018                 [Page 16]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -949,7 +949,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 17]
+Rahman, et al.             Expires May 3, 2018                 [Page 17]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -985,7 +985,7 @@ Internet-Draft                  BFD YANG                    October 2017
               +--ro session-up-count?           uint32
               +--ro session-down-count?         uint32
               +--ro session-admin-down-count?   uint32
-   augment /te:te/te:tunnels/te:tunnel/te:config:
+   augment /te:te/te:tunnels/te:tunnel:
      +--rw local-multiplier?           multiplier
      +--rw (interval-config-type)?
      |  +--:(tx-rx-intervals)
@@ -1005,7 +1005,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 18]
+Rahman, et al.             Expires May 3, 2018                 [Page 18]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1061,7 +1061,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 19]
+Rahman, et al.             Expires May 3, 2018                 [Page 19]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1117,7 +1117,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 20]
+Rahman, et al.             Expires May 3, 2018                 [Page 20]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1134,7 +1134,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.12.  IANA BFD YANG Module
 
-  <CODE BEGINS> file "iana-bfd-types@2017-10-29.yang"
+  <CODE BEGINS> file "iana-bfd-types@2017-10-30.yang"
 
   module iana-bfd-types {
     namespace "urn:ietf:params:xml:ns:yang:iana-bfd-types";
@@ -1173,12 +1173,12 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 21]
+Rahman, et al.             Expires May 3, 2018                 [Page 21]
 
 Internet-Draft                  BFD YANG                    October 2017
 
 
-    revision 2017-10-29 {
+    revision 2017-10-30 {
       description "Initial revision.";
       reference "RFC XXXX: IANA BFD YANG Data Types.";
     }
@@ -1229,7 +1229,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 22]
+Rahman, et al.             Expires May 3, 2018                 [Page 22]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1279,13 +1279,13 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.13.  BFD types YANG Module
 
- <CODE BEGINS> file "ietf-bfd-types@2017-10-29.yang"
+ <CODE BEGINS> file "ietf-bfd-types@2017-10-30.yang"
 
  module ietf-bfd-types {
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 23]
+Rahman, et al.             Expires May 3, 2018                 [Page 23]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1341,7 +1341,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 24]
+Rahman, et al.             Expires May 3, 2018                 [Page 24]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1349,7 +1349,7 @@ Internet-Draft                  BFD YANG                    October 2017
       This version of this YANG module is part of RFC XXXX; see
       the RFC itself for full legal notices.";
 
-   revision 2017-10-29 {
+   revision 2017-10-30 {
      description "Initial revision.";
      reference "RFC XXXX: A YANG data model for BFD";
    }
@@ -1397,7 +1397,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 25]
+Rahman, et al.             Expires May 3, 2018                 [Page 25]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1453,7 +1453,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 26]
+Rahman, et al.             Expires May 3, 2018                 [Page 26]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1509,7 +1509,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 27]
+Rahman, et al.             Expires May 3, 2018                 [Page 27]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1565,7 +1565,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 28]
+Rahman, et al.             Expires May 3, 2018                 [Page 28]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1621,7 +1621,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 29]
+Rahman, et al.             Expires May 3, 2018                 [Page 29]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1677,7 +1677,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 30]
+Rahman, et al.             Expires May 3, 2018                 [Page 30]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1733,7 +1733,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 31]
+Rahman, et al.             Expires May 3, 2018                 [Page 31]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1789,7 +1789,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 32]
+Rahman, et al.             Expires May 3, 2018                 [Page 32]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1845,7 +1845,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 33]
+Rahman, et al.             Expires May 3, 2018                 [Page 33]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1901,7 +1901,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 34]
+Rahman, et al.             Expires May 3, 2018                 [Page 34]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1934,7 +1934,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.14.  BFD top-level YANG Module
 
-   <CODE BEGINS> file "ietf-bfd@2017-10-29.yang"
+   <CODE BEGINS> file "ietf-bfd@2017-10-30.yang"
 
    module ietf-bfd {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
@@ -1957,7 +1957,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 35]
+Rahman, et al.             Expires May 3, 2018                 [Page 35]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -1983,7 +1983,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD";
      }
@@ -2013,14 +2013,14 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 36]
+Rahman, et al.             Expires May 3, 2018                 [Page 36]
 
 Internet-Draft                  BFD YANG                    October 2017
 
 
 2.15.  BFD IP single-hop YANG Module
 
-   <CODE BEGINS> file "ietf-bfd-ip-sh@2017-10-29.yang"
+   <CODE BEGINS> file "ietf-bfd-ip-sh@2017-10-30.yang"
 
    module ietf-bfd-ip-sh {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh";
@@ -2069,7 +2069,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 37]
+Rahman, et al.             Expires May 3, 2018                 [Page 37]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2082,7 +2082,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD IP single-hop";
      }
@@ -2125,7 +2125,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 38]
+Rahman, et al.             Expires May 3, 2018                 [Page 38]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2155,7 +2155,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.16.  BFD IP multi-hop YANG Module
 
-<CODE BEGINS> file "ietf-bfd-ip-mh@2017-10-29.yang"
+<CODE BEGINS> file "ietf-bfd-ip-mh@2017-10-30.yang"
 
 module ietf-bfd-ip-mh {
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-ip-mh";
@@ -2181,7 +2181,7 @@ module ietf-bfd-ip-mh {
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 39]
+Rahman, et al.             Expires May 3, 2018                 [Page 39]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2213,7 +2213,7 @@ Internet-Draft                  BFD YANG                    October 2017
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-10-29 {
+  revision 2017-10-30 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multi-hop";
   }
@@ -2237,7 +2237,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 40]
+Rahman, et al.             Expires May 3, 2018                 [Page 40]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2293,7 +2293,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 41]
+Rahman, et al.             Expires May 3, 2018                 [Page 41]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2302,7 +2302,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.17.  BFD over LAG YANG Module
 
-   <CODE BEGINS> file "ietf-bfd-lag@2017-10-29.yang"
+   <CODE BEGINS> file "ietf-bfd-lag@2017-10-30.yang"
 
    module ietf-bfd-lag {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-lag";
@@ -2349,7 +2349,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 42]
+Rahman, et al.             Expires May 3, 2018                 [Page 42]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2364,7 +2364,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over LAG";
      }
@@ -2405,7 +2405,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 43]
+Rahman, et al.             Expires May 3, 2018                 [Page 43]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2461,7 +2461,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 44]
+Rahman, et al.             Expires May 3, 2018                 [Page 44]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2487,7 +2487,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.18.  BFD over MPLS YANG Module
 
-   <CODE BEGINS> file "ietf-bfd-mpls@2017-10-29.yang"
+   <CODE BEGINS> file "ietf-bfd-mpls@2017-10-30.yang"
 
    module ietf-bfd-mpls {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls";
@@ -2517,7 +2517,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 45]
+Rahman, et al.             Expires May 3, 2018                 [Page 45]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2545,7 +2545,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
      }
@@ -2573,7 +2573,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 46]
+Rahman, et al.             Expires May 3, 2018                 [Page 46]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2629,7 +2629,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 47]
+Rahman, et al.             Expires May 3, 2018                 [Page 47]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2669,7 +2669,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 2.19.  BFD over MPLS-TE YANG Module
 
-   <CODE BEGINS> file "ietf-bfd-mpls-te@2017-10-29.yang"
+   <CODE BEGINS> file "ietf-bfd-mpls-te@2017-10-30.yang"
 
    module ietf-bfd-mpls-te {
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te";
@@ -2685,7 +2685,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 48]
+Rahman, et al.             Expires May 3, 2018                 [Page 48]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2731,7 +2731,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
      }
@@ -2741,7 +2741,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 49]
+Rahman, et al.             Expires May 3, 2018                 [Page 49]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2772,7 +2772,7 @@ Internet-Draft                  BFD YANG                    October 2017
        }
      }
 
-     augment "/te:te/te:tunnels/te:tunnel/te:config" {
+     augment "/te:te/te:tunnels/te:tunnel" {
        description "BFD configuration on MPLS-TE tunnel.";
 
        uses bfd-types:common-cfg-parms;
@@ -2797,7 +2797,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 50]
+Rahman, et al.             Expires May 3, 2018                 [Page 50]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2853,7 +2853,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 51]
+Rahman, et al.             Expires May 3, 2018                 [Page 51]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2909,7 +2909,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 52]
+Rahman, et al.             Expires May 3, 2018                 [Page 52]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -2965,7 +2965,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 53]
+Rahman, et al.             Expires May 3, 2018                 [Page 53]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3021,7 +3021,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 54]
+Rahman, et al.             Expires May 3, 2018                 [Page 54]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3077,7 +3077,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 55]
+Rahman, et al.             Expires May 3, 2018                 [Page 55]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3134,7 +3134,7 @@ module example-bfd-echo {
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 56]
+Rahman, et al.             Expires May 3, 2018                 [Page 56]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3163,7 +3163,7 @@ Internet-Draft                  BFD YANG                    October 2017
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2017-10-29 {
+  revision 2017-10-30 {
     description "Initial revision.";
     reference
       "RFC XXXX: A YANG data model example augmentation for BFD echo
@@ -3190,7 +3190,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 57]
+Rahman, et al.             Expires May 3, 2018                 [Page 57]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3246,7 +3246,7 @@ Appendix B.  BFD client configuration example
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 58]
+Rahman, et al.             Expires May 3, 2018                 [Page 58]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3302,7 +3302,7 @@ B.1.  Example YANG module for BFD client
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 59]
+Rahman, et al.             Expires May 3, 2018                 [Page 59]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3326,7 +3326,7 @@ Internet-Draft                  BFD YANG                    October 2017
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2017-10-29 {
+     revision 2017-10-30 {
        description "Initial revision.";
        reference
          "RFC XXXX: A YANG data model example for BFD client.";
@@ -3358,7 +3358,7 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-Rahman, et al.             Expires May 2, 2018                 [Page 60]
+Rahman, et al.             Expires May 3, 2018                 [Page 60]
 
 Internet-Draft                  BFD YANG                    October 2017
 
@@ -3392,6 +3392,8 @@ C.1.  Changes between versions -06 and -07
    o  Grouping for BFD clients to have BFD multiplier and interval
       values.
 
+   o  Change in ietf-bfd-mpls-te since MPLS-TE model changed.
+
    o  Removed bfd- prefix from many names.
 
 C.2.  Changes between versions -05 and -06
@@ -3409,15 +3411,15 @@ C.3.  Changes between versions -04 and -05
    o  "bfd" node in augment of control-plane-protocol as per A YANG Data
       Model for Routing Management [RFC8022].
 
-   o  Removed augment of network-instance.  Replaced by schema-mount.
 
 
 
-
-Rahman, et al.             Expires May 2, 2018                 [Page 61]
+Rahman, et al.             Expires May 3, 2018                 [Page 61]
 
 Internet-Draft                  BFD YANG                    October 2017
 
+
+   o  Removed augment of network-instance.  Replaced by schema-mount.
 
    o  Added information on interaction with other YANG modules.
 
@@ -3461,18 +3463,23 @@ Authors' Addresses
    Email: rrahman@cisco.com
 
 
+
+
+
+
+
+
+
+Rahman, et al.             Expires May 3, 2018                 [Page 62]
+
+Internet-Draft                  BFD YANG                    October 2017
+
+
    Lianshu Zheng (editor)
    Huawei Technologies
    China
 
    Email: vero.zheng@huawei.com
-
-
-
-
-Rahman, et al.             Expires May 2, 2018                 [Page 62]
-
-Internet-Draft                  BFD YANG                    October 2017
 
 
    Mahesh Jethanandani (editor)
@@ -3519,11 +3526,4 @@ Internet-Draft                  BFD YANG                    October 2017
 
 
 
-
-
-
-
-
-
-
-Rahman, et al.             Expires May 2, 2018                 [Page 63]
+Rahman, et al.             Expires May 3, 2018                 [Page 63]
