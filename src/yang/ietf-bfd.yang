@@ -48,7 +48,7 @@ module ietf-bfd {
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol" {
-     when "rt:type = 'bfd:bfdv1'" {
+     when "rt:type = 'bfd-types:bfdv1'" {
       description
         "This augmentation is only valid for a control-plane protocol
          instance of BFD (type 'bfdv1').";

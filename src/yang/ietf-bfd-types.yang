@@ -245,21 +245,21 @@ module ietf-bfd-types {
   }
 
   grouping client-cfg-parms {
-    description 
+    description
       "BFD grouping for config parameters
        used by clients of BFD, e.g. IGP or MPLS";
-    
+
     leaf enable {
       type boolean;
       default false;
-      description 
+      description
         "Indicates whether the BFD is enabled.";
     }
-    uses base-cfg-parms;    
+    uses base-cfg-parms;
   }
 
   grouping common-cfg-parms {
-    description 
+    description
       "BFD grouping for common config parameters";
 
     uses base-cfg-parms;
@@ -268,7 +268,7 @@ module ietf-bfd-types {
       if-feature demand-mode;
       type boolean;
       default false;
-      description 
+      description
         "To enable demand mode";
     }
 
@@ -415,7 +415,7 @@ module ietf-bfd-types {
         description "Detection time";
       }
       leaf echo-tx-interval-in-use {
-        when "../../path-type = 'path-ip-sh'" {
+        when "../../path-type = 'bfd-types:path-ip-sh'" {
           description
             "Echo is supported for IP single-hop only.";
         }

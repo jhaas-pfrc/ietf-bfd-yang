@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="27" month="October" year="2017"/>
+    <date day="29" month="October" year="2017"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
