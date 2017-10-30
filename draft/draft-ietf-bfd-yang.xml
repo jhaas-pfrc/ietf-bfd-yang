@@ -202,8 +202,7 @@
       Management Datastore Architecture" (NMDA) guidelines described in <xref
       target="I-D.dsdt-nmda-guidelines"/>. This means that the data models do
       NOT have separate top-level or sibling containers for configuration and
-      operational data. One exception at the moment is the model for MPLS-TE
-      in <xref target="BFD-MPLS-TE-CFG"/></t>
+      operational data.</t>
 
       <section title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified

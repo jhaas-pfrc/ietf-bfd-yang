@@ -202,8 +202,7 @@
       Management Datastore Architecture" (NMDA) guidelines described in <xref
       target="I-D.dsdt-nmda-guidelines"/>. This means that the data models do
       NOT have separate top-level or sibling containers for configuration and
-      operational data. One exception at the moment is the model for MPLS-TE
-      in <xref target="BFD-MPLS-TE-CFG"/></t>
+      operational data.</t>
 
       <section title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified
@@ -877,25 +876,23 @@ module: ietf-bfd-mpls-te
   augment /rt:routing/rt:control-plane-protocols/rt:control-plane-proto
 col/bfd:bfd:
     +--rw mpls-te
-       +--rw config
-       |  +--rw egress
-       |     +--rw enable?                     boolean
-       |     +--rw local-multiplier?           multiplier
-       |     +--rw (interval-config-type)?
-       |     |  +--:(tx-rx-intervals)
-       |     |  |  +--rw desired-min-tx-interval     uint32
-       |     |  |  +--rw required-min-rx-interval    uint32
-       |     |  +--:(single-interval)
-       |     |     +--rw min-interval                uint32
-       |     +--rw authentication-parms! {authentication}?
-       |        +--rw key-chain?           kc:key-chain-ref
-       |        +--rw replay-protection?   identityref
-       +--ro oper
-          +--ro session-statistics
-             +--ro session-count?              uint32
-             +--ro session-up-count?           uint32
-             +--ro session-down-count?         uint32
-             +--ro session-admin-down-count?   uint32
+       +--rw egress
+       |  +--rw enable?                     boolean
+       |  +--rw local-multiplier?           multiplier
+       |  +--rw (interval-config-type)?
+       |  |  +--:(tx-rx-intervals)
+       |  |  |  +--rw desired-min-tx-interval     uint32
+       |  |  |  +--rw required-min-rx-interval    uint32
+       |  |  +--:(single-interval)
+       |  |     +--rw min-interval                uint32
+       |  +--rw authentication-parms! {authentication}?
+       |     +--rw key-chain?           kc:key-chain-ref
+       |     +--rw replay-protection?   identityref
+       +--ro session-statistics
+          +--ro session-count?              uint32
+          +--ro session-up-count?           uint32
+          +--ro session-down-count?         uint32
+          +--ro session-admin-down-count?   uint32
   augment /te:te/te:tunnels/te:tunnel:
     +--rw local-multiplier?           multiplier
     +--rw (interval-config-type)?
@@ -2465,23 +2462,15 @@ module ietf-bfd-mpls-te {
     container mpls-te {
       description "BFD MPLS-TE top level container";
 
-      container config {
-        description "BFD MPLS-TE configuration container";
+      container egress {
+        description "Egress configuration";
 
-        container egress {
-          description "Egress configuration";
+        uses bfd-types:client-cfg-parms;
 
-          uses bfd-types:client-cfg-parms;
-
-          uses bfd-types:auth-parms;
-        }
+        uses bfd-types:auth-parms;
       }
 
-      container oper {
-        config "false";
-        description "BFD operational container";
-        uses bfd-types:session-statistics;
-      }
+      uses bfd-types:session-statistics;
     }
   }
 

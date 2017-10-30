@@ -64,23 +64,15 @@ module ietf-bfd-mpls-te {
     container mpls-te {
       description "BFD MPLS-TE top level container";
 
-      container config {
-        description "BFD MPLS-TE configuration container";
+      container egress {
+        description "Egress configuration";
 
-        container egress {
-          description "Egress configuration";
+        uses bfd-types:client-cfg-parms;
 
-          uses bfd-types:client-cfg-parms;
-
-          uses bfd-types:auth-parms;
-        }
+        uses bfd-types:auth-parms;
       }
 
-      container oper {
-        config "false";
-        description "BFD operational container";
-        uses bfd-types:session-statistics;
-      }
+      uses bfd-types:session-statistics;
     }
   }
 
