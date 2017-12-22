@@ -218,7 +218,7 @@ module ietf-bfd-types {
         leaf desired-min-tx-interval {
           type uint32;
           units microseconds;
-          mandatory true;
+          default 1000000;
           description
             "Desired minimum transmit interval of control packets";
         }
@@ -226,7 +226,7 @@ module ietf-bfd-types {
         leaf required-min-rx-interval {
           type uint32;
           units microseconds;
-          mandatory true;
+          default 1000000;
           description
             "Required minimum receive interval of control packets";
         }
@@ -235,7 +235,7 @@ module ietf-bfd-types {
         leaf min-interval {
           type uint32;
           units microseconds;
-          mandatory true;
+          default 1000000;
           description
             "Desired minimum transmit interval and required " +
             "minimum receive interval of control packets";

@@ -20,12 +20,12 @@ draft_type := $(suffix $(firstword $(wildcard $(draft).md $(draft).org $(draft).
 
 current_ver := $(shell git tag | grep '$(draft)-[0-9][0-9]' | tail -1 | sed -e"s/.*-//")
 ifeq "${current_ver}" ""
-next_ver ?= 07
+next_ver ?= 08
 else
 next_ver ?= $(shell printf "%.2d" $$((1$(current_ver)-99)))
 endif
-#Hardcoding 07 for now
-next_ver := 07
+#Hardcoding 08 for now
+next_ver := 08
 next := $(draft)-$(next_ver)
 
 .PHONY: latest submit clean

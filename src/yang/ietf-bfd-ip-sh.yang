@@ -87,6 +87,17 @@ module ietf-bfd-ip-sh {
 
         uses bfd-types:all-session;
       }
+      list interfaces {
+        key "interface";
+        description "List of interfaces";
+        leaf interface {
+          type if:interface-ref;
+          description
+            "BFD information for this interface.";
+        }
+
+        uses bfd-types:auth-parms;
+      }
     }
   }
 
