@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-07.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-08.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="22" month="December" year="2017"/>
+    <date day="11" month="January" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -204,7 +204,7 @@
       NOT have separate top-level or sibling containers for configuration and
       operational data.</t>
 
-      <section title="Design of Configuration Model">
+      <section anchor="CFG-MODEL" title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified
         in <xref target="RFC5880">BFD</xref>. Some examples are desired
         minimum transmit interval, required minimum receive interval,
@@ -229,8 +229,10 @@
         would first have to determine the peer addresses. And when a new peer is discovered, 
         BFD configuration would need to be added. To avoid this issue, we define grouping client-cfg-parms 
         in <xref target="BFD-TYPES"/> for BFD clients to configure BFD: this allows BFD clients such as the IGPs
-        to have configuration (multipler and intervals) for the BFD sessions they need. 
+        to have configuration (multiplier and intervals) for the BFD sessions they need. 
         The mechanism how the BFD sessions are created by the BFD clients is outside the scope of this document.
+        For BFD clients which create BFD sessions via their own configuration, authentication parameters (if required)
+        are still specified in BFD.
         </t>
 
         <section anchor="BFD-COMMON-CFG"
@@ -256,16 +258,15 @@
           there is a choice between "min-interval", used for both transmit and
           receive intervals, and "desired-min-tx-interval" and
           "required-min-rx-interval". This is supported via a grouping which
-          is used by the YANG modules for the various forwarding paths. For
-          BFD authentication we have: <list hangIndent="8" style="hanging">
+          is used by the YANG modules for the various forwarding paths.</t>
+          <t>For BFD authentication we have: <list hangIndent="8" style="hanging">
               <t hangText="key-chain"><vspace/>This is a reference to
               key-chain defined in <xref target="RFC8177">YANG Data Model for
-              Key Chains </xref>. The keys, cryptographic algotihms, key
+              Key Chains </xref>. The keys, cryptographic algorithms, key
               lifetime etc are all defined in the key-chain model.</t>
 
-              <t hangText="replay-protection"><vspace/>This specifies
-              meticulous v/s non-meticulous mode as per <xref
-              target="RFC5880">BFD </xref>.</t>
+              <t hangText="meticulous"><vspace/>This enables 
+              meticulous mode as per <xref target="RFC5880">BFD </xref>.</t>
             </list></t>
         </section>
 
@@ -275,7 +276,9 @@
           single-hop sessions where each session is uniquely identified by the
           interface and destination address pair. For the configuration
           parameters we use what is defined in <xref
-          target="BFD-COMMON-CFG"/></t>
+          target="BFD-COMMON-CFG"/>. The "ip-sh" node also contains a list of
+          interfaces, this is used to specify authentication parameters for BFD sessions
+          which are created by BFD clients, see <xref target="CFG-MODEL"/>.</t>
 
           <t><xref target="RFC5880"/> and <xref target="RFC5881"/> do not
           specify whether echo function is continuous or on demand. Therefore
@@ -396,7 +399,7 @@
         of the session, e.g. when the session transitioned up/down and how
         long it has been in that state.</t>
 
-        <t>For some session types, there may be more than 1 session on the
+        <t>For some path types, there may be more than 1 session on the
         virtual path to the destination. For example, with IP multi-hop and
         MPLS LSPs, there could be multiple BFD sessions from the source to the
         same destination to test the various paths (ECMP) to the destination.
@@ -921,6 +924,16 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -07 and -08">
+        <t><list style="symbols">
+            <t>Timer intervals in client-cfg-parms are not mandatory anymore.</t>
+
+            <t>Added list of interfaces under "ip-sh" node for authentication parameters.</t>
+            
+            <t>Renamed replay-protection to meticulous.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -06 and -07">
         <t><list style="symbols">

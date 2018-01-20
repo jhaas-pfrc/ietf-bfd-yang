@@ -113,7 +113,7 @@ module ietf-bfd-types {
    */
   identity path-type {
     description
-      "Base identity for BFD path type. The session type indicates
+      "Base identity for BFD path type. The path type indicates
        the type of path on which BFD is running";
   }
   identity path-ip-sh {
@@ -146,26 +146,12 @@ module ietf-bfd-types {
     description "BFD with IP encapsulation.";
   }
 
-  identity auth-replay-protection {
-    description
-      "Base identity for BFD authentication replay protection. " +
-      "See section 6.7 of RFC5880.";
-  }
-  identity auth-replay-protection-non-meticulous {
-    base auth-replay-protection;
-    description "Non-meticulous (see section 6.7.3 of RFC5880)";
-  }
-  identity auth-replay-protection-meticulous {
-    base auth-replay-protection;
-    description "Meticulous (see section 6.7.3 of RFC5880)";
-  }
-
   /*
    * Feature definitions.
    */
   feature authentication {
-	  description "BFD authentication supported";
-	}
+    description "BFD authentication supported";
+  }
 
   feature demand-mode {
     description "BFD demand mode supported";
@@ -193,12 +179,11 @@ module ietf-bfd-types {
         description "Name of key-chain";
       }
 
-      leaf replay-protection {
-        type identityref {
-          base auth-replay-protection;
-        }
+      leaf meticulous {
+        type boolean;
         description
-          "Protection against replays";
+          "Enables meticulous mode as described in section 6.7 " +
+          "of RFC5880";
       }
     }
   }
@@ -289,7 +274,7 @@ module ietf-bfd-types {
       }
       config "false";
       description
-        "BFD session type, this indicates the path type that BFD is
+        "BFD path type, this indicates the path type that BFD is
         running on";
     }
     leaf ip-encapsulation {
