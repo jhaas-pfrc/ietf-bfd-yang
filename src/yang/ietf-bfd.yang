@@ -1,4 +1,7 @@
 module ietf-bfd {
+
+  yang-version 1.1;
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd";
 
   prefix "bfd";
@@ -9,6 +12,7 @@ module ietf-bfd {
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC 8022";
   }
 
   organization "IETF BFD Working Group";
@@ -23,7 +27,7 @@ module ietf-bfd {
 
   description
     "This module contains the YANG definition for BFD parameters as
-     per RFC5880.
+     per RFC 5880.
 
      Copyright (c) 2017 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
@@ -38,13 +42,15 @@ module ietf-bfd {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  reference "RFC XXXX";
+
   revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
-
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol" {
@@ -56,7 +62,7 @@ module ietf-bfd {
     description "BFD augmentation.";
 
     container bfd {
-      description "BFD top level container";
+      description "BFD top level container.";
 
       uses bfd-types:session-statistics;
     }

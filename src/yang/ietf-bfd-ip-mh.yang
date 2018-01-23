@@ -1,6 +1,9 @@
 module ietf-bfd-ip-mh {
+
+  yang-version 1.1;
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-ip-mh";
-  // replace with IANA namespace when assigned
+
   prefix "bfd-ip-mh";
 
   import ietf-bfd-types {
@@ -13,10 +16,12 @@ module ietf-bfd-ip-mh {
 
   import ietf-inet-types {
     prefix "inet";
+    reference "RFC 6991";
   }
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC 8022";
   }
 
   organization "IETF BFD Working Group";
@@ -31,9 +36,9 @@ module ietf-bfd-ip-mh {
 
   description
     "This module contains the YANG definition for BFD IP multi-hop
-     as per RFC5883.
+     as per RFC 5883.
 
-     Copyright (c) 2017 IETF Trust and the persons
+     Copyright (c) 2018 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -46,26 +51,31 @@ module ietf-bfd-ip-mh {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision YYYY-MM-DD {
-    description "Initial revision.";
-    reference "RFC XXXX: A YANG data model for BFD IP multi-hop";
-  }
-
   // RFC Ed.: replace XXXX with actual RFC number and remove this
   // note
 
+  reference "RFC XXXX";
+
+  revision YYYY-MM-DD {
+    description "Initial revision.";
+    reference "RFC XXXX: A YANG data model for BFD IP multihop.";
+  }
+
+  /* 
+   * Augments 
+   */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
-    description "BFD augmentation for IP multi-hop";
+    description "BFD augmentation for IP multihop.";
     container ip-mh {
-      description "BFD IP multi-hop top level container";
+      description "BFD IP multihop top level container.";
 
       uses bfd-types:session-statistics;
 
       list session-group {
         key "source-addr dest-addr";
-	      description
-	        "Group of BFD IP multi-hop sessions (for ECMP). A " +
+        description
+          "Group of BFD IP multi-hop sessions (for ECMP). A " +
           "group of sessions is between 1 source and 1  " +
           "destination, each session has a different field " +
           "in UDP/IP hdr for ECMP.";
@@ -73,19 +83,19 @@ module ietf-bfd-ip-mh {
         leaf source-addr {
           type inet:ip-address;
           description
-            "Local IP address";
+            "Local IP address.";
         }
         leaf dest-addr {
           type inet:ip-address;
           description
-            "IP address of the peer";
+            "IP address of the peer.";
         }
         uses bfd-types:common-cfg-parms;
 
         leaf tx-ttl {
           type bfd-types:hops;
           default 255;
-          description "Hop count of outgoing BFD control packets";
+          description "Hop count of outgoing BFD control packets.";
         }
         leaf rx-ttl {
           type bfd-types:hops;
@@ -93,10 +103,10 @@ module ietf-bfd-ip-mh {
           description
             "Minimum allowed hop count value for incoming BFD control
              packets. Control packets whose hop count is lower than this
-	           value are dropped.";
+             value are dropped.";
         }
         list sessions {
-	        config false;
+          config false;
           description
             "The multiple BFD sessions between a source and a " +
             "destination.";
@@ -106,6 +116,9 @@ module ietf-bfd-ip-mh {
     }
   }
 
+  /* 
+   * Notifications 
+   */
   notification multihop-notification {
     description
       "Notification for BFD multi-hop session state change. An " +

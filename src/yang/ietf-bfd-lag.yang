@@ -1,6 +1,9 @@
 module ietf-bfd-lag {
+
+  yang-version 1.1;
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-lag";
-  // replace with IANA namespace when assigned
+
   prefix "bfd-lag";
 
   import ietf-bfd-types {
@@ -13,14 +16,17 @@ module ietf-bfd-lag {
 
   import ietf-interfaces {
     prefix "if";
+    reference "RFC 7223";
   }
 
   import ietf-inet-types {
     prefix "inet";
+    reference "RFC 6991";
   }
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC 8022";
   }
 
   organization "IETF BFD Working Group";
@@ -37,7 +43,7 @@ module ietf-bfd-lag {
     "This module contains the YANG definition for BFD over LAG
      interfaces as per RFC7130.
 
-     Copyright (c) 2017 IETF Trust and the persons
+     Copyright (c) 2018 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -50,14 +56,19 @@ module ietf-bfd-lag {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  reference "RFC XXXX";
+
   revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
 
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
-
+  /* 
+   * Augments 
+   */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
     description "BFD augmentation for LAG";
@@ -65,17 +76,17 @@ module ietf-bfd-lag {
       description "BFD over LAG top level container";
 
       container micro-bfd-ipv4-session-statistics {
-        description "Micro-BFD IPv4 session counters";
+        description "Micro-BFD IPv4 session counters.";
         uses bfd-types:session-statistics;
       }
       container micro-bfd-ipv6-session-statistics {
-        description "Micro-BFD IPv6 session counters";
+        description "Micro-BFD IPv6 session counters.";
         uses bfd-types:session-statistics;
       }
 
       list sessions {
         key "lag-name";
-        description "A LAG interface on which BFD is running";
+        description "A LAG interface on which BFD is running.";
         leaf lag-name {
           type if:interface-ref ;
           description "Name of the LAG";
@@ -103,21 +114,21 @@ module ietf-bfd-lag {
 
         list member-links {
           key "member-link";
-	  config false;
+          config false;
           description
-            "Micro-BFD over LAG. This represents one member link";
+            "Micro-BFD over LAG. This represents one member link.";
 
           leaf member-link {
             type if:interface-ref;
             description
-              "Member link on which micro-BFD is running";
+              "Member link on which micro-BFD is running.";
           }
           container micro-bfd-ipv4 {
             when "../../use-ipv4 = 'true'" {
               description "Needed only if IPv4 is used.";
             }
             description
-              "Micro-BFD IPv4 session state on member link";
+              "Micro-BFD IPv4 session state on member link.";
             uses bfd-types:all-session;
           }
           container micro-bfd-ipv6 {
@@ -125,7 +136,7 @@ module ietf-bfd-lag {
               description "Needed only if IPv6 is used.";
             }
             description
-              "Micro-BFD IPv6 session state on member link";
+              "Micro-BFD IPv6 session state on member link.";
             uses bfd-types:all-session;
           }
         }
@@ -133,6 +144,9 @@ module ietf-bfd-lag {
     }
   }
 
+  /* 
+   * Notifications 
+   */
   notification lag-notification {
     description
       "Notification for BFD over LAG session state change. " +
@@ -143,12 +157,12 @@ module ietf-bfd-lag {
 
     leaf lag-name {
       type if:interface-ref;
-      description "LAG interface name";
+      description "LAG interface name.";
     }
 
     leaf member-link {
       type if:interface-ref;
-      description "Member link on which BFD is running";
+      description "Member link on which BFD is running.";
     }
   }
 }

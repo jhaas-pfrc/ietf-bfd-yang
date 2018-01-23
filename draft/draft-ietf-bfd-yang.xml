@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-08.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-09.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -54,8 +54,6 @@
 
     <author fullname="Mahesh Jethanandani" initials="M." role="editor"
             surname="Jethanandani">
-      <organization>Cisco Systems</organization>
-
       <address>
         <postal>
           <street/>
@@ -111,7 +109,7 @@
       </address>
     </author>
 
-    <date day="11" month="January" year="2018"/>
+    <date day="22" month="January" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -194,8 +192,8 @@
         </list> The approach taken is to do a schema-mount (see <xref
       target="I-D.ietf-netmod-schema-mount">Schema Mount</xref>) of the BFD
       model in the appropriate locations. For example, if an implementation
-      supports BFD IP multi-hop in network instances, the implementation would
-      do schema-mount of the BFD IP multi-hop model in a mount-point which
+      supports BFD IP multihop in network instances, the implementation would
+      do schema-mount of the BFD IP multihop model in a mount-point which
       resides in a network instance.</t>
 
       <t>The data models in this document strive to follow the "Network
@@ -292,11 +290,11 @@
             </list></t>
         </section>
 
-        <section title="Multi-hop IP">
-          <t>For multi-hop IP, there is an augment of the "bfd" data node in
+        <section title="Multihop IP">
+          <t>For multihop IP, there is an augment of the "bfd" data node in
           <xref target="DESIGN-DATA"/>.</t>
 
-          <t>Because of multiple paths, there could be multiple multi-hop IP
+          <t>Because of multiple paths, there could be multiple multihop IP
           sessions between a source and a destination address. We identify
           this as a "session-group". The key for each "session-group" consists
           of: <list hangIndent="8" style="hanging">
@@ -400,7 +398,7 @@
         long it has been in that state.</t>
 
         <t>For some path types, there may be more than 1 session on the
-        virtual path to the destination. For example, with IP multi-hop and
+        virtual path to the destination. For example, with IP multihop and
         MPLS LSPs, there could be multiple BFD sessions from the source to the
         same destination to test the various paths (ECMP) to the destination.
         This is represented by having multiple "sessions" under each
@@ -456,11 +454,11 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD-tree.txt)
         </figure>
       </section>
 
-      <section title="BFD IP multi-hop hierarchy">
+      <section title="BFD IP multihop hierarchy">
         <t>An "ip-mh" node is added under the "bfd" node in
         cntrol-plane-protocol. The configuration and operational data for each
-        BFD IP multi-hop session is under this "ip-mh" node. In the
-        operational model we support multiple BFD multi-hop sessions per
+        BFD IP multihop session is under this "ip-mh" node. In the
+        operational model we support multiple BFD multihop sessions per
         remote address (ECMP), the local discriminator is used as key. The
         "ip-mh" node can be used in a network device (top-level), or mounted
         in an LNE or in a network instance.</t>
@@ -643,7 +641,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD.yang)
         </figure>
       </section>
 
-      <section title="BFD IP multi-hop YANG Module">
+      <section title="BFD IP multihop YANG Module">
         <figure align="left">
           <preamble/>
 
@@ -698,120 +696,144 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
         ]]></artwork>
         </figure>
       </section>
+    </section>
 
-      <section title="Security Considerations">
-        <t>The YANG module defined in this memo is designed to be accessed via
-        the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure
-        transport layer and the mandatory to implement secure transport is SSH
-        [RFC6242]. The NETCONF access control model [RFC6536] provides the
-        means to restrict access for particular NETCONF users to a
-        pre-configured subset of all available NETCONF protocol operations and
-        content.</t>
+    <section title="Data Model examples">
+       <t>This section presents some simple and illustrative examples on how to configure BFD.</t>
+       <section title="IP single-hop">
+          <t>The following is an example configuration for a BFD IP single-hop session. The desired transmit interval and the required receive interval are both set to 10ms.</t>
+         <figure align="left">
+           <preamble/>
+             <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(example-ip-sh.xml)
+                     ]]>
+             </artwork>
+         </figure>
+       </section>
+       
+       <section title="IP multihop">
+          <t>The following is an example configuration for a BFD IP multihop session group. The desired transmit interval and the required receive interval are both set to 150ms.</t>
+         <figure align="left">
+           <preamble/>
+             <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
+                     ]]>
+             </artwork>
+         </figure>
+       </section>
+    </section>
+    <section title="Security Considerations">
+      <t>The YANG module defined in this memo is designed to be accessed via
+      the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure
+      transport layer and the mandatory to implement secure transport is SSH
+      [RFC6242]. The NETCONF access control model [RFC6536] provides the
+      means to restrict access for particular NETCONF users to a
+      pre-configured subset of all available NETCONF protocol operations and
+      content.</t>
 
-        <t>The YANG module has writeable data nodes which can be used for
-        creation of BFD sessions and modification of BFD session parameters.
-        The system should "police" creation of BFD sessions to prevent new
-        sessions from causing existing BFD sessions to fail. For BFD session
-        modification, the BFD protocol has mechanisms in place which allow for
-        in service modification.</t>
+      <t>The YANG module has writeable data nodes which can be used for
+      creation of BFD sessions and modification of BFD session parameters.
+      The system should "police" creation of BFD sessions to prevent new
+      sessions from causing existing BFD sessions to fail. For BFD session
+      modification, the BFD protocol has mechanisms in place which allow for
+      in service modification.</t>
+    </section>
+
+    <section title="IANA Considerations">
+      <t>The IANA is requested to as assign a new namespace URI from the
+      IETF XML registry.</t>
+
+      <t>This document registers the following namesace URIs in the IETF XML
+      registry <xref target="RFC3688"/>:</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mh</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-lag</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <section title="IANA-Maintained iana-bfd-types module">
+        <t>This document defines the initial version of the IANA-maintained
+        iana-bfd-types YANG module.</t>
+
+        <t>The iana-bfd-types YANG module is intended to reflect the "BFD
+        Diagnostic Codes" registry and "BFD Authentication Types" registry
+        at
+        https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml</t>
       </section>
+    </section>
 
-      <section title="IANA Considerations">
-        <t>The IANA is requested to as assign a new namespace URI from the
-        IETF XML registry.</t>
-
-        <t>This document registers the following namesace URIs in the IETF XML
-        registry <xref target="RFC3688"/>:</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mh</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-lag</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t/>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te</t>
-
-        <t>Registrant Contact: The IESG.</t>
-
-        <t>XML: N/A, the requested URI is an XML namespace.</t>
-
-        <t>--------------------------------------------------------------------</t>
-
-        <section title="IANA-Maintained iana-bfd-types module">
-          <t>This document defines the initial version of the IANA-maintained
-          iana-bfd-types YANG module.</t>
-
-          <t>The iana-bfd-types YANG module is intended to reflect the "BFD
-          Diagnostic Codes" registry and "BFD Authentication Types" registry
-          at
-          https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml</t>
-        </section>
-      </section>
-
-      <section title="Acknowledgements">
-        <t>We would also like to thank Nobo Akiya and Jeff Haas for their
-        encouragement on this work. We would also like to thank Rakesh Gandhi
-        and Tarek Saad for their help on the MPLS-TE model. We would also like
-        to thank Acee Lindem for his guidance.</t>
-      </section>
+    <section title="Acknowledgements">
+      <t>We would also like to thank Nobo Akiya and Jeff Haas for their
+      encouragement on this work. We would also like to thank Rakesh Gandhi
+      and Tarek Saad for their help on the MPLS-TE model. We would also like
+      to thank Acee Lindem for his guidance.</t>
     </section>
   </middle>
 
@@ -831,23 +853,26 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
 
       <?rfc include='reference.RFC.5884'?>
 
-      <?rfc include='reference.RFC.7130'?>
-
       <?rfc include='reference.RFC.5885'?>
 
       <?rfc include='reference.RFC.5586'?>
+
+      <?rfc include='reference.RFC.6991'?>
+
+      <?rfc include='reference.RFC.7130'?>
 
       <?rfc include='reference.RFC.8022'?>
 
       <?rfc include='reference.RFC.7223'?>
 
       <?rfc include='reference.RFC.7277'?>
+
+      <?rfc include="reference.RFC.8177"?>
     </references>
 
     <references title="Informative References">
       <?rfc include="reference.I-D.ietf-rtgwg-ni-model"?>
 
-      <?rfc include="reference.RFC.8177"?>
 
       <?rfc include="reference.I-D.ietf-teas-yang-te"?>
 
@@ -924,6 +949,19 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -08 and -09">
+        <t><list style="symbols">
+            <t>Mostly cosmetic changes to abide by draft-ietf-netmod-rfc6087bis.</t>
+
+            <t>Specified yang-version 1.1.</t>
+
+            <t>Added data model examples.</t>
+            
+            <t>Some minor changes.</t>
+            
+          </list></t>
+      </section>
 
       <section title="Changes between versions -07 and -08">
         <t><list style="symbols">

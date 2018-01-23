@@ -1,6 +1,9 @@
 module ietf-bfd-mpls {
+
+  yang-version 1.1;
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls";
-  // replace with IANA namespace when assigned
+
   prefix "bfd-mpls";
 
   import ietf-bfd-types {
@@ -13,10 +16,12 @@ module ietf-bfd-mpls {
 
   import ietf-inet-types {
     prefix "inet";
+    reference "RFC 6991";
   }
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC 8022";
   }
 
   organization "IETF BFD Working Group";
@@ -31,9 +36,9 @@ module ietf-bfd-mpls {
 
   description
     "This module contains the YANG definition for BFD parameters for
-     MPLS LSPs as per RFC5884.
+     MPLS LSPs as per RFC 5884.
 
-     Copyright (c) 2017 IETF Trust and the persons
+     Copyright (c) 2018 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -46,26 +51,34 @@ module ietf-bfd-mpls {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  reference "RFC XXXX";
+
   revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
 
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
-
+  /*
+   * Identity definitions
+   */
   identity encap-gach {
     base bfd-types:encap-type;
     description
-      "BFD with G-ACh encapsulation as per RFC5586.";
+      "BFD with G-ACh encapsulation as per RFC 5586.";
   }
 
   identity encap-ip-gach {
     base bfd-types:encap-type;
     description
-      "BFD with IP and G-ACh encapsulation as per RFC5586.";
+      "BFD with IP and G-ACh encapsulation as per RFC 5586.";
   }
 
+  /*
+   * Groupings
+   */
   grouping encap-cfg {
     description "Configuration for BFD encapsulation";
 
@@ -79,28 +92,30 @@ module ietf-bfd-mpls {
   }
 
   grouping mpls-dest-address {
-    description "Destination address as per RFC5884";
+    description "Destination address as per RFC 5884.";
 
     leaf mpls-dest-address {
       type inet:ip-address;
       config "false";
       description
-        "Destination address as per RFC5884.
-         Needed if IP encapsulation is used";
+        "Destination address as per RFC 5884.
+         Needed if IP encapsulation is used.";
     }
   }
 
-
+  /* 
+   * Augments 
+   */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
-    description "BFD augmentation for MPLS";
+    description "BFD augmentation for MPLS.";
     container mpls {
-      description "BFD MPLS top level container";
+      description "BFD MPLS top level container.";
 
       uses bfd-types:session-statistics;
 
       container egress {
-        description "Egress configuration";
+        description "Egress configuration.";
 
         uses bfd-types:client-cfg-parms;
 
@@ -115,13 +130,13 @@ module ietf-bfd-mpls {
           "field in UDP/IP hdr for ECMP.";
         leaf mpls-fec {
           type inet:ip-prefix;
-          description "MPLS FEC";
+          description "MPLS FEC.";
         }
 
         uses bfd-types:common-cfg-parms;
 
         list sessions {
-	        config false;
+          config false;
           description
             "The BFD sessions for an MPLS FEC. Local " +
             "discriminator is unique for each session in the " +
@@ -134,6 +149,9 @@ module ietf-bfd-mpls {
     }
   }
 
+  /* 
+   * Notifications 
+   */
   notification mpls-notification {
     description
       "Notification for BFD over MPLS FEC session state change. " +
@@ -145,8 +163,8 @@ module ietf-bfd-mpls {
     leaf mpls-dest-address {
       type inet:ip-address;
       description
-        "Destination address as per RFC5884.
-         Needed if IP encapsulation is used";
+        "Destination address as per RFC 5884.
+         Needed if IP encapsulation is used.";
     }
   }
 }

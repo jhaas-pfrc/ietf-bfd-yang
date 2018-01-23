@@ -1,4 +1,7 @@
 module ietf-bfd-types {
+
+  yang-version 1.1;
+
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-types";
 
   prefix "bfd-types";
@@ -9,18 +12,22 @@ module ietf-bfd-types {
 
   import ietf-inet-types {
     prefix "inet";
+    reference "RFC 6991";
   }
 
   import ietf-yang-types {
     prefix "yang";
+    reference "RFC 6991";
   }
 
   import ietf-routing {
     prefix "rt";
+    reference "RFC 8022";
   }
 
   import ietf-key-chain {
     prefix "kc";
+    reference "RFC 8177";
   }
 
   organization "IETF BFD Working Group";
@@ -35,7 +42,7 @@ module ietf-bfd-types {
 
   description
     "This module contains a collection of BFD specific YANG data type
-     definitions, as per RFC5880.
+     definitions, as per RFC 5880.
 
      Copyright (c) 2017 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
@@ -50,24 +57,89 @@ module ietf-bfd-types {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
+  // RFC Ed.: replace XXXX with actual RFC number and remove this
+  // note
+
+  reference "RFC XXXX";
+
   revision YYYY-MM-DD {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD";
   }
 
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
-
-  identity bfdv1 {
-    base "rt:control-plane-protocol";
-    description "BFD protocol version 1 as per RFC5880.";
+  /*
+   * Feature definitions
+   */
+  feature authentication {
+    description 
+      "This feature indicates that the server supports BFD
+       authentication as defined in RFC 5880.";
   }
 
+  feature demand-mode {
+    description 
+      "This feature indicates that the server supports BFD demand mode
+       as defined in RFC 5880.";
+  }
+
+  feature echo-mode {
+    description 
+      "This feature indicates that the server supports BFD echo mode
+       as defined in RFC 5880.";
+  }
+
+  /*
+   * Identity definitions
+   */
+  identity bfdv1 {
+    base "rt:control-plane-protocol";
+    description "BFD protocol version 1 as per RFC 5880.";
+  }
+
+  identity path-type {
+    description
+      "Base identity for BFD path type. The path type indicates
+       the type of path on which BFD is running.";
+  }
+  identity path-ip-sh {
+    base path-type;
+    description "BFD on IP single hop as described in RFC 5881.";
+  }
+  identity path-ip-mh {
+    base path-type;
+    description "BFD on IP multihop paths as described in RFC 5883.";
+  }
+  identity path-mpls-te {
+    base path-type;
+    description 
+      "BFD on MPLS Traffic Engineering as described in RFC 5884.";
+  }
+  identity path-mpls-lsp {
+    base path-type;
+    description 
+      "BFD on MPLS Label Switched Path as described in RFC 5884.";
+  }
+  identity path-lag {
+    base path-type;
+    description 
+      "Micro-BFD on LAG member links as described in RFC 7130.";
+  }
+
+  identity encap-type {
+    description
+      "Base identity for BFD encapsulation type.";
+  }
+  identity encap-ip {
+    base encap-type;
+    description "BFD with IP encapsulation.";
+  }
+
+  /*
+   * Type Definitions
+   */
   typedef discriminator {
-    type uint32 {
-      range 1..4294967295;
-    }
-    description "BFD discriminator";
+    type uint32;
+    description "BFD discriminator as described in RFC 5880.";
   }
 
   typedef state {
@@ -89,14 +161,14 @@ module ietf-bfd-types {
         description "up";
       }
     }
-    description "BFD state as defined in RFC5880";
+    description "BFD state as defined in RFC 5880.";
   }
 
   typedef multiplier {
     type uint8 {
       range 1..255;
     }
-    description "Multiplier";
+    description "BFD multiplier as described in RFC 5880.";
   }
 
   typedef hops {
@@ -105,60 +177,7 @@ module ietf-bfd-types {
     }
     description
       "This corresponds to Time To Live for IPv4 and corresponds to hop
-       limit for IPv6";
-  }
-
-  /*
-   * Identity definitions
-   */
-  identity path-type {
-    description
-      "Base identity for BFD path type. The path type indicates
-       the type of path on which BFD is running";
-  }
-  identity path-ip-sh {
-    base path-type;
-    description "BFD on IP single hop";
-  }
-  identity path-ip-mh {
-    base path-type;
-    description "BFD on IP multi hop";
-  }
-  identity path-mpls-te {
-    base path-type;
-    description "BFD on MPLS Traffic Engineering";
-  }
-  identity path-mpls-lsp {
-    base path-type;
-    description "BFD on MPLS Label Switched Path";
-  }
-  identity path-lag {
-    base path-type;
-    description "Micro-BFD on LAG member links";
-  }
-
-  identity encap-type {
-    description
-      "Base identity for BFD encapsulation type.";
-  }
-  identity encap-ip {
-    base encap-type;
-    description "BFD with IP encapsulation.";
-  }
-
-  /*
-   * Feature definitions.
-   */
-  feature authentication {
-    description "BFD authentication supported";
-  }
-
-  feature demand-mode {
-    description "BFD demand mode supported";
-  }
-
-  feature echo-mode {
-    description "BFD echo mode supported";
+       limit for IPv6.";
   }
 
   /*
@@ -167,45 +186,46 @@ module ietf-bfd-types {
   grouping auth-parms {
     description
       "Grouping for BFD authentication parameters
-       (see section 6.7 of RFC5880).";
-    container authentication-parms {
+       (see section 6.7 of RFC 5880).";
+    container authentication {
       if-feature authentication;
       presence
-        "Enables BFD authentication (see section 6.7 of RFC5880).";
-      description "Parameters for BFD authentication";
+        "Enables BFD authentication (see section 6.7 of RFC 5880).";
+      description "Parameters for BFD authentication.";
 
       leaf key-chain {
         type kc:key-chain-ref;
-        description "Name of key-chain";
+        description "Name of the key-chain as per RFC 8177.";
       }
 
       leaf meticulous {
         type boolean;
         description
           "Enables meticulous mode as described in section 6.7 " +
-          "of RFC5880";
+          "of RFC 5880.";
       }
     }
   }
 
   grouping base-cfg-parms {
-    description "BFD grouping for base config parameters";
+    description "BFD grouping for base config parameters.";
     leaf local-multiplier {
       type multiplier;
       default 3;
-      description "Multiplier transmitted by local system";
+      description "Multiplier transmitted by local system.";
     }
 
     choice interval-config-type {
       description
-        "Two interval values or 1 value used for both tx and rx";
+        "Two interval values or 1 value used for both transmit and 
+         receive.";
       case tx-rx-intervals {
         leaf desired-min-tx-interval {
           type uint32;
           units microseconds;
           default 1000000;
           description
-            "Desired minimum transmit interval of control packets";
+            "Desired minimum transmit interval of control packets.";
         }
 
         leaf required-min-rx-interval {
@@ -213,7 +233,7 @@ module ietf-bfd-types {
           units microseconds;
           default 1000000;
           description
-            "Required minimum receive interval of control packets";
+            "Required minimum receive interval of control packets.";
         }
       }
       case single-interval {
@@ -223,7 +243,7 @@ module ietf-bfd-types {
           default 1000000;
           description
             "Desired minimum transmit interval and required " +
-            "minimum receive interval of control packets";
+            "minimum receive interval of control packets.";
         }
       }
     }
@@ -231,8 +251,8 @@ module ietf-bfd-types {
 
   grouping client-cfg-parms {
     description
-      "BFD grouping for config parameters
-       used by clients of BFD, e.g. IGP or MPLS";
+      "BFD grouping for configuration parameters
+       used by clients of BFD, e.g. IGP or MPLS.";
 
     leaf enable {
       type boolean;
@@ -245,7 +265,7 @@ module ietf-bfd-types {
 
   grouping common-cfg-parms {
     description
-      "BFD grouping for common config parameters";
+      "BFD grouping for common configuration parameters.";
 
     uses base-cfg-parms;
 
@@ -254,14 +274,14 @@ module ietf-bfd-types {
       type boolean;
       default false;
       description
-        "To enable demand mode";
+        "To enable demand mode.";
     }
 
     leaf admin-down {
       type boolean;
       default false;
       description
-        "Is the BFD session administratively down";
+        "Is the BFD session administratively down.";
     }
     uses auth-parms;
   }
@@ -275,38 +295,38 @@ module ietf-bfd-types {
       config "false";
       description
         "BFD path type, this indicates the path type that BFD is
-        running on";
+        running on.";
     }
     leaf ip-encapsulation {
       type boolean;
       config "false";
-      description "Whether BFD encapsulation uses IP";
+      description "Whether BFD encapsulation uses IP.";
     }
     leaf local-discriminator {
       type discriminator;
       config "false";
-      description "Local discriminator";
+      description "Local discriminator.";
     }
     leaf remote-discriminator {
       type discriminator;
       config "false";
-      description "Remote discriminator";
+      description "Remote discriminator.";
     }
     leaf remote-multiplier {
       type multiplier;
       config "false";
-      description "Remote multiplier";
+      description "Remote multiplier.";
     }
     leaf demand-capability {
       if-feature demand-mode;
       type boolean;
       config "false";
-      description "Local demand mode capability";
+      description "Local demand mode capability.";
     }
     leaf source-port {
       when "../ip-encapsulation = 'true'" {
         description
-          "Source port valid only when IP encapsulation is used";
+          "Source port valid only when IP encapsulation is used.";
       }
       type inet:port-number;
       config "false";
@@ -315,89 +335,89 @@ module ietf-bfd-types {
     leaf dest-port {
       when "../ip-encapsulation = 'true'" {
         description
-          "Destination port valid only when IP encapsulation is used";
+          "Destination port valid only when IP encapsulation is used.";
       }
       type inet:port-number;
       config "false";
-      description "Destination UDP port";
+      description "Destination UDP port.";
     }
 
     container session-running {
       config "false";
-      description "BFD session running information";
+      description "BFD session running information.";
       leaf session-index {
         type uint32;
         description
-          "An index used to uniquely identify BFD sessions";
+          "An index used to uniquely identify BFD sessions.";
       }
       leaf local-state {
         type state;
-        description "Local state";
+        description "Local state.";
       }
       leaf remote-state {
         type state;
-        description "Remote state";
+        description "Remote state.";
       }
       leaf local-diagnostic {
         type iana-bfd-types:diagnostic;
-        description "Local diagnostic";
+        description "Local diagnostic.";
       }
       leaf remote-diagnostic {
         type iana-bfd-types:diagnostic;
-        description "Remote diagnostic";
+        description "Remote diagnostic.";
       }
       leaf remote-authenticated {
         type boolean;
         description
           "Indicates whether incoming BFD control packets are
-          authenticated";
+          authenticated.";
       }
       leaf remote-authentication-type {
         when "../remote-authenticated = 'true'" {
           description
             "Only valid when incoming BFD control packets are
-             authenticated";
+             authenticated.";
         }
         if-feature authentication;
         type iana-bfd-types:auth-type;
         description
-          "Authentication type of incoming BFD control packets";
+          "Authentication type of incoming BFD control packets.";
       }
       leaf detection-mode {
         type enumeration {
           enum async-with-echo {
             value "1";
-            description "Async with echo";
+            description "Async with echo.";
           }
           enum async-without-echo {
             value "2";
-            description "Async without echo";
+            description "Async without echo.";
           }
           enum demand-with-echo {
             value "3";
-            description "Demand with echo";
+            description "Demand with echo.";
           }
           enum demand-without-echo {
             value "4";
-            description "Demand without echo";
+            description "Demand without echo.";
           }
         }
-        description "Detection mode";
+        description "Detection mode.";
       }
       leaf negotiated-tx-interval {
         type uint32;
         units microseconds;
-        description "Negotiated transmit interval";
+        description "Negotiated transmit interval.";
       }
       leaf negotiated-rx-interval {
         type uint32;
         units microseconds;
-        description "Negotiated receive interval";
+        description "Negotiated receive interval.";
       }
       leaf detection-time {
         type uint32;
         units microseconds;
-        description "Detection time";
+        description "Detection time.";
       }
       leaf echo-tx-interval-in-use {
         when "../../path-type = 'bfd-types:path-ip-sh'" {
@@ -407,76 +427,76 @@ module ietf-bfd-types {
         if-feature echo-mode;
         type uint32;
         units microseconds;
-        description "Echo transmit interval in use";
+        description "Echo transmit interval in use.";
       }
     }
 
     container sesssion-statistics {
       config "false";
-      description "BFD per-session statistics";
+      description "BFD per-session statistics.";
 
       leaf create-time {
         type yang:date-and-time;
         description
-          "Time and date when session was created";
+          "Time and date when session was created.";
       }
       leaf last-down-time {
         type yang:date-and-time;
         description
-          "Time and date of last time the session went down";
+          "Time and date of last time the session went down.";
       }
       leaf last-up-time {
         type yang:date-and-time;
         description
-          "Time and date of last time the session went up";
+          "Time and date of last time the session went up.";
       }
       leaf down-count {
         type uint32;
-        description "Session Down Count";
+        description "Session Down Count.";
       }
       leaf admin-down-count {
         type uint32;
-        description "Session Admin-Down Count";
+        description "Session Admin-Down Count.";
       }
       leaf receive-packet-count {
         type uint64;
-        description "Received Packet Count";
+        description "Received Packet Count.";
       }
       leaf send-packet-count {
         type uint64;
-        description "Sent Packet Count";
+        description "Sent Packet Count.";
       }
       leaf receive-bad-packet {
         type uint64;
-        description "Received bad packet count";
+        description "Received bad packet count.";
       }
       leaf send-failed-packet {
         type uint64;
-        description "Packet Failed to Send Count";
+        description "Packet Failed to Send Count.";
       }
     }
   }
 
   grouping session-statistics {
-    description "Grouping for session counters";
+    description "Grouping for session counters.";
     container session-statistics {
       config false;
-      description "BFD session counters";
+      description "BFD session counters.";
       leaf session-count {
         type uint32;
-        description "Number of sessions";
+        description "Number of sessions.";
       }
       leaf session-up-count {
         type uint32;
-        description "Count of sessions which are up";
+        description "Count of sessions which are up.";
       }
       leaf session-down-count {
         type uint32;
-        description "Count of sessions which are down";
+        description "Count of sessions which are down.";
       }
       leaf session-admin-down-count {
         type uint32;
-        description "Count of sessions which are admin-down";
+        description "Count of sessions which are admin-down.";
       }
     }
   }
@@ -484,54 +504,54 @@ module ietf-bfd-types {
   grouping notification-parms {
     description
       "This group describes common parameters that will be sent " +
-      "as part of BFD notification";
+      "as part of BFD notification.";
 
     leaf local-discr {
       type discriminator;
-      description "BFD local discriminator";
+      description "BFD local discriminator.";
     }
 
     leaf remote-discr {
       type discriminator;
-      description "BFD remote discriminator";
+      description "BFD remote discriminator.";
     }
 
     leaf new-state {
       type state;
-      description "Current BFD state";
+      description "Current BFD state.";
     }
 
     leaf state-change-reason {
       type iana-bfd-types:diagnostic;
-      description "BFD state change reason";
+      description "BFD state change reason.";
     }
 
     leaf time-of-last-state-change {
       type yang:date-and-time;
       description
-        "Calendar time of previous state change";
+        "Calendar time of previous state change.";
     }
 
     leaf dest-addr {
       type inet:ip-address;
-      description "BFD peer address";
+      description "BFD peer address.";
     }
 
     leaf source-addr {
       type inet:ip-address;
-      description "BFD local address";
+      description "BFD local address.";
     }
 
     leaf session-index {
       type uint32;
-      description "An index used to uniquely identify BFD sessions";
+      description "An index used to uniquely identify BFD sessions.";
     }
 
     leaf path-type {
       type identityref {
         base path-type;
       }
-      description "BFD path type";
+      description "BFD path type.";
     }
   }
 }
