@@ -574,8 +574,8 @@ Internet-Draft                  BFD YANG                    January 2018
         |  |  +--ro remote-diagnostic?
         |  |  |       iana-bfd-types:diagnostic
         |  |  +--ro remote-authenticated?         boolean
-        |  |  +--ro remote-authentication-type?   iana-bfd-types:auth-ty
- pe
+        |  |  +--ro remote-authentication-type?   iana-bfd-types:
+                                                  auth-type
         |  |  |       {authentication}?
         |  |  +--ro detection-mode?               enumeration
         |  |  +--ro negotiated-tx-interval?       uint32
