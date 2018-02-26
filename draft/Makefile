@@ -20,12 +20,11 @@ draft_type := $(suffix $(firstword $(wildcard $(draft).md $(draft).org $(draft).
 
 current_ver := $(shell git tag | grep '$(draft)-[0-9][0-9]' | tail -1 | sed -e"s/.*-//")
 ifeq "${current_ver}" ""
-next_ver ?= 09
+next_ver ?= 00
 else
 next_ver ?= $(shell printf "%.2d" $$((1$(current_ver)-99)))
 endif
-#Hardcoding 09 for now
-next_ver := 09
+
 next := $(draft)-$(next_ver)
 
 .PHONY: latest submit clean
@@ -38,9 +37,12 @@ idnits: $(next).txt
 	$(idnits) $<
 
 clean:
-	-rm -f $(draft).txt $(draft).html index.html
+	-rm -f $(draft)-[0-9][0-9].txt $(draft)-[0-9][0-9].html index.html
 	-rm -f $(next).txt $(next).html
 	-rm -f $(draft)-[0-9][0-9].xml
+	-rm -f $(draft)-[0-9][0-9].xml[~]
+	-rm ../src/yang/*\@$(shell date +%Y)-*-*-tree.txt
+	-rm ../src/yang/*\@$(shell date +%Y)-*-*.yang
 ifeq (md,$(draft_type))
 	-rm -f $(draft).xml
 endif
@@ -63,10 +65,8 @@ $(next).xml: $(draft).xml ../src/yang/iana-bfd-types.yang ../src/yang/ietf-bfd-i
 
 	cd ../src; ./gen-trees.sh; cd ..;
 	../src/insert-figures.sh $@ > tmp; mv tmp $@
-	rm ../src/yang/*-tree.txt
-	rm ../src/yang/ietf-*\@$(shell date +%Y-%m-%d).yang
-	rm ../src/yang/iana-*\@$(shell date +%Y-%m-%d).yang
-	rm ../src/yang/example-*\@$(shell date +%Y-%m-%d).yang
+
+	yanglint -p ../../ ../src/yang/ietf-bfd-ip-sh\@$(shell date +%Y-%m-%d).yang example-ip-sh.xml
 
 .INTERMEDIATE: $(draft).xml
 %.xml: %.md
