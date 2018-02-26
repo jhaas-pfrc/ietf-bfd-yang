@@ -1,5 +1,5 @@
 module example-bfd-echo {
-  namespace "tag:example.com,2017:example-bfd-echo";
+  namespace "tag:example.com,2018:example-bfd-echo";
 
   prefix "example-bfd-echo";
 
@@ -33,7 +33,7 @@ module example-bfd-echo {
     "This module contains an example YANG augmentation for configuration
      of BFD echo function.
 
-     Copyright (c) 2017 IETF Trust and the persons
+     Copyright (c) 2018 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -65,21 +65,26 @@ module example-bfd-echo {
       type uint32;
       units microseconds;
       default 0;
-      description "Desired minumum transmit interval for echo";
+      description
+        "This is the minimum interval that the local system would like
+         to use when transmitting BFD echo packets.  If 0, the echo
+         function as defined in BFD [RFC5880] is disabled.";
     }
 
     leaf required-min-echo-rx-interval {
       type uint32;
       units microseconds;
       default 0;
-      description "Required minimum receive interval for echo";
+      description
+        "This is the Required Min Echo RX Interval as defined in BFD
+        [RFC5880].";
     }
   }
 
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd/bfd-ip-sh:ip-sh/"
         + "bfd-ip-sh:sessions" {
-    description "Augmentation for BFD echo fucntion.";
+    description "Augmentation for BFD echo function.";
 
     container echo {
       if-feature bfd-types:echo-mode;
