@@ -16,17 +16,23 @@ module ietf-bfd-lag {
 
   import ietf-interfaces {
     prefix "if";
-    reference "RFC 7223";
+    // RFC Ed.: replace XXXX with actual RFC number of
+    // draft-ietf-netmod-rfc7223bis and remove this note.
+    reference
+      "RFC XXXX: A YANG Data Model for Interface Management";
   }
 
   import ietf-inet-types {
     prefix "inet";
-    reference "RFC 6991";
+    reference "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC 8022";
+    // RFC Ed.: replace XXXX with actual RFC number of
+    // draft-ietf-netmod-rfc8022bis and remove this note.
+    reference
+      "RFC XXXX: A YANG Data Model for Routing Management";
   }
 
   organization "IETF BFD Working Group";
@@ -66,8 +72,8 @@ module ietf-bfd-lag {
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
 
-  /* 
-   * Augments 
+  /*
+   * Augments
    */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
@@ -77,11 +83,11 @@ module ietf-bfd-lag {
 
       container micro-bfd-ipv4-session-statistics {
         description "Micro-BFD IPv4 session counters.";
-        uses bfd-types:session-statistics;
+        uses bfd-types:session-statistics-summary;
       }
       container micro-bfd-ipv6-session-statistics {
         description "Micro-BFD IPv6 session counters.";
-        uses bfd-types:session-statistics;
+        uses bfd-types:session-statistics-summary;
       }
 
       list sessions {
@@ -144,8 +150,8 @@ module ietf-bfd-lag {
     }
   }
 
-  /* 
-   * Notifications 
+  /*
+   * Notifications
    */
   notification lag-notification {
     description

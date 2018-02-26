@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-09.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-10.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,19 +109,13 @@
       </address>
     </author>
 
-    <date day="22" month="January" year="2018"/>
+    <date day="23" month="February" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
       and manage Bidirectional Forwarding Detection (BFD).</t>
+      <t>The YANG modules in this document conform to the Network Management Datastore Architecture (NMDA).</t>
     </abstract>
-
-    <note title="Requirements Language">
-      <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-      "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-      document are to be interpreted as described in <xref
-      target="RFC2119">RFC 2119</xref>.</t>
-    </note>
   </front>
 
   <middle>
@@ -157,6 +151,19 @@
       not have "hellos" to detect failures, e.g. static routes, and routing
       protocols whose "hellos" do not support sub-second failure detection,
       e.g. OSPF and IS-IS.</t>
+      <t>The YANG modules in this document conform to the Network Management
+   Datastore Architecture (NMDA) <xref target="I-D.ietf-netmod-revised-datastores">Network Management Datastore Architecture
+</xref>. This means that the data models do
+      not have separate top-level or sibling containers for configuration and
+      operational state data.</t>
+      
+      <section title="Requirements Language">
+        <t>The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+           "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+           document are to be interpreted as described in BCP 14 <xref
+           target="RFC2119"></xref> <xref target="RFC8174"></xref> when, and only when, they appear in all
+           capitals, as shown here.</t>
+      </section>
     </section>
 
     <section anchor="DESIGN-DATA" title="Design of the Data Model">
@@ -173,34 +180,29 @@
 
       <t>A new control-plane protocol "bfdv1" is defined and a "bfd" container
       is created under control-plane-protocol as specified in <xref
-      target="RFC8022">A YANG Data Model for Routing Management </xref>. This
+      target="I-D.ietf-netmod-rfc8022bis">A YANG Data Model for Routing Management </xref>. This
       new "bfd" node is augmented by all the YANG modules for their respective
       specific information.</t>
 
       <t>BFD can operate in the following contexts: <list style="numbers">
-          <t>Network devices as described in <xref
-          target="I-D.ietf-rtgwg-device-model">Network Device YANG
-          Organizational Models</xref></t>
+          <t>At the network device level</t>
 
-          <t>Logical Network Elements as described in <xref
+          <t>In Logical Network Elements as described in <xref
           target="I-D.ietf-rtgwg-lne-model">YANG Logical Network
           Element</xref></t>
 
-          <t>Network instances as described in <xref
+          <t>In Network Instances as described in <xref
           target="I-D.ietf-rtgwg-ni-model">YANG Logical Network
           Element</xref></t>
-        </list> The approach taken is to do a schema-mount (see <xref
+        </list> 
+      When used at the network device level, the BFD YANG model is used "as-is". 
+      When the BFD model is to be used in a Logical Network Element or in a 
+      Network Instance, the approach taken is to do a schema-mount (see <xref
       target="I-D.ietf-netmod-schema-mount">Schema Mount</xref>) of the BFD
-      model in the appropriate locations. For example, if an implementation
+      model in the appropriate location. For example, if an implementation
       supports BFD IP multihop in network instances, the implementation would
       do schema-mount of the BFD IP multihop model in a mount-point which
       resides in a network instance.</t>
-
-      <t>The data models in this document strive to follow the "Network
-      Management Datastore Architecture" (NMDA) guidelines described in <xref
-      target="I-D.dsdt-nmda-guidelines"/>. This means that the data models do
-      NOT have separate top-level or sibling containers for configuration and
-      operational data.</t>
 
       <section anchor="CFG-MODEL" title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified
@@ -227,8 +229,10 @@
         would first have to determine the peer addresses. And when a new peer is discovered, 
         BFD configuration would need to be added. To avoid this issue, we define grouping client-cfg-parms 
         in <xref target="BFD-TYPES"/> for BFD clients to configure BFD: this allows BFD clients such as the IGPs
-        to have configuration (multiplier and intervals) for the BFD sessions they need. 
-        The mechanism how the BFD sessions are created by the BFD clients is outside the scope of this document.
+        to have configuration (multiplier and intervals) for the BFD sessions they need. For example, when a new IGP peer
+        is discovered, the IGP would create a BFD session to the newly discovered peer and similarly when an IGP peer goes away,
+        the IGP would remove the BFD session to that peer.
+        The mechanism how the BFD sessions are created and removed by the BFD clients is outside the scope of this document, but typically this would be done by use of an API implemented by the BFD module on the system.
         For BFD clients which create BFD sessions via their own configuration, authentication parameters (if required)
         are still specified in BFD.
         </t>
@@ -373,8 +377,8 @@
         </section>
       </section>
 
-      <section title="Design of Operational Model">
-        <t>The operational model contains both the overall statistics of BFD
+      <section title="Design of Operational State Model">
+        <t>The operational state model contains both the overall statistics of BFD
         sessions running on the device and the per session operational
         information.</t>
 
@@ -383,7 +387,7 @@
         globally (i.e. for all BFD sessions) under the "bfd" node in <xref
         target="DESIGN-DATA"/> and also per type of forwarding path.</t>
 
-        <t>For each BFD session, mainly three categories of operational items
+        <t>For each BFD session, mainly three categories of operational state data
         are shown. The fundamental information of a BFD session such as the
         local discriminator, remote discriminator and the capability of
         supporting demand detect mode are shown in the first category. The
@@ -406,7 +410,7 @@
       </section>
 
       <section title="Notifications">
-        <t>This YANG model defines notifications to inform clients of BFD of
+        <t>This YANG model defines notifications to inform end-users of
         important events detected during the protocol operation. Pair of local
         and remote discriminator identifies a BFD session on local system.
         Notifications also give more important details about BFD sessions;
@@ -422,7 +426,7 @@
 
       <section title="BFD top level hierarchy">
         <t>At the "bfd" node under control-plane-protocol, there is no
-        configuration data, only operational data. The operational data
+        configuration data, only operational state data. The operational state data
         consist of overall BFD session statistics, i.e. for BFD on all types
         of forwarding paths. The "bfd" node under control-plane-protocol can
         be used in a network device (top-level), or mounted in an LNE or in a
@@ -439,7 +443,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd@YYYY-MM-DD-tree.txt)
 
       <section title="BFD IP single-hop hierarchy">
         <t>An "ip-sh" node is added under "bfd" node in
-        control-plane-protocol. The configuration and operational data for
+        control-plane-protocol. The configuration and operational state data for
         each BFD IP single-hop session is under this "ip-sh" node. The "ip-sh"
         node can be used in a network device (top-level), or mounted in an LNE
         or in a network instance.</t>
@@ -456,9 +460,9 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD-tree.txt)
 
       <section title="BFD IP multihop hierarchy">
         <t>An "ip-mh" node is added under the "bfd" node in
-        cntrol-plane-protocol. The configuration and operational data for each
+        cntrol-plane-protocol. The configuration and operational state data for each
         BFD IP multihop session is under this "ip-mh" node. In the
-        operational model we support multiple BFD multihop sessions per
+        operational state model we support multiple BFD multihop sessions per
         remote address (ECMP), the local discriminator is used as key. The
         "ip-mh" node can be used in a network device (top-level), or mounted
         in an LNE or in a network instance.</t>
@@ -474,7 +478,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD-tree.txt)
 
       <section title="BFD over LAG hierarchy">
         <t>A "lag" node is added under the "bfd" node in
-        control-plane-protocol. The configuration and operational data for
+        control-plane-protocol. The configuration and operational state data for
         each BFD LAG session is under this "lag" node. The "lag" node can be
         used in a network device (top-level), or mounted in an LNE or in a
         network instance.</t>
@@ -491,7 +495,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-lag@YYYY-MM-DD-tree.txt)
       <section title="BFD over MPLS LSPs hierarchy">
         <t>An "mpls" node is added under the "bfd" node in
         control-plane-protocol. The configuration is per MPLS FEC under this
-        "mpls" node. In the operational model we support multiple BFD sessions
+        "mpls" node. In the operational state model we support multiple BFD sessions
         per MPLS FEC (ECMP), the local discriminator is used as key. The
         "mpls" node can be used in a network device (top-level), or mounted in
         an LNE or in a network instance.</t>
@@ -508,7 +512,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls@YYYY-MM-DD-tree.txt)
       <section title="BFD over MPLS-TE hierarchy">
         <t><xref target="I-D.ietf-teas-yang-te">YANG Data Model for TE
         Topologies </xref> is augmented. BFD is configured per MPLS-TE tunnel,
-        and BFD session operational data is provided per MPLS-TE LSP.</t>
+        and BFD session operational state data is provided per MPLS-TE LSP.</t>
 
         <figure align="left">
           <preamble/>
@@ -529,7 +533,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD-tree.txt)
 
         <section title="Module ietf-interfaces">
           <t>The following boolean configuration is defined in <xref
-          target="RFC7223">A YANG Data Model for Interface Management </xref>:
+          target="I-D.ietf-netmod-rfc7223bis">A YANG Data Model for Interface Management </xref>:
           <list hangIndent="8" style="hanging">
               <t hangText="/if:interfaces/if:interface/if:enabled"><vspace/>If
               this configuration is set to "false", no BFD packets can be
@@ -539,7 +543,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD-tree.txt)
 
         <section title="Module ietf-ip">
           <t>The following boolean configuration is defined in <xref
-          target="RFC7277">A YANG Data Model for IP Management </xref>: <list
+          target="I-D.ietf-netmod-rfc7277bis">A YANG Data Model for IP Management </xref>: <list
               hangIndent="8" style="hanging">
               <t
               hangText="/if:interfaces/if:interface/ip:ipv4/ip:enabled"><vspace/>If
@@ -600,6 +604,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/iana-bfd-types@YYYY-MM-DD.yang)
       </section>
 
       <section anchor="BFD-TYPES" title="BFD types YANG Module">
+         <t>This YANG module imports typedefs from <xref target="RFC6991"/> and the "control-plane-protocol" identity from <xref
+      target="I-D.ietf-netmod-rfc8022bis"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -614,6 +620,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-types@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD top-level YANG Module">
+         <t>This YANG module imports and augments "/routing/control-plane-protocols/control-plane-protocol"  from <xref
+      target="I-D.ietf-netmod-rfc8022bis"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -628,6 +636,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD IP single-hop YANG Module">
+         <t>This YANG module imports "interface-ref" from <xref target="I-D.ietf-netmod-rfc7223bis"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -642,6 +651,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD IP multihop YANG Module">
+         <t>This YANG module imports typedefs from <xref target="RFC6991"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -656,7 +666,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD over LAG YANG Module">
-        <figure align="left">
+         <t>This YANG module imports "interface-ref" from <xref target="I-D.ietf-netmod-rfc7223bis"/>.</t>        <figure align="left">
           <preamble/>
 
           <artwork align="left"><![CDATA[
@@ -670,6 +680,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD over MPLS YANG Module">
+         <t>This YANG module imports typedefs from <xref target="RFC6991"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -684,6 +695,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls@YYYY-MM-DD.yang)
       </section>
 
       <section title="BFD over MPLS-TE YANG Module">
+         <t>This YANG module imports and augments "/te/tunnels/tunnel"  from <xref
+      target="I-D.ietf-teas-yang-te"/>.</t>
         <figure align="left">
           <preamble/>
 
@@ -723,20 +736,64 @@ INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
        </section>
     </section>
     <section title="Security Considerations">
-      <t>The YANG module defined in this memo is designed to be accessed via
-      the NETCONF protocol [RFC6241]. The lowest NETCONF layer is the secure
-      transport layer and the mandatory to implement secure transport is SSH
-      [RFC6242]. The NETCONF access control model [RFC6536] provides the
-      means to restrict access for particular NETCONF users to a
-      pre-configured subset of all available NETCONF protocol operations and
-      content.</t>
+      <t>The YANG module specified in this document defines a schema for data
+      that is designed to be accessed via network management protocols such
+      as NETCONF <xref target="RFC6241"/> or RESTCONF <xref target="RFC8040"/>.  The lowest NETCONF layer
+      is the secure transport layer, and the mandatory-to-implement secure
+      transport is Secure Shell (SSH) <xref target="RFC6242"/>.  The lowest RESTCONF layer
+      is HTTPS, and the mandatory-to-implement secure transport is TLS
+      <xref target="RFC5246"/>.</t>
+      <t>The NETCONF access control model <xref target="RFC6536"/> provides the means to
+      restrict access for particular NETCONF or RESTCONF users to a
+      preconfigured subset of all available NETCONF or RESTCONF protocol
+      operations and content.</t>
+      <t>There are a number of data nodes defined in this YANG module that are
+      writable/creatable/deletable (i.e., config true, which is the
+      default).  These data nodes may be considered sensitive or vulnerable
+      in some network environments.  Write operations (e.g., edit-config)
+      to these data nodes without proper protection can have a negative
+      effect on network operations.  These are the subtrees and data nodes
+      and their sensitivity/vulnerability:</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh/sessions: the list specifies the IP 
+      single-hop BFD sessions.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh/sessions: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD IP single-hop session.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/session-group: the list specifies the IP 
+      multi-hop BFD session groups.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/session-group: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD IP multi-hop session.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions: the list specifies the BFD sessions 
+      over LAG.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD over LAG session.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/session-group: the list specifies the 
+      session groups for BFD over MPLS.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/session-group: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD over MPLS LSPs session.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/egress: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD over MPLS LSPs sessions for which 
+      this device is an MPLS LSP egress node.</t>
+      <t>/te/tunnels/tunnel: data nodes local-multiplier, desired-min-tx-interval, required-min-rx-interval, min-interval 
+      and authentication all impact the BFD session over the MPLS-TE tunnel.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls-te/egress: data nodes local-multiplier,  
+      desired-min-tx-interval, required-min-rx-interval, min-interval and authentication all impact the BFD over MPLS-TE sessions for which 
+      this device is an MPLS-TE egress node.</t>
 
+      <t></t>
       <t>The YANG module has writeable data nodes which can be used for
       creation of BFD sessions and modification of BFD session parameters.
       The system should "police" creation of BFD sessions to prevent new
       sessions from causing existing BFD sessions to fail. For BFD session
       modification, the BFD protocol has mechanisms in place which allow for
       in service modification.</t>
+      <t></t>
+      <t>Some of the readable data nodes in this YANG module may be considered
+      sensitive or vulnerable in some network environments.  It is thus
+      important to control read access (e.g., via get, get-config, or
+      notification) to these data nodes.  These are the subtrees and data
+      nodes and their sensitivity/vulnerability:</t>
+      <t>The "summary" container in the various modules provides a summary of all BFD sessions in their respective module.</t>
+
     </section>
 
     <section title="IANA Considerations">
@@ -843,6 +900,8 @@ INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
 
       <?rfc include="reference.RFC.3688"?>
 
+      <?rfc include='reference.RFC.5246'?>
+
       <?rfc include='reference.RFC.5880'?>
 
       <?rfc include='reference.RFC.5881'?>
@@ -857,36 +916,44 @@ INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
 
       <?rfc include='reference.RFC.5586'?>
 
+      <?rfc include='reference.RFC.6241'?>
+
+      <?rfc include='reference.RFC.6242'?>
+
+      <?rfc include='reference.RFC.6536'?>
+
       <?rfc include='reference.RFC.6991'?>
 
       <?rfc include='reference.RFC.7130'?>
 
-      <?rfc include='reference.RFC.8022'?>
+      <?rfc include='reference.RFC.8040'?>
 
-      <?rfc include='reference.RFC.7223'?>
-
-      <?rfc include='reference.RFC.7277'?>
-
+      <?rfc include="reference.RFC.8174"?>
+         
       <?rfc include="reference.RFC.8177"?>
+         
+      <?rfc include="reference.I-D.ietf-netmod-rfc7223bis"?>   
+         
+      <?rfc include="reference.I-D.ietf-netmod-rfc7277bis"?>   
+
+      <?rfc include='reference.I-D.ietf-netmod-rfc8022bis'?>
+
+      <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
+
+      <?rfc include="reference.I-D.ietf-teas-yang-te"?>
+                  
     </references>
 
     <references title="Informative References">
       <?rfc include="reference.I-D.ietf-rtgwg-ni-model"?>
 
-
-      <?rfc include="reference.I-D.ietf-teas-yang-te"?>
-
       <?rfc include="reference.I-D.ietf-netmod-schema-mount"?>
-
-      <?rfc include="reference.I-D.ietf-rtgwg-device-model"?>
 
       <?rfc include="reference.I-D.ietf-rtgwg-lne-model"?>
 
       <?rfc include="reference.I-D.ietf-lime-yang-connectionless-oam"?>
 
-      <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
-
-      <?rfc include="reference.I-D.dsdt-nmda-guidelines"?>
+      <?rfc include="reference.I-D.ietf-netmod-revised-datastores"?>
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
@@ -1000,9 +1067,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
 
       <section title="Changes between versions -04 and -05">
         <t><list style="symbols">
-            <t>"bfd" node in augment of control-plane-protocol as per <xref
-            target="RFC8022">A YANG Data Model for Routing Management
-            </xref>.</t>
+            <t>"bfd" node in augment of control-plane-protocol.</t>
 
             <t>Removed augment of network-instance. Replaced by
             schema-mount.</t>
@@ -1029,9 +1094,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
 
       <section title="Changes between versions -01 and -02">
         <t><list style="symbols">
-            <t>Replace routing-instance, which has been removed from <xref
-            target="RFC8022">A YANG Data Model for Routing Management </xref>,
-            with network-instance from <xref
+            <t>Replace routing-instance with network-instance from <xref
             target="I-D.ietf-rtgwg-ni-model">YANG Network Instances</xref></t>
           </list></t>
       </section>

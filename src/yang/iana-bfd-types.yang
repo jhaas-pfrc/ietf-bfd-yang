@@ -19,8 +19,11 @@ module iana-bfd-types {
     <mailto:iana@iana.org>";
 
   description
-    "This module contains a collection of YANG data types
-     considered defined by IANA and used for BFD.
+    "This module defines YANG data types for IANA-registered
+     BFD parameters.
+
+     This YANG module is maintained by IANA and reflects the
+     'BFD Diagnostic Codes' and 'BFD Authentication Types' registries.
 
      Copyright (c) 2018 IETF Trust and the persons
      identified as authors of the code.  All rights reserved.
@@ -92,7 +95,8 @@ module iana-bfd-types {
       }
     }
     description
-      "BFD diagnostic as defined in RFC 5880. Range is 0 to 31.";
+      "BFD diagnostic as defined in RFC 5880, values are maintained in
+      the 'BFD Diagnostic Codes' IANA registry. Range is 0 to 31.";
   }
 
   typedef auth-type {
@@ -123,7 +127,8 @@ module iana-bfd-types {
       }
     }
     description
-      "BFD authentication type as defined in RFC 5880. Range is 0 to
-       255.";
+      "BFD authentication type as defined in RFC 5880, values are
+       maintained in the 'BFD Authentication Types' IANA registry.
+       Range is 0 to 255.";
   }
 }

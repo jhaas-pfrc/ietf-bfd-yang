@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
-  <routing xmlns="urn:ietf:params:xml:ns:yang:ietf-routing">
+  <routing xmlns="urn:ietf:params:xml:ns:yang:ietf-bfd-ip-mh">
     <control-plane-protocols>
       <control-plane-protocol>
+        <name>bfd</name>
+        <type>bfdv1</type>
         <bfd>
           <ip-mh>
             <session-group>
-              <dest-addr>2001:202:0:114::100</dest-addr>
-              <source-addr>2001:204:0:113::103</source-addr>
+              <dest-addr>2001:DB8:0:114::100</dest-addr>
+              <source-addr>2001:DB8:0:113::103</source-addr>
               <desired-min-tx-interval>150000</desired-min-tx-interval>
               <required-min-rx-interval>150000</required-min-rx-interval>
             </session-group>
           </ip-mh>
-        </bfd>        
+        </bfd>
       </control-plane-protocol>
     </control-plane-protocols>
   </routing>

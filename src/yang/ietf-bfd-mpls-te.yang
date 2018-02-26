@@ -24,7 +24,10 @@ module ietf-bfd-mpls-te {
 
   import ietf-routing {
     prefix "rt";
-    reference "RFC 8022";
+    // RFC Ed.: replace XXXX with actual RFC number of
+    // draft-ietf-netmod-rfc8022bis and remove this note.
+    reference
+      "RFC XXXX: A YANG Data Model for Routing Management";
   }
 
   organization "IETF BFD Working Group";
@@ -64,8 +67,8 @@ module ietf-bfd-mpls-te {
     reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
   }
 
-  /* 
-   * Augments 
+  /*
+   * Augments
    */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
@@ -81,7 +84,7 @@ module ietf-bfd-mpls-te {
         uses bfd-types:auth-parms;
       }
 
-      uses bfd-types:session-statistics;
+      uses bfd-types:session-statistics-summary;
     }
   }
 
@@ -104,8 +107,8 @@ module ietf-bfd-mpls-te {
     uses bfd-mpls:mpls-dest-address;
   }
 
-  /* 
-   * Notifications 
+  /*
+   * Notifications
    */
   notification mpls-te-notification {
     description
