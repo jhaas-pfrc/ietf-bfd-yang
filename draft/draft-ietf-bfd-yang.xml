@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="23" month="February" year="2018"/>
+    <date day="26" month="February" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -180,9 +180,21 @@
 
       <t>A new control-plane protocol "bfdv1" is defined and a "bfd" container
       is created under control-plane-protocol as specified in <xref
-      target="I-D.ietf-netmod-rfc8022bis">A YANG Data Model for Routing Management </xref>. This
-      new "bfd" node is augmented by all the YANG modules for their respective
-      specific information.</t>
+      target="I-D.ietf-netmod-rfc8022bis">"A YANG Data Model for Routing Management (NMDA Version)"</xref>. This
+      new "bfd" container is augmented by all the YANG modules for their respective
+      specific information:<list style="numbers">
+         <t>ietf-bfd-ip-sh.yang augments "/routing/control-plane-protocols/control-plane-protocol/bfd/" with the 
+            "ip-sh" container for BFD sessions over IP single-hop.</t>
+         <t>ietf-bfd-ip-mh.yang augments "/routing/control-plane-protocols/control-plane-protocol/bfd/" with the 
+            "ip-mh" container for BFD sessions over IP multi-hop.</t>
+         <t>ietf-bfd-lag.yang augments "/routing/control-plane-protocols/control-plane-protocol/bfd/" with the 
+            "lag" container for BFD sessions over LAG.</t>
+         <t>ietf-bfd-mpls.yang augments "/routing/control-plane-protocols/control-plane-protocol/bfd/" with the 
+            "mpls" container for BFD over MPLS LSPs.</t>
+         <t>ietf-bfd-mpls-te.yang augments "/routing/control-plane-protocols/control-plane-protocol/bfd/" with the 
+            "mpls-te" container for BFD over MPLS-TE.</t>
+         </list>
+      </t>
 
       <t>BFD can operate in the following contexts: <list style="numbers">
           <t>At the network device level</t>
@@ -792,8 +804,12 @@ INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
       important to control read access (e.g., via get, get-config, or
       notification) to these data nodes.  These are the subtrees and data
       nodes and their sensitivity/vulnerability:</t>
-      <t>The "summary" container in the various modules provides a summary of all BFD sessions in their respective module.</t>
-
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh/summary: access to this information discloses the number of BFD IP single-hop sessions which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/summary: access to this information discloses the number of BFD IP multi-hop sessions which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/micro-bfd-ipv4-session-statistics/summary: access to this information discloses the number of micro BFD IPv4 LAG sessions which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/micro-bfd-ipv6-session-statistics/summary: access to this information discloses the number of micro BFD IPv6 LAG sessions which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/summary: access to this information discloses the number of BFD sessions over MPLS LSPs which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls-te/summary: access to this information discloses the number of BFD sessions over MPLS-TE which are up, down and admin-down. The counters include BFD sessions for which the user does not have read-access.</t>
     </section>
 
     <section title="IANA Considerations">
@@ -957,18 +973,10 @@ INSERT_TEXT_FROM_FILE(example-ip-mh.xml)
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
-      <t>The following intervals
-      are added for the echo function (if supported): <list hangIndent="8"
-          style="hanging">
-          <t hangText="desired-min-echo-tx-interval"><vspace/>This is the
-          minimum interval that the local system would like to use when
-          transmitting BFD echo packets. If 0, the echo function as defined in
-          <xref target="RFC5880">BFD </xref> is disabled.</t>
-
-          <t hangText="required-min-echo-rx-interval"><vspace/>This is the
-          Required Min Echo RX Interval as defined in <xref
-          target="RFC5880">BFD </xref>.</t>
-        </list></t>
+      <t>As mentioned in <xref target="IP-SH-CFG"/>, the mechanism to start and stop the echo function, 
+      as defined in <xref target="RFC5880"/> and <xref target="RFC5881"/>, is implementation specific. In this section 
+      we provide an example of how the echo function can be implemented via configuration.
+      </t>
 
       <figure align="left">
         <preamble/>
@@ -978,7 +986,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD-tree.txt)
                      ]]></artwork>
       </figure>
 
-      <section title="Example YANG module for BFD echo function">
+      <section title="Example YANG module for BFD echo function configuration">
         <figure align="left">
           <preamble/>
 
@@ -990,33 +998,16 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
       </section>
     </section>
 
-    <section title="BFD client configuration example">
-       <t>The following is an example of how a BFD client could use the grouping client-cfg-parms.</t>
-
-                      <figure align="left">
-          <preamble/>
-
-          <artwork align="left"><![CDATA[
-INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD-tree.txt)
-                     ]]></artwork>
-        </figure>
-
-
-      <section title="Example YANG module for BFD client">
-        <figure align="left">
-          <preamble/>
-
-          <artwork align="left"><![CDATA[
-
-INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-client@YYYY-MM-DD.yang)
-        ]]></artwork>
-        </figure>
-      </section>
-    </section>
-
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
+      <section title="Changes between versions -09 and -10">
+        <t><list style="symbols">
+            <t>Addressed comments from YANG DOctor review.</t>
+
+            <t>Addressed comments from WGLC.</t>
+          </list></t>
+      </section>
       <section title="Changes between versions -08 and -09">
         <t><list style="symbols">
             <t>Mostly cosmetic changes to abide by draft-ietf-netmod-rfc6087bis.</t>
