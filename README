@@ -9,8 +9,8 @@ To build the draft you need to have tools, all of which you will use before you 
 # https://github.com/Juniper/libslax/tree/master/doc/oxtradoc
 # https://tools.ietf.org/tools/idnits/
 
-Once you have installed these tools, go the draft directory and type the following. Note, there is a drafts directory (plural), which will be deprecated.
+Once you have installed these tools, go the draft directory and type the following. Note, there is a drafts directory (plural).
 
 % make
 
-The result of the build will be the latest version of the draft, complete with models inserted in all the right places. If the version of the draft comes out incorrect, just update the version number in Makefile.
+The result of the build will be the latest version of the draft, complete with models inserted in all the right places. If the version of the draft comes out incorrect, it is because you are missing a git tag for the last version of the draft. Just add a tag, e.g. 'git tag draft-ietf-bfd-yang-XX' where XX is the last published version of the draft. make will add 1 to XX to compute the latest version.
