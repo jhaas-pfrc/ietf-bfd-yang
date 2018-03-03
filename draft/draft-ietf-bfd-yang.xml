@@ -790,6 +790,33 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-ip-mh.xml)
  ]]></artwork>
         </figure>
       </section>
+
+      <section title="LAG">
+        <t>The following is an example of BFD configuration for a LAG session.
+        In this case, an interface named "Bundle-Ether1" of interface type
+        "ieee802eadLag" has a desired transmit and required receive interval
+        set to 10ms. </t>
+
+        <t><figure>
+            <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(../src/yang/example-lag.xml)
+
+]]></artwork>
+          </figure></t>
+      </section>
+
+      <section title="MPLS">
+        <t>The following is an example of BFD configured for a MPLS tunnel. In
+        this case, the desired transmit and required receive interval set to
+        250ms.</t>
+
+        <t><figure>
+            <artwork align="left"><![CDATA[
+INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
+
+]]></artwork>
+          </figure></t>
+      </section>
     </section>
 
     <section title="Security Considerations">

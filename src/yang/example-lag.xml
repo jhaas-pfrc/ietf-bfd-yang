@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
+  <interfaces xmlns="urn:ietf:params:xml:ns:yang:ietf-interfaces">
+    <interface>
+      <name>Bundle-Ether1</name>
+      <type xmlns:ianaift="urn:ietf:params:xml:ns:yang:iana-if-type">ianaift:ieee8023adLag</type>
+    </interface>
+  </interfaces>
   <routing xmlns="urn:ietf:params:xml:ns:yang:ietf-routing">
     <control-plane-protocols>
       <control-plane-protocol>

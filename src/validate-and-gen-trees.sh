@@ -53,3 +53,21 @@ if [ $? -ne 0 ]; then
   echo
   exit 1
 fi
+
+echo "example-lag.xml"
+response=`yanglint -s -i -t auto -p ../../ yang/ietf-bfd-lag\@$(date +%Y-%m-%d).yang dependencies/iana-if-type.yang ../src/yang/example-lag.xml`
+if [ $? -ne 0 ]; then
+  printf "failed (error code: $?)\n"
+  printf "$response\n\n"
+  echo
+  exit 1
+fi
+
+echo "example-mpls.xml"
+response=`yanglint -s -i -t auto -p ../../ yang/ietf-bfd-mpls\@$(date +%Y-%m-%d).yang dependencies/iana-if-type.yang ../src/yang/example-mpls.xml`
+if [ $? -ne 0 ]; then
+  printf "failed (error code: $?)\n"
+  printf "$response\n\n"
+  echo
+  exit 1
+fi
