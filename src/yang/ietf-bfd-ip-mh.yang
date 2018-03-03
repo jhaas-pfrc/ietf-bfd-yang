@@ -75,45 +75,49 @@ module ietf-bfd-ip-mh {
 
       uses bfd-types:session-statistics-summary;
 
-      list session-group {
-        key "source-addr dest-addr";
+      container session-groups {
         description
-          "Group of BFD IP multi-hop sessions (for ECMP). A " +
-          "group of sessions is between 1 source and 1  " +
-          "destination, each session has a different field " +
-          "in UDP/IP hdr for ECMP.";
+          "BFD IP multi-hop session groups.";
+        list session-group {
+          key "source-addr dest-addr";
+          description
+            "Group of BFD IP multi-hop sessions (for ECMP). A " +
+            "group of sessions is between 1 source and 1  " +
+            "destination, each session has a different field " +
+            "in UDP/IP hdr for ECMP.";
 
-        leaf source-addr {
-          type inet:ip-address;
-          description
-            "Local IP address.";
-        }
-        leaf dest-addr {
-          type inet:ip-address;
-          description
-            "IP address of the peer.";
-        }
-        uses bfd-types:common-cfg-parms;
+          leaf source-addr {
+            type inet:ip-address;
+            description
+              "Local IP address.";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description
+              "IP address of the peer.";
+          }
+          uses bfd-types:common-cfg-parms;
 
-        leaf tx-ttl {
-          type bfd-types:hops;
-          default 255;
-          description "Hop count of outgoing BFD control packets.";
-        }
-        leaf rx-ttl {
-          type bfd-types:hops;
-          mandatory true;
-          description
-            "Minimum allowed hop count value for incoming BFD control
-             packets. Control packets whose hop count is lower than this
-             value are dropped.";
-        }
-        list sessions {
-          config false;
-          description
-            "The multiple BFD sessions between a source and a " +
-            "destination.";
-          uses bfd-types:all-session;
+          leaf tx-ttl {
+            type bfd-types:hops;
+            default 255;
+            description "Hop count of outgoing BFD control packets.";
+          }
+          leaf rx-ttl {
+            type bfd-types:hops;
+            mandatory true;
+            description
+              "Minimum allowed hop count value for incoming BFD control
+               packets. Control packets whose hop count is lower than
+               this value are dropped.";
+          }
+          list sessions {
+            config false;
+            description
+              "The multiple BFD sessions between a source and a " +
+              "destination.";
+            uses bfd-types:all-session;
+          }
         }
       }
     }

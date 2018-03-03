@@ -90,60 +90,64 @@ module ietf-bfd-lag {
         uses bfd-types:session-statistics-summary;
       }
 
-      list sessions {
-        key "lag-name";
-        description "A LAG interface on which BFD is running.";
-        leaf lag-name {
-          type if:interface-ref ;
-          description "Name of the LAG";
-        }
-        leaf ipv4-dest-addr {
-          type inet:ipv4-address;
-          description
-            "IPv4 address of the peer, for IPv4 micro-BFD.";
-        }
-        leaf ipv6-dest-addr {
-          type inet:ipv6-address;
-          description
-            "IPv6 address of the peer, for IPv6 micro-BFD.";
-        }
-        uses bfd-types:common-cfg-parms;
-
-        leaf use-ipv4 {
-          type boolean;
-          description "Using IPv4 micro-BFD.";
-        }
-        leaf use-ipv6 {
-          type boolean;
-          description "Using IPv6 micro-BFD.";
-        }
-
-        list member-links {
-          key "member-link";
-          config false;
-          description
-            "Micro-BFD over LAG. This represents one member link.";
-
-          leaf member-link {
-            type if:interface-ref;
-            description
-              "Member link on which micro-BFD is running.";
+      container sessions {
+        description
+          "BFD over LAG sessions";
+        list session {
+          key "lag-name";
+          description "List of BFD over LAG sessions.";
+          leaf lag-name {
+            type if:interface-ref ;
+            description "Name of the LAG";
           }
-          container micro-bfd-ipv4 {
-            when "../../use-ipv4 = 'true'" {
-              description "Needed only if IPv4 is used.";
-            }
+          leaf ipv4-dest-addr {
+            type inet:ipv4-address;
             description
-              "Micro-BFD IPv4 session state on member link.";
-            uses bfd-types:all-session;
+              "IPv4 address of the peer, for IPv4 micro-BFD.";
           }
-          container micro-bfd-ipv6 {
-            when "../../use-ipv6 = 'true'" {
-              description "Needed only if IPv6 is used.";
-            }
+          leaf ipv6-dest-addr {
+            type inet:ipv6-address;
             description
-              "Micro-BFD IPv6 session state on member link.";
-            uses bfd-types:all-session;
+              "IPv6 address of the peer, for IPv6 micro-BFD.";
+          }
+          uses bfd-types:common-cfg-parms;
+
+          leaf use-ipv4 {
+            type boolean;
+            description "Using IPv4 micro-BFD.";
+          }
+          leaf use-ipv6 {
+            type boolean;
+            description "Using IPv6 micro-BFD.";
+          }
+
+          list member-links {
+            key "member-link";
+            config false;
+            description
+              "Micro-BFD over LAG. This represents one member link.";
+
+            leaf member-link {
+              type if:interface-ref;
+              description
+                "Member link on which micro-BFD is running.";
+            }
+            container micro-bfd-ipv4 {
+              when "../../use-ipv4 = 'true'" {
+                description "Needed only if IPv4 is used.";
+              }
+              description
+                "Micro-BFD IPv4 session state on member link.";
+              uses bfd-types:all-session;
+            }
+            container micro-bfd-ipv6 {
+              when "../../use-ipv6 = 'true'" {
+                description "Needed only if IPv6 is used.";
+              }
+              description
+                "Micro-BFD IPv6 session state on member link.";
+              uses bfd-types:all-session;
+            }
           }
         }
       }
