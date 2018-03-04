@@ -83,26 +83,30 @@ module ietf-bfd-ip-sh {
 
       uses bfd-types:session-statistics-summary;
 
-      list sessions {
-        key "interface dest-addr";
-        description "List of IP single-hop sessions";
-        leaf interface {
-          type if:interface-ref;
-          description
-            "Interface on which the BFD session is running.";
-        }
-        leaf dest-addr {
-          type inet:ip-address;
-          description "IP address of the peer.";
-        }
-        leaf source-addr {
-          type inet:ip-address;
-          description "Local IP address.";
-        }
+      container sessions {
+        description
+          "BFD IP single-hop sessions.";
+        list session {
+          key "interface dest-addr";
+          description "List of IP single-hop sessions.";
+          leaf interface {
+            type if:interface-ref;
+            description
+              "Interface on which the BFD session is running.";
+          }
+          leaf dest-addr {
+            type inet:ip-address;
+            description "IP address of the peer.";
+          }
+          leaf source-addr {
+            type inet:ip-address;
+            description "Local IP address.";
+          }
 
-        uses bfd-types:common-cfg-parms;
+          uses bfd-types:common-cfg-parms;
 
-        uses bfd-types:all-session;
+          uses bfd-types:all-session;
+        }
       }
       list interfaces {
         key "interface";

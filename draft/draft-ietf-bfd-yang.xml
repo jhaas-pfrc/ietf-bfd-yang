@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-10.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-11.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="2" month="March" year="2018"/>
+    <date day="3" month="March" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -806,7 +806,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-lag.xml)
       </section>
 
       <section title="MPLS">
-        <t>The following is an example of BFD configured for a MPLS tunnel. In
+        <t>The following is an example of BFD configured for an MPLS LSP. In
         this case, the desired transmit and required receive interval set to
         250ms.</t>
 
@@ -1126,9 +1126,19 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
+      <section title="Changes between versions -10 and -11">
+        <t><list style="symbols">
+            <t>Added 2 examples.</t>
+
+            <t>Added a container around some lists.</t>
+            
+            <t>Fixed some indentation nits.</t>
+          </list></t>
+      </section>
+
       <section title="Changes between versions -09 and -10">
         <t><list style="symbols">
-            <t>Addressed comments from YANG DOctor review.</t>
+            <t>Addressed comments from YANG Doctor review.</t>
 
             <t>Addressed comments from WGLC.</t>
           </list></t>

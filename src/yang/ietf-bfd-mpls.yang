@@ -125,28 +125,32 @@ module ietf-bfd-mpls {
         uses bfd-types:auth-parms;
       }
 
-      list session-group {
-        key "mpls-fec";
+      container session-groups {
         description
-          "Group of BFD MPLS sessions (for ECMP). A group of " +
-          "sessions is for 1 FEC, each session has a different " +
-          "field in UDP/IP hdr for ECMP.";
-        leaf mpls-fec {
-          type inet:ip-prefix;
-          description "MPLS FEC.";
-        }
-
-        uses bfd-types:common-cfg-parms;
-
-        list sessions {
-          config false;
+          "BFD over MPLS session groups.";
+        list session-group {
+          key "mpls-fec";
           description
-            "The BFD sessions for an MPLS FEC. Local " +
-            "discriminator is unique for each session in the " +
-            "group.";
-          uses bfd-types:all-session;
+            "Group of BFD MPLS sessions (for ECMP). A group of " +
+            "sessions is for 1 FEC, each session has a different " +
+            "field in UDP/IP hdr for ECMP.";
+          leaf mpls-fec {
+            type inet:ip-prefix;
+            description "MPLS FEC.";
+          }
 
-          uses bfd-mpls:mpls-dest-address;
+          uses bfd-types:common-cfg-parms;
+
+          list sessions {
+            config false;
+            description
+              "The BFD sessions for an MPLS FEC. Local " +
+              "discriminator is unique for each session in the " +
+              "group.";
+            uses bfd-types:all-session;
+
+            uses bfd-mpls:mpls-dest-address;
+          }
         }
       }
     }
