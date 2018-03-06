@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-11.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-12.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="3" month="March" year="2018"/>
+    <date day="5" month="March" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -167,6 +167,10 @@
         document are to be interpreted as described in BCP 14 <xref
         target="RFC2119"/> <xref target="RFC8174"/> when, and only when, they
         appear in all capitals, as shown here.</t>
+      </section>
+      <section title="Tree Diagrams">
+         <t>This document uses the graphical representation of data models defined in 
+            <xref target="I-D.ietf-netmod-yang-tree-diagrams"/>.</t>
       </section>
     </section>
 
@@ -1082,6 +1086,9 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
       <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
 
       <?rfc include="reference.I-D.ietf-teas-yang-te"?>
+         
+      <?rfc include="reference.I-D.ietf-netmod-yang-tree-diagrams"?>
+         
     </references>
 
     <references title="Informative References">
