@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="5" month="March" year="2018"/>
+    <date day="19" month="March" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -224,13 +224,10 @@
           target="I-D.ietf-rtgwg-ni-model">YANG Logical Network
           Element</xref></t>
         </list> When used at the network device level, the BFD YANG model is
-      used "as-is". When the BFD model is to be used in a Logical Network
-      Element or in a Network Instance, the approach taken is to do a
-      schema-mount (see <xref target="I-D.ietf-netmod-schema-mount">Schema
-      Mount</xref>) of the BFD model in the appropriate location. For example,
-      if an implementation supports BFD IP multihop in network instances, the
-      implementation would do schema-mount of the BFD IP multihop model in a
-      mount-point which resides in a network instance.</t>
+        used "as-is". When the BFD YANG model is used in a Logical Network
+        Element or in a Network Instance, then the BFD YANG model augments
+        the mounted routing model for the Logical Network Element or the
+        Network Instance.</t>
 
       <section anchor="CFG-MODEL" title="Design of Configuration Model">
         <t>The configuration model consists mainly of the parameters specified
@@ -464,9 +461,7 @@
         <t>At the "bfd" node under control-plane-protocol, there is no
         configuration data, only operational state data. The operational state
         data consist of overall BFD session statistics, i.e. for BFD on all
-        types of forwarding paths. The "bfd" node under control-plane-protocol
-        can be used in a network device (top-level), or mounted in an LNE or
-        in a network instance.</t>
+        types of forwarding paths.</t>
 
         <figure align="left">
           <preamble/>
@@ -480,9 +475,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd@YYYY-MM-DD-tree.txt)
       <section title="BFD IP single-hop hierarchy">
         <t>An "ip-sh" node is added under "bfd" node in
         control-plane-protocol. The configuration and operational state data
-        for each BFD IP single-hop session is under this "ip-sh" node. The
-        "ip-sh" node can be used in a network device (top-level), or mounted
-        in an LNE or in a network instance.</t>
+        for each BFD IP single-hop session is under this "ip-sh" node.</t>
 
         <figure align="left">
           <preamble/>
@@ -499,9 +492,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD-tree.txt)
         cntrol-plane-protocol. The configuration and operational state data
         for each BFD IP multihop session is under this "ip-mh" node. In the
         operational state model we support multiple BFD multihop sessions per
-        remote address (ECMP), the local discriminator is used as key. The
-        "ip-mh" node can be used in a network device (top-level), or mounted
-        in an LNE or in a network instance.</t>
+        remote address (ECMP), the local discriminator is used as key.</t>
 
         <figure align="left">
           <preamble/>
@@ -515,9 +506,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD-tree.txt)
       <section title="BFD over LAG hierarchy">
         <t>A "lag" node is added under the "bfd" node in
         control-plane-protocol. The configuration and operational state data
-        for each BFD LAG session is under this "lag" node. The "lag" node can
-        be used in a network device (top-level), or mounted in an LNE or in a
-        network instance.</t>
+        for each BFD LAG session is under this "lag" node.</t>
 
         <figure align="left">
           <preamble/>
@@ -641,7 +630,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/iana-bfd-types@YYYY-MM-DD.yang)
       </section>
 
       <section anchor="BFD-TYPES" title="BFD types YANG Module">
-        <t>This YANG module imports typedefs from <xref target="RFC6991"/> and
+        <t>This YANG module imports typedefs from <xref target="RFC6991"/>,  <xref target="RFC8177"/> and
         the "control-plane-protocol" identity from <xref
         target="I-D.ietf-netmod-rfc8022bis"/>.</t>
 
@@ -678,7 +667,10 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd@YYYY-MM-DD.yang)
 
       <section title="BFD IP single-hop YANG Module">
         <t>This YANG module imports "interface-ref" from <xref
-        target="I-D.ietf-netmod-rfc7223bis"/>.</t>
+        target="I-D.ietf-netmod-rfc7223bis"/>, typedefs from <xref
+        target="RFC6991"/> and augments
+        "/routing/control-plane-protocols/control-plane-protocol" from <xref
+        target="I-D.ietf-netmod-rfc8022bis"/>.</t>
 
         <figure align="left">
           <preamble/>
@@ -695,7 +687,9 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-sh@YYYY-MM-DD.yang)
 
       <section title="BFD IP multihop YANG Module">
         <t>This YANG module imports typedefs from <xref
-        target="RFC6991"/>.</t>
+        target="RFC6991"/> and augments
+        "/routing/control-plane-protocols/control-plane-protocol" from <xref
+        target="I-D.ietf-netmod-rfc8022bis"/>.</t>
 
         <figure align="left">
           <preamble/>
@@ -712,7 +706,10 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD.yang)
 
       <section title="BFD over LAG YANG Module">
         <t>This YANG module imports "interface-ref" from <xref
-        target="I-D.ietf-netmod-rfc7223bis"/>.</t>
+        target="I-D.ietf-netmod-rfc7223bis"/>, typedefs from <xref
+        target="RFC6991"/> and augments
+        "/routing/control-plane-protocols/control-plane-protocol" from <xref
+        target="I-D.ietf-netmod-rfc8022bis"/>.</t>
 
         <figure align="left">
           <preamble/>
@@ -729,7 +726,9 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-ip-mh@YYYY-MM-DD.yang)
 
       <section title="BFD over MPLS YANG Module">
         <t>This YANG module imports typedefs from <xref
-        target="RFC6991"/>.</t>
+        target="RFC6991"/> and augments
+        "/routing/control-plane-protocols/control-plane-protocol" from <xref
+        target="I-D.ietf-netmod-rfc8022bis"/>.</t>
 
         <figure align="left">
           <preamble/>
@@ -1025,9 +1024,10 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
         <t>This document defines the initial version of the IANA-maintained
         iana-bfd-types YANG module.</t>
 
-        <t>The iana-bfd-types YANG module is intended to reflect the "BFD
+        <t>The iana-bfd-types YANG module mirrors the "BFD
         Diagnostic Codes" registry and "BFD Authentication Types" registry at
-        https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml</t>
+        https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml. 
+        Whenever that registry changes, IANA must update the iana-bfd-types YANG module.</t>
       </section>
     </section>
 
@@ -1094,8 +1094,6 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
     <references title="Informative References">
       <?rfc include="reference.I-D.ietf-rtgwg-ni-model"?>
 
-      <?rfc include="reference.I-D.ietf-netmod-schema-mount"?>
-
       <?rfc include="reference.I-D.ietf-rtgwg-lne-model"?>
 
       <?rfc include="reference.I-D.ietf-lime-yang-connectionless-oam"?>
@@ -1132,6 +1130,12 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -11 and -12">
+        <t><list style="symbols">
+            <t>Addressed comments from YANG Doctor review of rev11.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -10 and -11">
         <t><list style="symbols">
