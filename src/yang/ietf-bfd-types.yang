@@ -83,7 +83,7 @@ module ietf-bfd-types {
   feature authentication {
     description
       "This feature indicates that the server supports BFD
-       authentication as defined in section 6.7 of RFC 5880.";
+       authentication.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.7.";
@@ -91,8 +91,8 @@ module ietf-bfd-types {
 
   feature demand-mode {
     description
-      "This feature indicates that the server supports BFD demand mode
-       as defined in section 6.6 of RFC 5880.";
+      "This feature indicates that the server supports BFD demand
+       mode.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.6.";
@@ -100,8 +100,8 @@ module ietf-bfd-types {
 
   feature echo-mode {
     description
-      "This feature indicates that the server supports BFD echo mode
-       as defined in section 6.4 of RFC 5880.";
+      "This feature indicates that the server supports BFD echo
+       mode.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.4.";
@@ -112,7 +112,7 @@ module ietf-bfd-types {
    */
   identity bfdv1 {
     base "rt:control-plane-protocol";
-    description "BFD protocol version 1 as per RFC 5880.";
+    description "BFD protocol version 1.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD).";
   }
@@ -124,14 +124,14 @@ module ietf-bfd-types {
   }
   identity path-ip-sh {
     base path-type;
-    description "BFD on IP single hop as described in RFC 5881.";
+    description "BFD on IP single hop.";
     reference
       "RFC 5881: Bidirectional Forwarding Detection (BFD)
        for IPv4 and IPv6 (Single Hop).";
   }
   identity path-ip-mh {
     base path-type;
-    description "BFD on IP multihop paths as described in RFC 5883.";
+    description "BFD on IP multihop paths.";
     reference
       "RFC 5883: Bidirectional Forwarding Detection (BFD) for
        Multihop Paths.";
@@ -139,7 +139,7 @@ module ietf-bfd-types {
   identity path-mpls-te {
     base path-type;
     description
-      "BFD on MPLS Traffic Engineering as described in RFC 5884.";
+      "BFD on MPLS Traffic Engineering.";
     reference
       "RFC 5884: Bidirectional Forwarding Detection (BFD)
        for MPLS Label Switched Paths (LSPs).";
@@ -147,7 +147,7 @@ module ietf-bfd-types {
   identity path-mpls-lsp {
     base path-type;
     description
-      "BFD on MPLS Label Switched Path as described in RFC 5884.";
+      "BFD on MPLS Label Switched Path.";
     reference
       "RFC 5884: Bidirectional Forwarding Detection (BFD)
        for MPLS Label Switched Paths (LSPs).";
@@ -155,7 +155,7 @@ module ietf-bfd-types {
   identity path-lag {
     base path-type;
     description
-      "Micro-BFD on LAG member links as described in RFC 7130.";
+      "Micro-BFD on LAG member links.";
     reference
       "RFC 7130: Bidirectional Forwarding Detection (BFD) on
        Link Aggregation Group (LAG) Interfaces.";

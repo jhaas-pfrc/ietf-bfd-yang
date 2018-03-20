@@ -5,14 +5,14 @@
 Network Working Group                                     R. Rahman, Ed.
 Internet-Draft                                             Cisco Systems
 Intended status: Standards Track                           L. Zheng, Ed.
-Expires: September 20, 2018                          Huawei Technologies
+Expires: September 21, 2018                          Huawei Technologies
                                                     M. Jethanandani, Ed.
 
                                                            S. Pallagatti
 
                                                                G. Mirsky
                                                          ZTE Corporation
-                                                          March 19, 2018
+                                                          March 20, 2018
 
 
       YANG Data Model for Bidirectional Forwarding Detection (BFD)
@@ -41,7 +41,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 20, 2018.
+   This Internet-Draft will expire on September 21, 2018.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 1]
+Rahman, et al.         Expires September 21, 2018               [Page 1]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 2]
+Rahman, et al.         Expires September 21, 2018               [Page 2]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -165,7 +165,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 3]
+Rahman, et al.         Expires September 21, 2018               [Page 3]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -212,16 +212,16 @@ Internet-Draft                  BFD YANG                      March 2018
 
    A new control-plane protocol "bfdv1" is defined and a "bfd" container
    is created under control-plane-protocol as specified in "A YANG Data
-   Model for Routing Management (NMDA Version)"
-   [I-D.ietf-netmod-rfc8022bis].  This new "bfd" container is augmented
-   by all the YANG modules for their respective specific information:
+   Model for Routing Management (NMDA Version)" [RFC8349].  This new
+   "bfd" container is augmented by all the YANG modules for their
+   respective specific information:
 
 
 
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 4]
+Rahman, et al.         Expires September 21, 2018               [Page 4]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -277,7 +277,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 5]
+Rahman, et al.         Expires September 21, 2018               [Page 5]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -333,7 +333,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 6]
+Rahman, et al.         Expires September 21, 2018               [Page 6]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -389,7 +389,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 7]
+Rahman, et al.         Expires September 21, 2018               [Page 7]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -445,7 +445,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 8]
+Rahman, et al.         Expires September 21, 2018               [Page 8]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -501,7 +501,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018               [Page 9]
+Rahman, et al.         Expires September 21, 2018               [Page 9]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -557,7 +557,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 10]
+Rahman, et al.         Expires September 21, 2018              [Page 10]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -613,21 +613,21 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 11]
+Rahman, et al.         Expires September 21, 2018              [Page 11]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
         |     +--ro session-statistics
-        |        +--ro create-time?                  yang:date-and-time
-        |        +--ro last-down-time?               yang:date-and-time
-        |        +--ro last-up-time?                 yang:date-and-time
-        |        +--ro down-count?                   yang:counter32
-        |        +--ro admin-down-count?             yang:counter32
-        |        +--ro receive-packet-count?         yang:counter64
-        |        +--ro send-packet-count?            yang:counter64
-        |        +--ro receive-invalid-packet-count? yang:counter64
-        |        +--ro send-failed-packet-count?     yang:counter64
+        |        +--ro create-time?                   yang:date-and-time
+        |        +--ro last-down-time?                yang:date-and-time
+        |        +--ro last-up-time?                  yang:date-and-time
+        |        +--ro down-count?                    yang:counter32
+        |        +--ro admin-down-count?              yang:counter32
+        |        +--ro receive-packet-count?          yang:counter64
+        |        +--ro send-packet-count?             yang:counter64
+        |        +--ro receive-invalid-packet-count?  yang:counter64
+        |        +--ro send-failed-packet-count?      yang:counter64
         +--rw interfaces* [interface]
            +--rw interface         if:interface-ref
            +--rw authentication! {authentication}?
@@ -666,7 +666,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 12]
+Rahman, et al.         Expires September 21, 2018              [Page 12]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -722,7 +722,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 13]
+Rahman, et al.         Expires September 21, 2018              [Page 13]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -778,7 +778,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 14]
+Rahman, et al.         Expires September 21, 2018              [Page 14]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -834,7 +834,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 15]
+Rahman, et al.         Expires September 21, 2018              [Page 15]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -890,7 +890,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 16]
+Rahman, et al.         Expires September 21, 2018              [Page 16]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -946,7 +946,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 17]
+Rahman, et al.         Expires September 21, 2018              [Page 17]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1002,7 +1002,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 18]
+Rahman, et al.         Expires September 21, 2018              [Page 18]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1058,7 +1058,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 19]
+Rahman, et al.         Expires September 21, 2018              [Page 19]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1114,7 +1114,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 20]
+Rahman, et al.         Expires September 21, 2018              [Page 20]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1161,7 +1161,7 @@ Internet-Draft                  BFD YANG                      March 2018
 2.11.1.  Module ietf-interfaces
 
    The following boolean configuration is defined in A YANG Data Model
-   for Interface Management [I-D.ietf-netmod-rfc7223bis]:
+   for Interface Management [RFC8343]:
 
    /if:interfaces/if:interface/if:enabled
            If this configuration is set to "false", no BFD packets can
@@ -1170,7 +1170,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 21]
+Rahman, et al.         Expires September 21, 2018              [Page 21]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1217,7 +1217,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 2.12.  IANA BFD YANG Module
 
-  <CODE BEGINS> file "iana-bfd-types@2018-03-19.yang"
+  <CODE BEGINS> file "iana-bfd-types@2018-03-20.yang"
 
   module iana-bfd-types {
 
@@ -1226,7 +1226,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 22]
+Rahman, et al.         Expires September 21, 2018              [Page 22]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1272,7 +1272,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
     reference "RFC XXXX";
 
-    revision 2018-03-19 {
+    revision 2018-03-20 {
       description "Initial revision.";
       reference "RFC XXXX: IANA BFD YANG Data Types.";
     }
@@ -1282,7 +1282,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 23]
+Rahman, et al.         Expires September 21, 2018              [Page 23]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1338,7 +1338,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 24]
+Rahman, et al.         Expires September 21, 2018              [Page 24]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1382,9 +1382,9 @@ Internet-Draft                  BFD YANG                      March 2018
 2.13.  BFD types YANG Module
 
    This YANG module imports typedefs from [RFC6991], [RFC8177] and the
-   "control-plane-protocol" identity from [I-D.ietf-netmod-rfc8022bis].
+   "control-plane-protocol" identity from [RFC8349].
 
-<CODE BEGINS> file "ietf-bfd-types@2018-03-19.yang"
+<CODE BEGINS> file "ietf-bfd-types@2018-03-20.yang"
 
 module ietf-bfd-types {
 
@@ -1394,7 +1394,7 @@ module ietf-bfd-types {
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 25]
+Rahman, et al.         Expires September 21, 2018              [Page 25]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1417,10 +1417,9 @@ Internet-Draft                  BFD YANG                      March 2018
 
   import ietf-routing {
     prefix "rt";
-    // RFC Ed.: replace XXXX with actual RFC number of
-    // draft-ietf-netmod-rfc8022bis and remove this note.
     reference
-      "RFC XXXX: A YANG Data Model for Routing Management";
+      "RFC 8349: A YANG Data Model for Routing Management
+       (NMDA version)";
   }
 
   import ietf-key-chain {
@@ -1447,15 +1446,15 @@ Internet-Draft                  BFD YANG                      March 2018
      identified as authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 26]
+Rahman, et al.         Expires September 21, 2018              [Page 26]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-     without modification, is permitted pursuant to, and subject
      to the license terms contained in, the Simplified BSD License
      set forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
@@ -1469,7 +1468,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
   reference "RFC XXXX";
 
-  revision 2018-03-19 {
+  revision 2018-03-20 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -1487,7 +1486,7 @@ Internet-Draft                  BFD YANG                      March 2018
   feature authentication {
     description
       "This feature indicates that the server supports BFD
-       authentication as defined in section 6.7 of RFC 5880.";
+       authentication.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.7.";
@@ -1495,25 +1494,25 @@ Internet-Draft                  BFD YANG                      March 2018
 
   feature demand-mode {
     description
-      "This feature indicates that the server supports BFD demand mode
-       as defined in section 6.6 of RFC 5880.";
+      "This feature indicates that the server supports BFD demand
+       mode.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.6.";
   }
 
   feature echo-mode {
+    description
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 27]
+Rahman, et al.         Expires September 21, 2018              [Page 27]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-    description
-      "This feature indicates that the server supports BFD echo mode
-       as defined in section 6.4 of RFC 5880.";
+      "This feature indicates that the server supports BFD echo
+       mode.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD),
        section 6.4.";
@@ -1524,7 +1523,7 @@ Internet-Draft                  BFD YANG                      March 2018
    */
   identity bfdv1 {
     base "rt:control-plane-protocol";
-    description "BFD protocol version 1 as per RFC 5880.";
+    description "BFD protocol version 1.";
     reference
       "RFC 5880: Bidirectional Forwarding Detection (BFD).";
   }
@@ -1536,14 +1535,14 @@ Internet-Draft                  BFD YANG                      March 2018
   }
   identity path-ip-sh {
     base path-type;
-    description "BFD on IP single hop as described in RFC 5881.";
+    description "BFD on IP single hop.";
     reference
       "RFC 5881: Bidirectional Forwarding Detection (BFD)
        for IPv4 and IPv6 (Single Hop).";
   }
   identity path-ip-mh {
     base path-type;
-    description "BFD on IP multihop paths as described in RFC 5883.";
+    description "BFD on IP multihop paths.";
     reference
       "RFC 5883: Bidirectional Forwarding Detection (BFD) for
        Multihop Paths.";
@@ -1551,7 +1550,7 @@ Internet-Draft                  BFD YANG                      March 2018
   identity path-mpls-te {
     base path-type;
     description
-      "BFD on MPLS Traffic Engineering as described in RFC 5884.";
+      "BFD on MPLS Traffic Engineering.";
     reference
       "RFC 5884: Bidirectional Forwarding Detection (BFD)
        for MPLS Label Switched Paths (LSPs).";
@@ -1559,15 +1558,15 @@ Internet-Draft                  BFD YANG                      March 2018
   identity path-mpls-lsp {
     base path-type;
     description
+      "BFD on MPLS Label Switched Path.";
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 28]
+Rahman, et al.         Expires September 21, 2018              [Page 28]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-      "BFD on MPLS Label Switched Path as described in RFC 5884.";
     reference
       "RFC 5884: Bidirectional Forwarding Detection (BFD)
        for MPLS Label Switched Paths (LSPs).";
@@ -1575,7 +1574,7 @@ Internet-Draft                  BFD YANG                      March 2018
   identity path-lag {
     base path-type;
     description
-      "Micro-BFD on LAG member links as described in RFC 7130.";
+      "Micro-BFD on LAG member links.";
     reference
       "RFC 7130: Bidirectional Forwarding Detection (BFD) on
        Link Aggregation Group (LAG) Interfaces.";
@@ -1615,15 +1614,15 @@ Internet-Draft                  BFD YANG                      March 2018
       enum up {
         value 3;
         description "up";
+      }
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 29]
+Rahman, et al.         Expires September 21, 2018              [Page 29]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-      }
     }
     description "BFD state as defined in RFC 5880.";
   }
@@ -1671,15 +1670,15 @@ Internet-Draft                  BFD YANG                      March 2018
     }
   }
 
+  grouping base-cfg-parms {
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 30]
+Rahman, et al.         Expires September 21, 2018              [Page 30]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-  grouping base-cfg-parms {
     description "BFD grouping for base config parameters.";
     leaf local-multiplier {
       type multiplier;
@@ -1730,7 +1729,8 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 31]
+
+Rahman, et al.         Expires September 21, 2018              [Page 31]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1786,7 +1786,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 32]
+Rahman, et al.         Expires September 21, 2018              [Page 32]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1842,7 +1842,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 33]
+Rahman, et al.         Expires September 21, 2018              [Page 33]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1898,7 +1898,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 34]
+Rahman, et al.         Expires September 21, 2018              [Page 34]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -1954,7 +1954,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 35]
+Rahman, et al.         Expires September 21, 2018              [Page 35]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -2010,7 +2010,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 36]
+Rahman, et al.         Expires September 21, 2018              [Page 36]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -2066,7 +2066,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 37]
+Rahman, et al.         Expires September 21, 2018              [Page 37]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -2099,9 +2099,9 @@ Internet-Draft                  BFD YANG                      March 2018
 2.14.  BFD top-level YANG Module
 
    This YANG module imports and augments "/routing/control-plane-
-   protocols/control-plane-protocol" from [I-D.ietf-netmod-rfc8022bis].
+   protocols/control-plane-protocol" from [RFC8349].
 
-   <CODE BEGINS> file "ietf-bfd@2018-03-19.yang"
+   <CODE BEGINS> file "ietf-bfd@2018-03-20.yang"
 
    module ietf-bfd {
 
@@ -2122,16 +2122,15 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 38]
+Rahman, et al.         Expires September 21, 2018              [Page 38]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
        prefix "rt";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc8022bis and remove this note.
        reference
-         "RFC XXXX: A YANG Data Model for Routing Management";
+         "RFC 8349: A YANG Data Model for Routing Management
+          (NMDA version)";
      }
 
      organization "IETF BFD Working Group";
@@ -2166,7 +2165,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
      reference "RFC XXXX";
 
-     revision 2018-03-19 {
+     revision 2018-03-20 {
        description "Initial revision.";
        reference "RFC XXXX: YANG Data Model for BFD";
      }
@@ -2175,15 +2174,15 @@ Internet-Draft                  BFD YANG                      March 2018
            + "rt:control-plane-protocol" {
         when "derived-from-or-self(rt:type, 'bfd-types:bfdv1')" {
          description
+           "This augmentation is only valid for a control-plane protocol
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 39]
+Rahman, et al.         Expires September 21, 2018              [Page 39]
 
 Internet-Draft                  BFD YANG                      March 2018
 
 
-           "This augmentation is only valid for a control-plane protocol
             instance of BFD (type 'bfdv1').";
        }
        description "BFD augmentation.";
@@ -2200,12 +2199,11 @@ Internet-Draft                  BFD YANG                      March 2018
 
 2.15.  BFD IP single-hop YANG Module
 
-   This YANG module imports "interface-ref" from
-   [I-D.ietf-netmod-rfc7223bis], typedefs from [RFC6991] and augments
-   "/routing/control-plane-protocols/control-plane-protocol" from
-   [I-D.ietf-netmod-rfc8022bis].
+   This YANG module imports "interface-ref" from [RFC8343], typedefs
+   from [RFC6991] and augments "/routing/control-plane-protocols/
+   control-plane-protocol" from [RFC8349].
 
-   <CODE BEGINS> file "ietf-bfd-ip-sh@2018-03-19.yang"
+   <CODE BEGINS> file "ietf-bfd-ip-sh@2018-03-20.yang"
 
    module ietf-bfd-ip-sh {
 
@@ -2225,31 +2223,27 @@ Internet-Draft                  BFD YANG                      March 2018
 
      import ietf-interfaces {
        prefix "if";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc7223bis and remove this note.
        reference
-         "RFC XXXX: A YANG Data Model for Interface Management";
+         "RFC 8343: A YANG Data Model for Interface Management";
      }
-
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 40]
-
-Internet-Draft                  BFD YANG                      March 2018
-
 
      import ietf-inet-types {
        prefix "inet";
        reference "RFC 6991: Common YANG Data Types";
      }
 
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 40]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
      import ietf-routing {
        prefix "rt";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc8022bis and remove this note.
        reference
-         "RFC XXXX: A YANG Data Model for Routing Management";
+         "RFC 8349: A YANG Data Model for Routing Management
+          (NMDA version)";
      }
 
      organization "IETF BFD Working Group";
@@ -2284,23 +2278,23 @@ Internet-Draft                  BFD YANG                      March 2018
 
      reference "RFC XXXX";
 
-     revision 2018-03-19 {
+     revision 2018-03-20 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD IP single-hop";
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 41]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
      }
 
      /*
       * Augments
       */
      augment "/rt:routing/rt:control-plane-protocols/"
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 41]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
            + "rt:control-plane-protocol/bfd:bfd" {
        description "BFD augmentation for IP single-hop";
        container ip-sh {
@@ -2343,20 +2337,20 @@ Internet-Draft                  BFD YANG                      March 2018
            }
 
            uses bfd-types:auth-parms;
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 42]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
          }
        }
      }
 
      /*
       * Notifications
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 42]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
       */
      notification singlehop-notification {
        description
@@ -2385,9 +2379,9 @@ Internet-Draft                  BFD YANG                      March 2018
 
    This YANG module imports typedefs from [RFC6991] and augments
    "/routing/control-plane-protocols/control-plane-protocol" from
-   [I-D.ietf-netmod-rfc8022bis].
+   [RFC8349].
 
- <CODE BEGINS> file "ietf-bfd-ip-mh@2018-03-19.yang"
+ <CODE BEGINS> file "ietf-bfd-ip-mh@2018-03-20.yang"
 
  module ietf-bfd-ip-mh {
 
@@ -2399,19 +2393,19 @@ Internet-Draft                  BFD YANG                      March 2018
 
    import ietf-bfd-types {
      prefix "bfd-types";
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 43]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
    }
 
    import ietf-bfd {
      prefix "bfd";
    }
+
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 43]
+
+Internet-Draft                  BFD YANG                      March 2018
+
 
    import ietf-inet-types {
      prefix "inet";
@@ -2420,10 +2414,9 @@ Internet-Draft                  BFD YANG                      March 2018
 
    import ietf-routing {
      prefix "rt";
-     // RFC Ed.: replace XXXX with actual RFC number of
-     // draft-ietf-netmod-rfc8022bis and remove this note.
      reference
-       "RFC XXXX: A YANG Data Model for Routing Management";
+       "RFC 8349: A YANG Data Model for Routing Management
+        (NMDA version)";
    }
 
    organization "IETF BFD Working Group";
@@ -2456,19 +2449,19 @@ Internet-Draft                  BFD YANG                      March 2018
    // RFC Ed.: replace XXXX with actual RFC number and remove this
    // note
 
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 44]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
    reference "RFC XXXX";
 
-   revision 2018-03-19 {
+   revision 2018-03-20 {
      description "Initial revision.";
      reference "RFC XXXX: A YANG data model for BFD IP multihop.";
    }
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 44]
+
+Internet-Draft                  BFD YANG                      March 2018
+
 
    /*
     * Augments
@@ -2511,14 +2504,6 @@ Internet-Draft                  BFD YANG                      March 2018
            }
            leaf rx-ttl {
              type bfd-types:hops;
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 45]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
              mandatory true;
              description
                "Minimum allowed hop count value for incoming BFD control
@@ -2526,6 +2511,14 @@ Internet-Draft                  BFD YANG                      March 2018
                 this value are dropped.";
            }
            list sessions {
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 45]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
              config false;
              description
                "The multiple BFD sessions between a source and a " +
@@ -2554,26 +2547,17 @@ Internet-Draft                  BFD YANG                      March 2018
 
 2.17.  BFD over LAG YANG Module
 
-   This YANG module imports "interface-ref" from
-   [I-D.ietf-netmod-rfc7223bis], typedefs from [RFC6991] and augments
-   "/routing/control-plane-protocols/control-plane-protocol" from
-   [I-D.ietf-netmod-rfc8022bis].
+   This YANG module imports "interface-ref" from [RFC8343], typedefs
+   from [RFC6991] and augments "/routing/control-plane-protocols/
+   control-plane-protocol" from [RFC8349].
 
-   <CODE BEGINS> file "ietf-bfd-lag@2018-03-19.yang"
+   <CODE BEGINS> file "ietf-bfd-lag@2018-03-20.yang"
 
    module ietf-bfd-lag {
 
      yang-version 1.1;
 
      namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-lag";
-
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 46]
-
-Internet-Draft                  BFD YANG                      March 2018
-
 
      prefix "bfd-lag";
 
@@ -2583,14 +2567,21 @@ Internet-Draft                  BFD YANG                      March 2018
 
      import ietf-bfd {
        prefix "bfd";
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 46]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
      }
 
      import ietf-interfaces {
        prefix "if";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc7223bis and remove this note.
        reference
-         "RFC XXXX: A YANG Data Model for Interface Management";
+         "RFC 8349: A YANG Data Model for Routing Management
+          (NMDA version)";
      }
 
      import ietf-inet-types {
@@ -2623,14 +2614,6 @@ Internet-Draft                  BFD YANG                      March 2018
         Copyright (c) 2018 IETF Trust and the persons
         identified as authors of the code.  All rights reserved.
 
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 47]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
         Redistribution and use in source and binary forms, with or
         without modification, is permitted pursuant to, and subject
         to the license terms contained in, the Simplified BSD License
@@ -2641,12 +2624,19 @@ Internet-Draft                  BFD YANG                      March 2018
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 47]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
      // RFC Ed.: replace XXXX with actual RFC number and remove this
      // note
 
      reference "RFC XXXX";
 
-     revision 2018-03-19 {
+     revision 2018-03-20 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over LAG";
      }
@@ -2679,14 +2669,6 @@ Internet-Draft                  BFD YANG                      March 2018
                type if:interface-ref ;
                description "Name of the LAG";
              }
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 48]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
              leaf ipv4-dest-addr {
                type inet:ipv4-address;
                description
@@ -2697,6 +2679,14 @@ Internet-Draft                  BFD YANG                      March 2018
                description
                  "IPv6 address of the peer, for IPv6 micro-BFD.";
              }
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 48]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
              uses bfd-types:common-cfg-parms;
 
              leaf use-ipv4 {
@@ -2735,14 +2725,6 @@ Internet-Draft                  BFD YANG                      March 2018
                    "Micro-BFD IPv6 session state on member link.";
                  uses bfd-types:all-session;
                }
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 49]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
              }
            }
          }
@@ -2753,6 +2735,14 @@ Internet-Draft                  BFD YANG                      March 2018
       * Notifications
       */
      notification lag-notification {
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 49]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
        description
          "Notification for BFD over LAG session state change. " +
          "An implementation may rate-limit notifications, e.g. when a" +
@@ -2778,9 +2768,9 @@ Internet-Draft                  BFD YANG                      March 2018
 
    This YANG module imports typedefs from [RFC6991] and augments
    "/routing/control-plane-protocols/control-plane-protocol" from
-   [I-D.ietf-netmod-rfc8022bis].
+   [RFC8349].
 
-   <CODE BEGINS> file "ietf-bfd-mpls@2018-03-19.yang"
+   <CODE BEGINS> file "ietf-bfd-mpls@2018-03-20.yang"
 
    module ietf-bfd-mpls {
 
@@ -2791,14 +2781,6 @@ Internet-Draft                  BFD YANG                      March 2018
      prefix "bfd-mpls";
 
      import ietf-bfd-types {
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 50]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
        prefix "bfd-types";
      }
 
@@ -2809,14 +2791,21 @@ Internet-Draft                  BFD YANG                      March 2018
      import ietf-inet-types {
        prefix "inet";
        reference "RFC 6991: Common YANG Data Types";
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 50]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
      }
 
      import ietf-routing {
        prefix "rt";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc8022bis and remove this note.
        reference
-         "RFC XXXX: A YANG Data Model for Routing Management";
+         "RFC 8349: A YANG Data Model for Routing Management
+          (NMDA version)";
      }
 
      organization "IETF BFD Working Group";
@@ -2847,25 +2836,25 @@ Internet-Draft                  BFD YANG                      March 2018
         the RFC itself for full legal notices.";
 
      // RFC Ed.: replace XXXX with actual RFC number and remove this
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 51]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
      // note
 
      reference "RFC XXXX";
 
-     revision 2018-03-19 {
+     revision 2018-03-20 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
      }
 
      /*
       * Identity definitions
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 51]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
       */
      identity encap-gach {
        base bfd-types:encap-type;
@@ -2903,14 +2892,6 @@ Internet-Draft                  BFD YANG                      March 2018
          description
            "Destination address as per RFC 5884.
             Needed if IP encapsulation is used.";
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 52]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
        }
      }
 
@@ -2922,6 +2903,13 @@ Internet-Draft                  BFD YANG                      March 2018
        description "BFD augmentation for MPLS.";
        container mpls {
          description "BFD MPLS top level container.";
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 52]
+
+Internet-Draft                  BFD YANG                      March 2018
+
 
          uses bfd-types:session-statistics-summary;
 
@@ -2959,14 +2947,6 @@ Internet-Draft                  BFD YANG                      March 2018
 
                uses bfd-mpls:mpls-dest-address;
              }
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 53]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
            }
          }
        }
@@ -2979,6 +2959,14 @@ Internet-Draft                  BFD YANG                      March 2018
        description
          "Notification for BFD over MPLS FEC session state change. " +
          "An implementation may rate-limit notifications, e.g. when a" +
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 53]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
          "session is continuously changing state.";
 
        uses bfd-types:notification-parms;
@@ -2999,7 +2987,7 @@ Internet-Draft                  BFD YANG                      March 2018
    This YANG module imports and augments "/te/tunnels/tunnel" from
    [I-D.ietf-teas-yang-te].
 
-   <CODE BEGINS> file "ietf-bfd-mpls-te@2018-03-19.yang"
+   <CODE BEGINS> file "ietf-bfd-mpls-te@2018-03-20.yang"
 
    module ietf-bfd-mpls-te {
 
@@ -3015,14 +3003,6 @@ Internet-Draft                  BFD YANG                      March 2018
 
      import ietf-bfd {
        prefix "bfd";
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 54]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
      }
 
      import ietf-bfd-mpls {
@@ -3035,10 +3015,17 @@ Internet-Draft                  BFD YANG                      March 2018
 
      import ietf-routing {
        prefix "rt";
-       // RFC Ed.: replace XXXX with actual RFC number of
-       // draft-ietf-netmod-rfc8022bis and remove this note.
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 54]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
        reference
-         "RFC XXXX: A YANG Data Model for Routing Management";
+         "RFC 8349: A YANG Data Model for Routing Management
+          (NMDA version)";
      }
 
      organization "IETF BFD Working Group";
@@ -3071,17 +3058,9 @@ Internet-Draft                  BFD YANG                      March 2018
      // RFC Ed.: replace XXXX with actual RFC number and remove this
      // note
 
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 55]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
      reference "RFC XXXX";
 
-     revision 2018-03-19 {
+     revision 2018-03-20 {
        description "Initial revision.";
        reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
      }
@@ -3092,6 +3071,14 @@ Internet-Draft                  BFD YANG                      March 2018
      augment "/rt:routing/rt:control-plane-protocols/"
            + "rt:control-plane-protocol/bfd:bfd" {
        description "BFD augmentation for MPLS-TE.";
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 55]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
        container mpls-te {
          description "BFD MPLS-TE top level container.";
 
@@ -3127,14 +3114,6 @@ Internet-Draft                  BFD YANG                      March 2018
      }
 
      /*
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 56]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
       * Notifications
       */
      notification mpls-te-notification {
@@ -3148,6 +3127,14 @@ Internet-Draft                  BFD YANG                      March 2018
        uses bfd-mpls:mpls-dest-address;
 
        leaf tunnel-name {
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 56]
+
+Internet-Draft                  BFD YANG                      March 2018
+
+
          type string;
          description "MPLS-TE tunnel on which BFD was running.";
        }
@@ -3186,7 +3173,20 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 57]
+
+
+
+
+
+
+
+
+
+
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 57]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3242,7 +3242,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 58]
+Rahman, et al.         Expires September 21, 2018              [Page 58]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3298,7 +3298,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 59]
+Rahman, et al.         Expires September 21, 2018              [Page 59]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3354,7 +3354,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 60]
+Rahman, et al.         Expires September 21, 2018              [Page 60]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3410,7 +3410,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 61]
+Rahman, et al.         Expires September 21, 2018              [Page 61]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3466,7 +3466,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 62]
+Rahman, et al.         Expires September 21, 2018              [Page 62]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3522,7 +3522,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 63]
+Rahman, et al.         Expires September 21, 2018              [Page 63]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3578,7 +3578,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 64]
+Rahman, et al.         Expires September 21, 2018              [Page 64]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3634,7 +3634,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 65]
+Rahman, et al.         Expires September 21, 2018              [Page 65]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3648,20 +3648,10 @@ Internet-Draft                  BFD YANG                      March 2018
               YANG Data Model for MPLS Base", draft-ietf-mpls-base-
               yang-06 (work in progress), February 2018.
 
-   [I-D.ietf-netmod-rfc7223bis]
-              Bjorklund, M., "A YANG Data Model for Interface
-              Management", draft-ietf-netmod-rfc7223bis-03 (work in
-              progress), January 2018.
-
    [I-D.ietf-netmod-rfc7277bis]
               Bjorklund, M., "A YANG Data Model for IP Management",
               draft-ietf-netmod-rfc7277bis-03 (work in progress),
               January 2018.
-
-   [I-D.ietf-netmod-rfc8022bis]
-              Lhotka, L., Lindem, A., and Y. Qu, "A YANG Data Model for
-              Routing Management (NMDA Version)", draft-ietf-netmod-
-              rfc8022bis-11 (work in progress), January 2018.
 
    [I-D.ietf-netmod-yang-tree-diagrams]
               Bjorklund, M. and L. Berger, "YANG Tree Diagrams", draft-
@@ -3688,13 +3678,6 @@ Internet-Draft                  BFD YANG                      March 2018
               DOI 10.17487/RFC5246, August 2008, <https://www.rfc-
               editor.org/info/rfc5246>.
 
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 66]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
    [RFC5586]  Bocci, M., Ed., Vigoureux, M., Ed., and S. Bryant, Ed.,
               "MPLS Generic Associated Channel", RFC 5586,
               DOI 10.17487/RFC5586, June 2009, <https://www.rfc-
@@ -3703,6 +3686,14 @@ Internet-Draft                  BFD YANG                      March 2018
    [RFC5880]  Katz, D. and D. Ward, "Bidirectional Forwarding Detection
               (BFD)", RFC 5880, DOI 10.17487/RFC5880, June 2010,
               <https://www.rfc-editor.org/info/rfc5880>.
+
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 66]
+
+Internet-Draft                  BFD YANG                      March 2018
+
 
    [RFC5881]  Katz, D. and D. Ward, "Bidirectional Forwarding Detection
               (BFD) for IPv4 and IPv6 (Single Hop)", RFC 5881,
@@ -3743,14 +3734,6 @@ Internet-Draft                  BFD YANG                      March 2018
               DOI 10.17487/RFC6536, March 2012, <https://www.rfc-
               editor.org/info/rfc6536>.
 
-
-
-
-Rahman, et al.         Expires September 20, 2018              [Page 67]
-
-Internet-Draft                  BFD YANG                      March 2018
-
-
    [RFC6991]  Schoenwaelder, J., Ed., "Common YANG Data Types",
               RFC 6991, DOI 10.17487/RFC6991, July 2013,
               <https://www.rfc-editor.org/info/rfc6991>.
@@ -3760,6 +3743,13 @@ Internet-Draft                  BFD YANG                      March 2018
               Forwarding Detection (BFD) on Link Aggregation Group (LAG)
               Interfaces", RFC 7130, DOI 10.17487/RFC7130, February
               2014, <https://www.rfc-editor.org/info/rfc7130>.
+
+
+
+Rahman, et al.         Expires September 21, 2018              [Page 67]
+
+Internet-Draft                  BFD YANG                      March 2018
+
 
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
@@ -3773,6 +3763,15 @@ Internet-Draft                  BFD YANG                      March 2018
               Zhang, "YANG Data Model for Key Chains", RFC 8177,
               DOI 10.17487/RFC8177, June 2017, <https://www.rfc-
               editor.org/info/rfc8177>.
+
+   [RFC8343]  Bjorklund, M., "A YANG Data Model for Interface
+              Management", RFC 8343, DOI 10.17487/RFC8343, March 2018,
+              <https://www.rfc-editor.org/info/rfc8343>.
+
+   [RFC8349]  Lhotka, L., Lindem, A., and Y. Qu, "A YANG Data Model for
+              Routing Management (NMDA Version)", RFC 8349,
+              DOI 10.17487/RFC8349, March 2018, <https://www.rfc-
+              editor.org/info/rfc8349>.
 
 7.2.  Informative References
 
@@ -3802,7 +3801,8 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 68]
+
+Rahman, et al.         Expires September 21, 2018              [Page 68]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3859,7 +3859,7 @@ module example-bfd-echo {
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 69]
+Rahman, et al.         Expires September 21, 2018              [Page 69]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3881,7 +3881,7 @@ Internet-Draft                  BFD YANG                      March 2018
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-03-19 {
+  revision 2018-03-20 {
     description "Initial revision.";
     reference
       "RFC XXXX: A YANG data model example augmentation for BFD echo
@@ -3915,7 +3915,7 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 70]
+Rahman, et al.         Expires September 21, 2018              [Page 70]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -3971,7 +3971,7 @@ B.4.  Changes between versions -08 and -09
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 71]
+Rahman, et al.         Expires September 21, 2018              [Page 71]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -4027,7 +4027,7 @@ B.9.  Changes between versions -03 and -04
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 72]
+Rahman, et al.         Expires September 21, 2018              [Page 72]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -4083,7 +4083,7 @@ Authors' Addresses
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 73]
+Rahman, et al.         Expires September 21, 2018              [Page 73]
 
 Internet-Draft                  BFD YANG                      March 2018
 
@@ -4139,4 +4139,4 @@ Internet-Draft                  BFD YANG                      March 2018
 
 
 
-Rahman, et al.         Expires September 20, 2018              [Page 74]
+Rahman, et al.         Expires September 21, 2018              [Page 74]
