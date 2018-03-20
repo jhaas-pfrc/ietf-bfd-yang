@@ -16,10 +16,8 @@ module ietf-bfd-ip-sh {
 
   import ietf-interfaces {
     prefix "if";
-    // RFC Ed.: replace XXXX with actual RFC number of
-    // draft-ietf-netmod-rfc7223bis and remove this note.
     reference
-      "RFC XXXX: A YANG Data Model for Interface Management";
+      "RFC 8343: A YANG Data Model for Interface Management";
   }
 
   import ietf-inet-types {
@@ -29,10 +27,9 @@ module ietf-bfd-ip-sh {
 
   import ietf-routing {
     prefix "rt";
-    // RFC Ed.: replace XXXX with actual RFC number of
-    // draft-ietf-netmod-rfc8022bis and remove this note.
     reference
-      "RFC XXXX: A YANG Data Model for Routing Management";
+      "RFC 8349: A YANG Data Model for Routing Management
+       (NMDA version)";
   }
 
   organization "IETF BFD Working Group";

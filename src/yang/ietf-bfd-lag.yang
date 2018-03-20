@@ -16,10 +16,9 @@ module ietf-bfd-lag {
 
   import ietf-interfaces {
     prefix "if";
-    // RFC Ed.: replace XXXX with actual RFC number of
-    // draft-ietf-netmod-rfc7223bis and remove this note.
     reference
-      "RFC XXXX: A YANG Data Model for Interface Management";
+      "RFC 8349: A YANG Data Model for Routing Management
+       (NMDA version)";
   }
 
   import ietf-inet-types {
