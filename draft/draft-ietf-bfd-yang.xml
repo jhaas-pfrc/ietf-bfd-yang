@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-12.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-13.txt" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="20" month="March" year="2018"/>
+    <date day="21" month="March" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -156,7 +156,7 @@
 
       <t>The YANG modules in this document conform to the Network Management
       Datastore Architecture (NMDA) <xref
-      target="I-D.ietf-netmod-revised-datastores">Network Management Datastore
+      target="RFC8342">Network Management Datastore
       Architecture </xref>. This means that the data models do not have
       separate top-level or sibling containers for configuration and
       operational state data.</t>
@@ -170,7 +170,7 @@
       </section>
       <section title="Tree Diagrams">
          <t>This document uses the graphical representation of data models defined in 
-            <xref target="I-D.ietf-netmod-yang-tree-diagrams"/>.</t>
+            <xref target="RFC8340"/>.</t>
       </section>
     </section>
 
@@ -569,7 +569,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD-tree.txt)
 
         <section title="Module ietf-ip">
           <t>The following boolean configuration is defined in <xref
-          target="I-D.ietf-netmod-rfc7277bis">A YANG Data Model for IP
+          target="RFC8344">A YANG Data Model for IP
           Management </xref>: <list hangIndent="8" style="hanging">
               <t
               hangText="/if:interfaces/if:interface/ip:ipv4/ip:enabled"><vspace/>If
@@ -1077,17 +1077,17 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <?rfc include="reference.RFC.8177"?>
 
+      <?rfc include="reference.RFC.8340"?>
+
       <?rfc include="reference.RFC.8343"?>
+
+      <?rfc include="reference.RFC.8344"?>
 
       <?rfc include="reference.RFC.8349"?>
 
-      <?rfc include="reference.I-D.ietf-netmod-rfc7277bis"?>
-
       <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
 
-      <?rfc include="reference.I-D.ietf-teas-yang-te"?>
-         
-      <?rfc include="reference.I-D.ietf-netmod-yang-tree-diagrams"?>
+      <?rfc include="reference.I-D.ietf-teas-yang-te"?>         
          
     </references>
 
@@ -1098,7 +1098,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <?rfc include="reference.I-D.ietf-lime-yang-connectionless-oam"?>
 
-      <?rfc include="reference.I-D.ietf-netmod-revised-datastores"?>
+      <?rfc include="reference.RFC.8342"?>
     </references>
 
     <section anchor="ECHO-CONFIG" title="Echo function configuration example">
@@ -1130,6 +1130,12 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -12 and -13">
+        <t><list style="symbols">
+            <t>Updated references for drafts which became RFCs recently.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -11 and -12">
         <t><list style="symbols">
