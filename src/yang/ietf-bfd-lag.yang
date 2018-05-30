@@ -6,19 +6,23 @@ module ietf-bfd-lag {
 
   prefix "bfd-lag";
 
+  // RFC Ed.: replace occurences of XXXX with actual RFC number and
+  // remove this note
+
   import ietf-bfd-types {
     prefix "bfd-types";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-bfd {
     prefix "bfd";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-interfaces {
     prefix "if";
     reference
-      "RFC 8349: A YANG Data Model for Routing Management
-       (NMDA version)";
+      "RFC 8343: A YANG Data Model for Interface Management";
   }
 
   import ietf-inet-types {
@@ -28,10 +32,9 @@ module ietf-bfd-lag {
 
   import ietf-routing {
     prefix "rt";
-    // RFC Ed.: replace XXXX with actual RFC number of
-    // draft-ietf-netmod-rfc8022bis and remove this note.
     reference
-      "RFC XXXX: A YANG Data Model for Routing Management";
+      "RFC 8349: A YANG Data Model for Routing Management
+       (NMDA version)";
   }
 
   organization "IETF BFD Working Group";
@@ -60,9 +63,6 @@ module ietf-bfd-lag {
 
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
-
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
 
   reference "RFC XXXX";
 

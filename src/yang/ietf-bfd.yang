@@ -6,10 +6,11 @@ module ietf-bfd {
 
   prefix "bfd";
 
+  // RFC Ed.: replace occurences of XXXX with actual RFC number and
+  // remove this note
+
   import ietf-bfd-types {
     prefix "bfd-types";
-    // RFC Ed.: replace XXXX with actual RFC number and remove this
-    // note
     reference "RFC XXXX: YANG Data Model for BFD";
   }
 
@@ -46,9 +47,6 @@ module ietf-bfd {
 
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
-
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
 
   reference "RFC XXXX";
 

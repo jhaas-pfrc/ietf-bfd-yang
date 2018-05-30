@@ -6,20 +6,31 @@ module ietf-bfd-mpls-te {
 
   prefix "bfd-mpls-te";
 
+  // RFC Ed.: replace occurences of XXXX with actual RFC number and
+  // remove this note
+
   import ietf-bfd-types {
     prefix "bfd-types";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-bfd {
     prefix "bfd";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-bfd-mpls {
     prefix "bfd-mpls";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-te {
     prefix "te";
+    // RFC Ed.: replace YYYY with actual RFC number of
+    // draft-ietf-teas-yang-te and remove this note.
+    reference
+      "RFC YYYY: A YANG Data Model for Traffic Engineering Tunnels and
+       Interfaces";
   }
 
   import ietf-routing {
@@ -55,9 +66,6 @@ module ietf-bfd-mpls-te {
 
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
-
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
 
   reference "RFC XXXX";
 
