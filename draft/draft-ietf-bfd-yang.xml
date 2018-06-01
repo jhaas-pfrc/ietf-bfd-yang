@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-14.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-14" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="26" month="May" year="2018"/>
+    <date day="1" month="June" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
