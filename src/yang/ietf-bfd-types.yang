@@ -6,8 +6,12 @@ module ietf-bfd-types {
 
   prefix "bfd-types";
 
+  // RFC Ed.: replace occurences of XXXX with actual RFC number and
+  // remove this note
+
   import iana-bfd-types {
     prefix "iana-bfd-types";
+    reference "RFC XXXX: YANG Data Model for BFD";
   }
 
   import ietf-inet-types {
@@ -59,9 +63,6 @@ module ietf-bfd-types {
 
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
-
-  // RFC Ed.: replace XXXX with actual RFC number and remove this
-  // note
 
   reference "RFC XXXX";
 
