@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-14.txt" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-14" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="26" month="May" year="2018"/>
+    <date day="1" month="June" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -1126,7 +1126,7 @@ module: ietf-bfd-mpls-te
         <figure align="left">
           <preamble/>
 
-          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@2018-05-26.yang"
+          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@2018-06-01.yang"
 
 module iana-bfd-types {
 
@@ -1173,7 +1173,7 @@ module iana-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: IANA BFD YANG Data Types.";
   }
@@ -1277,7 +1277,7 @@ module iana-bfd-types {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-types@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-types@2018-06-01.yang"
 
 module ietf-bfd-types {
 
@@ -1347,7 +1347,7 @@ module ietf-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -1899,7 +1899,7 @@ module ietf-bfd-types {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd@2018-06-01.yang"
 
 module ietf-bfd {
 
@@ -1953,7 +1953,7 @@ module ietf-bfd {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -1991,7 +1991,7 @@ module ietf-bfd {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-sh@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-ip-sh@2018-06-01.yang"
 
 module ietf-bfd-ip-sh {
 
@@ -2061,7 +2061,7 @@ module ietf-bfd-ip-sh {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP single-hop";
   }
@@ -2155,7 +2155,7 @@ module ietf-bfd-ip-sh {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-mh@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-ip-mh@2018-06-01.yang"
 
 module ietf-bfd-ip-mh {
 
@@ -2219,7 +2219,7 @@ module ietf-bfd-ip-mh {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multihop.";
   }
@@ -2312,7 +2312,7 @@ module ietf-bfd-ip-mh {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-lag@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-lag@2018-06-01.yang"
 
 module ietf-bfd-lag {
 
@@ -2382,7 +2382,7 @@ module ietf-bfd-lag {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
@@ -2507,7 +2507,7 @@ module ietf-bfd-lag {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-mpls@2018-06-01.yang"
 
 module ietf-bfd-mpls {
 
@@ -2571,7 +2571,7 @@ module ietf-bfd-mpls {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
@@ -2701,7 +2701,7 @@ module ietf-bfd-mpls {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls-te@2018-05-26.yang"
+<CODE BEGINS> file "ietf-bfd-mpls-te@2018-06-01.yang"
 
 module ietf-bfd-mpls-te {
 
@@ -2774,7 +2774,7 @@ module ietf-bfd-mpls-te {
 
   reference "RFC XXXX";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
   }
@@ -3392,7 +3392,7 @@ module example-bfd-echo {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-05-26 {
+  revision 2018-06-01 {
     description "Initial revision.";
     reference
       "RFC XXXX: A YANG data model example augmentation for BFD echo
