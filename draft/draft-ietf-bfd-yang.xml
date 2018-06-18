@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-14" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-15" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -109,7 +109,7 @@
       </address>
     </author>
 
-    <date day="1" month="June" year="2018"/>
+    <date day="18" month="June" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -950,6 +950,17 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <t/>
 
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd-types</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t/>
       <t>--------------------------------------------------------------------</t>
 
       <t>URI: urn:ietf:params:xml:ns:yang:ietf-bfd</t>
