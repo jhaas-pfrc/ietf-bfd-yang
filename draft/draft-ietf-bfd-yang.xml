@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-15" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-16" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -54,17 +54,18 @@
 
     <author fullname="Mahesh Jethanandani" initials="M." role="editor"
             surname="Jethanandani">
+      <organization>Xoriant Corporation</organization>
       <address>
         <postal>
-          <street/>
+          <street>1248 Reamwood Ave</street>
 
-          <city/>
+          <city>Sunnyvale</city>
 
-          <region/>
+          <region>California</region>
 
-          <code/>
+          <code>94089</code>
 
-          <country/>
+          <country>USA</country>
         </postal>
 
         <email>mjethanandani@gmail.com</email>
@@ -109,7 +110,7 @@
       </address>
     </author>
 
-    <date day="18" month="June" year="2018"/>
+    <date day="21" month="June" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -169,7 +170,7 @@
         appear in all capitals, as shown here.</t>
       </section>
       <section title="Tree Diagrams">
-         <t>This document uses the graphical representation of data models defined in 
+         <t>This document uses the graphical representation of data models defined in
             <xref target="RFC8340"/>.</t>
       </section>
     </section>
@@ -774,7 +775,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/ietf-bfd-mpls-te@YYYY-MM-DD.yang)
           <preamble/>
 
           <artwork align="left"><![CDATA[
-INSERT_TEXT_FROM_FILE(../src/yang/example-ip-sh.xml)  
+INSERT_TEXT_FROM_FILE(../src/yang/example-ip-sh.xml)
 
 ]]></artwork>
         </figure>
@@ -942,13 +943,20 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
     </section>
 
     <section title="IANA Considerations">
-      <t>The IANA is requested to as assign a new namespace URI from the IETF
-      XML registry.</t>
-
-      <t>This document registers the following namesace URIs in the IETF XML
+      <t>This document registers the following namespace URIs in the IETF XML
       registry <xref target="RFC3688"/>:</t>
 
       <t/>
+
+      <t>--------------------------------------------------------------------</t>
+
+      <t>URI: urn:ietf:params:xml:ns:yang:iana-bfd-types</t>
+
+      <t>Registrant Contact: The IESG.</t>
+
+      <t>XML: N/A, the requested URI is an XML namespace.</t>
+
+      <t>--------------------------------------------------------------------</t>
 
       <t>--------------------------------------------------------------------</t>
 
@@ -1031,13 +1039,72 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <t>--------------------------------------------------------------------</t>
 
+      <t>This document registers the following YANG modules in the YANG Module Names
+      registry <xref target="RFC6020"/>:</t>
+      <t>RFC Editor: Replace RFC XXXX with actual RFC number and remove this note.</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: iana-bfd-types</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:iana-bfd-types</t>
+      <t>Prefix: iana-bfd-types</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-types</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-types</t>
+      <t>Prefix: bfd-types</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd</t>
+      <t>Prefix: bfd</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-ip-sh</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-ip-sh</t>
+      <t>Prefix: bfd-ip-sh</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-ip-mh</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-ip-mh</t>
+      <t>Prefix: bfd-ip-mh</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-lag</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-lag</t>
+      <t>Prefix: bfd-lag</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-mpls</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls</t>
+      <t>Prefix: bfd-mpls</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
+
+      <t>--------------------------------------------------------------------</t>
+      <t>Name: ietf-bfd-mpls-te</t>
+      <t>Namespace: urn:ietf:params:xml:ns:yang:ietf-bfd-mpls-te</t>
+      <t>Prefix: bfd-mpls-te</t>
+      <t>Reference: RFC XXXX</t>
+      <t>--------------------------------------------------------------------</t>
       <section title="IANA-Maintained iana-bfd-types module">
         <t>This document defines the initial version of the IANA-maintained
         iana-bfd-types YANG module.</t>
 
         <t>The iana-bfd-types YANG module mirrors the "BFD
         Diagnostic Codes" registry and "BFD Authentication Types" registry at
-        https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml. 
+        https://www.iana.org/assignments/bfd-parameters/bfd-parameters.xhtml.
         Whenever that registry changes, IANA must update the iana-bfd-types YANG module.</t>
       </section>
     </section>
@@ -1072,6 +1139,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <?rfc include='reference.RFC.5586'?>
 
+      <?rfc include='reference.RFC.6020'?>
+
       <?rfc include='reference.RFC.6241'?>
 
       <?rfc include='reference.RFC.6242'?>
@@ -1098,8 +1167,8 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <?rfc include="reference.I-D.ietf-mpls-base-yang"?>
 
-      <?rfc include="reference.I-D.ietf-teas-yang-te"?>         
-         
+      <?rfc include="reference.I-D.ietf-teas-yang-te"?>
+
     </references>
 
     <references title="Informative References">
@@ -1142,6 +1211,18 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
 
+      <section title="Changes between versions -15 and -16">
+        <t><list style="symbols">
+            <t>Added list of modules for YANG module registry.</t>
+          </list></t>
+      </section>
+
+      <section title="Changes between versions -14 and -15">
+        <t><list style="symbols">
+            <t>Added missing ietf-bfd-types in XML registry.</t>
+          </list></t>
+      </section>
+
       <section title="Changes between versions -13 and -14">
         <t><list style="symbols">
             <t>Addressed missing/incorrect references in import statements.</t>
@@ -1165,7 +1246,7 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
             <t>Added 2 examples.</t>
 
             <t>Added a container around some lists.</t>
-            
+
             <t>Fixed some indentation nits.</t>
           </list></t>
       </section>
