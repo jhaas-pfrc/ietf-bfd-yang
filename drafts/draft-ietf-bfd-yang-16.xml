@@ -54,17 +54,18 @@
 
     <author fullname="Mahesh Jethanandani" initials="M." role="editor"
             surname="Jethanandani">
+      <organization>Xoriant Corporation</organization>
       <address>
         <postal>
-          <street/>
+          <street>1248 Reamwood Ave</street>
 
-          <city/>
+          <city>Sunnyvale</city>
 
-          <region/>
+          <region>California</region>
 
-          <code/>
+          <code>94089</code>
 
-          <country/>
+          <country>USA</country>
         </postal>
 
         <email>mjethanandani@gmail.com</email>

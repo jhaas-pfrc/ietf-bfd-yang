@@ -7,7 +7,7 @@ Internet-Draft                                             Cisco Systems
 Intended status: Standards Track                           L. Zheng, Ed.
 Expires: December 23, 2018                           Huawei Technologies
                                                     M. Jethanandani, Ed.
-
+                                                     Xoriant Corporation
                                                            S. Pallagatti
 
                                                                G. Mirsky
@@ -4242,14 +4242,14 @@ Authors' Addresses
 
 
    Mahesh Jethanandani (editor)
+   Xoriant Corporation
+   1248 Reamwood Ave
+   Sunnyvale, California  94089
+   USA
 
    Email: mjethanandani@gmail.com
 
 
-   Santosh Pallagatti
-   India
-
-   Email: santosh.pallagatti@gmail.com
 
 
 
@@ -4258,16 +4258,16 @@ Rahman, et al.          Expires December 23, 2018              [Page 76]
 Internet-Draft                  BFD YANG                       June 2018
 
 
+   Santosh Pallagatti
+   India
+
+   Email: santosh.pallagatti@gmail.com
+
+
    Greg Mirsky
    ZTE Corporation
 
    Email: gregimirsky@gmail.com
-
-
-
-
-
-
 
 
 
