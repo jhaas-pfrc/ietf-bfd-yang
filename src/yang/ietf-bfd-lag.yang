@@ -159,7 +159,7 @@ module ietf-bfd-lag {
   notification lag-notification {
     description
       "Notification for BFD over LAG session state change. " +
-      "An implementation may rate-limit notifications, e.g. when a" +
+      "An implementation may rate-limit notifications, e.g. when a " +
       "session is continuously changing state.";
 
     uses bfd-types:notification-parms;
