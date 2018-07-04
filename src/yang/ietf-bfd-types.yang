@@ -535,16 +535,21 @@ module ietf-bfd-types {
       }
       leaf number-of-sessions-up {
         type yang:gauge32;
-        description "Number of BFD sessions currently in up state.";
+        description
+          "Number of BFD sessions currently in up state (as defined
+           in RFC 5880).";
       }
       leaf number-of-sessions-down {
         type yang:gauge32;
-        description "Number of BFD sessions currently in down state.";
+        description
+          "Number of BFD sessions currently in down or init state
+           but not admin-down (as defined in RFC 5880).";
       }
       leaf number-of-sessions-admin-down {
         type yang:gauge32;
         description
-          "Number of BFD sessions currently in admin-down state.";
+          "Number of BFD sessions currently in admin-down state (as
+           defined in RFC 5880).";
       }
     }
   }

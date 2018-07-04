@@ -5,7 +5,7 @@
 <?rfc tocdepth="6"?>
 <?rfc symrefs="yes"?>
 <?rfc sortrefs="yes"?>
-<rfc category="std" docName="draft-ietf-bfd-yang-16" ipr="trust200902">
+<rfc category="std" docName="draft-ietf-bfd-yang-17" ipr="trust200902">
   <front>
     <title abbrev="BFD YANG">YANG Data Model for Bidirectional Forwarding
     Detection (BFD)</title>
@@ -156,10 +156,9 @@
       protocols whose "hellos" do not support sub-second failure detection,
       e.g. OSPF and IS-IS.</t>
 
-      <t>The YANG modules in this document conform to the Network Management
-      Datastore Architecture (NMDA) <xref
-      target="RFC8342">Network Management Datastore
-      Architecture </xref>. This means that the data models do not have
+      <t>The YANG modules in this document conform to the <xref
+      target="RFC8342">Network Management Datastore Architecture (NMDA)</xref>.
+      This means that the data models do not have
       separate top-level or sibling containers for configuration and
       operational state data.</t>
 
@@ -178,7 +177,7 @@
 
     <section anchor="DESIGN-DATA" title="Design of the Data Model">
       <t>Since BFD is used for liveliness detection of various forwarding
-      paths, there is no uniform key to identify a BFD session. So the BFD
+      paths, there is no uniform key to identify a BFD session, and so the BFD
       data model is split in multiple YANG modules where each module
       corresponds to one type of forwarding path. For example, BFD for IP
       single-hop is in one YANG module and BFD for MPLS-TE is in another YANG
@@ -852,46 +851,62 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh/sessions:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
-      BFD IP single-hop session.</t>
+      required-min-rx-interval and min-interval all impact the
+      BFD IP single-hop session. The source-addr and dest-addr data nodes can be used to
+      send BFD packets to unwitting recipients, <xref target="RFC5880"/> describes how
+      BFD mitigates against such threats. Authentication data nodes key-chain and meticulous
+      impact the security of the BFD IP single-hop session.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/session-group:
       the list specifies the IP multi-hop BFD session groups.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/session-group:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
-      BFD IP multi-hop session.</t>
+      required-min-rx-interval and min-interval all impact the
+      BFD IP multi-hop session. The source-addr and dest-addr data nodes can be used to
+      send BFD packets to unwitting recipients, <xref target="RFC5880"/> describes how
+      BFD mitigates against such threats. Authentication data nodes key-chain and meticulous
+      impact the security of the BFD IP multi-hop session.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions:
       the list specifies the BFD sessions over LAG.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
-      BFD over LAG session.</t>
+      required-min-rx-interval and min-interval all impact the
+      BFD over LAG session. The ipv4-dest-addr and ipv6-dest-addr data nodes can be used to
+      send BFD packets to unwitting recipients, <xref target="RFC5880"/> describes how
+      BFD mitigates against such threats. Authentication data nodes key-chain and meticulous
+      impact the security of the BFD over LAG session.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/session-group:
       the list specifies the session groups for BFD over MPLS.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/session-group:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
-      BFD over MPLS LSPs session.</t>
+      required-min-rx-interval, and min-interval all impact the
+      BFD over MPLS LSPs session. Authentication data nodes key-chain and meticulous
+      impact the security of the BFD over MPLS LSPs session.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/egress:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
+      required-min-rx-interval and min-interval all impact the
       BFD over MPLS LSPs sessions for which this device is an MPLS LSP egress
-      node.</t>
+      node. Authentication data nodes key-chain and meticulous
+      impact the security of the BFD over MPLS LSPs sessions for which this device is
+      an MPLS LSP egress node</t>
 
       <t>/te/tunnels/tunnel: data nodes local-multiplier,
-      desired-min-tx-interval, required-min-rx-interval, min-interval and
-      authentication all impact the BFD session over the MPLS-TE tunnel.</t>
+      desired-min-tx-interval, required-min-rx-interval and min-interval
+      all impact the BFD session over the MPLS-TE tunnel. Authentication
+      data nodes key-chain and meticulous impact the security of the BFD session over
+      the MPLS-TE tunnel.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls-te/egress:
       data nodes local-multiplier, desired-min-tx-interval,
-      required-min-rx-interval, min-interval and authentication all impact the
+      required-min-rx-interval and min-interval all impact the
+      BFD over MPLS-TE sessions for which this device is an MPLS-TE egress
+      node. Authentication data nodes key-chain and meticulous impact the security of the
       BFD over MPLS-TE sessions for which this device is an MPLS-TE egress
       node.</t>
 
@@ -904,7 +919,11 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
       modification, the BFD protocol has mechanisms in place which allow for
       in service modification.</t>
 
-      <t/>
+      <t>When BFD clients are used to modify BFD configuration
+      (as described in <xref target="CFG-MODEL"/>), any authentication and
+      authorization for the BFD configuration changes have to take place in the BFD
+      clients. For example, if the BFD client is an IGP then the IGP should be
+      authenticated.</t>
 
       <t>Some of the readable data nodes in this YANG module may be considered
       sensitive or vulnerable in some network environments. It is thus
@@ -917,30 +936,61 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
       sessions which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
 
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-sh/sessions/session/:
+      access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the authentication container) provides the
+      ability to spoof BFD IP single-hop packets.</t>
+
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/summary:
       access to this information discloses the number of BFD IP multi-hop
       sessions which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
+
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/ip-mh/session-groups/session-group/sessions:
+      access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the session-group's authentication container) provides the
+      ability to spoof BFD IP multi-hop packets.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/micro-bfd-ipv4-session-statistics/summary:
       access to this information discloses the number of micro BFD IPv4 LAG
       sessions which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
 
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions/session/member-links/member-link/micro-bfd-ipv4:
+      access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the session's authentication container) provides the
+      ability to spoof BFD IPv4 LAG packets.</t>
+
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/micro-bfd-ipv6-session-statistics/summary:
       access to this information discloses the number of micro BFD IPv6 LAG
       sessions which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
+
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/lag/sessions/session/member-links/member-link/micro-bfd-ipv6:
+      access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the session's authentication container) provides the
+      ability to spoof BFD IPv6 LAG packets.</t>
 
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/summary:
       access to this information discloses the number of BFD sessions over
       MPLS LSPs which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
 
+      <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls/session-groups/session-group/sessions:
+      access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the session-group's authentication container) provides the
+      ability to spoof BFD over MPLS LSPs packets.</t>
+
       <t>/routing/control-plane-protocols/control-plane-protocol/bfd/mpls-te/summary:
       access to this information discloses the number of BFD sessions over
       MPLS-TE which are up, down and admin-down. The counters include BFD
       sessions for which the user does not have read-access.</t>
+
+      <t>/te/lsps-state/lsp: access to data nodes local-discriminator and remote-discriminator
+      (combined with the data nodes in the tunnel's authentication container) provides the
+      ability to spoof BFD over MPLS-TE packets.</t>
+
+
     </section>
 
     <section title="IANA Considerations">
