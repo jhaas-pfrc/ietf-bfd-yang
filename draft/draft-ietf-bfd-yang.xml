@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="4" month="July" year="2018"/>
+    <date day="5" month="July" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -361,7 +361,7 @@
         <section anchor="BFD-MPLS-TE-CFG"
                  title="MPLS Traffic Engineering Tunnels">
           <t>For MPLS-TE tunnels, BFD is configured under the MPLS-TE tunnel
-          since the desired failure detection parameters is a property of the
+          since the desired failure detection parameters are a property of the
           MPLS-TE tunnel. This is achieved by augmenting the MPLS-TE data
           model in <xref target="I-D.ietf-teas-yang-te">YANG Data Model for TE
           Topologies </xref>. For BFD parameters which are specific to the TE

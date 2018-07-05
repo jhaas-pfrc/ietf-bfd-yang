@@ -448,7 +448,7 @@
 
   <meta name="dct.creator" content="Rahman, R., Ed., Zheng, L., Ed., Jethanandani, M., Ed., Pallagatti, S., and G. Mirsky" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-bfd-yang-17" />
-  <meta name="dct.issued" scheme="ISO8601" content="2018-7-4" />
+  <meta name="dct.issued" scheme="ISO8601" content="2018-7-5" />
   <meta name="dct.abstract" content="This document defines a YANG data model that can be used to configure and manage Bidirectional Forwarding Detection (BFD)." />
   <meta name="description" content="This document defines a YANG data model that can be used to configure and manage Bidirectional Forwarding Detection (BFD)." />
 
@@ -472,7 +472,7 @@
 <td class="right">L. Zheng, Ed.</td>
 </tr>
 <tr>
-<td class="left">Expires: January 5, 2019</td>
+<td class="left">Expires: January 6, 2019</td>
 <td class="right">Huawei Technologies</td>
 </tr>
 <tr>
@@ -501,7 +501,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">July 4, 2018</td>
+<td class="right">July 5, 2018</td>
 </tr>
 
     	
@@ -518,7 +518,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on January 5, 2019.</p>
+<p>This Internet-Draft will expire on January 6, 2019.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2018 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -775,7 +775,7 @@
 <h1 id="rfc.section.2.1.4">
 <a href="#rfc.section.2.1.4">2.1.4.</a> <a href="#BFD-MPLS-TE-CFG" id="BFD-MPLS-TE-CFG">MPLS Traffic Engineering Tunnels</a>
 </h1>
-<p id="rfc.section.2.1.4.p.1">For MPLS-TE tunnels, BFD is configured under the MPLS-TE tunnel since the desired failure detection parameters is a property of the MPLS-TE tunnel. This is achieved by augmenting the MPLS-TE data model in <a href="#I-D.ietf-teas-yang-te" class="xref">YANG Data Model for TE Topologies</a>. For BFD parameters which are specific to the TE application, e.g. whether to tear down the tunnel in the event of a BFD session failure, these parameters will be defined in the YANG model of the MPLS-TE application.</p>
+<p id="rfc.section.2.1.4.p.1">For MPLS-TE tunnels, BFD is configured under the MPLS-TE tunnel since the desired failure detection parameters are a property of the MPLS-TE tunnel. This is achieved by augmenting the MPLS-TE data model in <a href="#I-D.ietf-teas-yang-te" class="xref">YANG Data Model for TE Topologies</a>. For BFD parameters which are specific to the TE application, e.g. whether to tear down the tunnel in the event of a BFD session failure, these parameters will be defined in the YANG model of the MPLS-TE application.</p>
 <p id="rfc.section.2.1.4.p.2">On top of the usual BFD parameters, we have the following per MPLS-TE tunnel: </p>
 
 <dl>
@@ -1406,7 +1406,7 @@ module: ietf-bfd-mpls-te
 <h1 id="rfc.section.2.12">
 <a href="#rfc.section.2.12">2.12.</a> IANA BFD YANG Module</h1>
 <p></p>
-<pre>&lt;CODE BEGINS&gt; file "iana-bfd-types@2018-07-04.yang"
+<pre>&lt;CODE BEGINS&gt; file "iana-bfd-types@2018-07-05.yang"
 
 module iana-bfd-types {
 
@@ -1453,7 +1453,7 @@ module iana-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: IANA BFD YANG Data Types.";
   }
@@ -1551,7 +1551,7 @@ module iana-bfd-types {
 <p id="rfc.section.2.13.p.1">This YANG module imports typedefs from <a href="#RFC6991" class="xref">[RFC6991]</a>,  <a href="#RFC8177" class="xref">[RFC8177]</a> and the "control-plane-protocol" identity from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-types@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-types@2018-07-05.yang"
 
 module ietf-bfd-types {
 
@@ -1621,7 +1621,7 @@ module ietf-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -2171,7 +2171,7 @@ module ietf-bfd-types {
 <p id="rfc.section.2.14.p.1">This YANG module imports and augments "/routing/control-plane-protocols/control-plane-protocol" from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd@2018-07-05.yang"
 
 module ietf-bfd {
 
@@ -2225,7 +2225,7 @@ module ietf-bfd {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -2254,7 +2254,7 @@ module ietf-bfd {
 <p id="rfc.section.2.15.p.1">This YANG module imports "interface-ref" from <a href="#RFC8343" class="xref">[RFC8343]</a>, typedefs from <a href="#RFC6991" class="xref">[RFC6991]</a> and augments "/routing/control-plane-protocols/control-plane-protocol" from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-ip-sh@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-ip-sh@2018-07-05.yang"
 
 module ietf-bfd-ip-sh {
 
@@ -2324,7 +2324,7 @@ module ietf-bfd-ip-sh {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP single-hop";
   }
@@ -2410,7 +2410,7 @@ module ietf-bfd-ip-sh {
 <p id="rfc.section.2.16.p.1">This YANG module imports typedefs from <a href="#RFC6991" class="xref">[RFC6991]</a> and augments "/routing/control-plane-protocols/control-plane-protocol" from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-ip-mh@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-ip-mh@2018-07-05.yang"
 
 module ietf-bfd-ip-mh {
 
@@ -2474,7 +2474,7 @@ module ietf-bfd-ip-mh {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multihop.";
   }
@@ -2558,7 +2558,7 @@ module ietf-bfd-ip-mh {
 <p id="rfc.section.2.17.p.1">This YANG module imports "interface-ref" from <a href="#RFC8343" class="xref">[RFC8343]</a>, typedefs from <a href="#RFC6991" class="xref">[RFC6991]</a> and augments "/routing/control-plane-protocols/control-plane-protocol" from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-lag@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-lag@2018-07-05.yang"
 
 module ietf-bfd-lag {
 
@@ -2628,7 +2628,7 @@ module ietf-bfd-lag {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
@@ -2745,7 +2745,7 @@ module ietf-bfd-lag {
 <p id="rfc.section.2.18.p.1">This YANG module imports typedefs from <a href="#RFC6991" class="xref">[RFC6991]</a> and augments "/routing/control-plane-protocols/control-plane-protocol" from <a href="#RFC8349" class="xref">[RFC8349]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-mpls@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-mpls@2018-07-05.yang"
 
 module ietf-bfd-mpls {
 
@@ -2809,7 +2809,7 @@ module ietf-bfd-mpls {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
@@ -2933,7 +2933,7 @@ module ietf-bfd-mpls {
 <p id="rfc.section.2.19.p.1">This YANG module imports and augments "/te/tunnels/tunnel" from <a href="#I-D.ietf-teas-yang-te" class="xref">[I-D.ietf-teas-yang-te]</a>.</p>
 <p></p>
 <pre>
-&lt;CODE BEGINS&gt; file "ietf-bfd-mpls-te@2018-07-04.yang"
+&lt;CODE BEGINS&gt; file "ietf-bfd-mpls-te@2018-07-05.yang"
 
 module ietf-bfd-mpls-te {
 
@@ -3006,7 +3006,7 @@ module ietf-bfd-mpls-te {
 
   reference "RFC XXXX";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
   }
@@ -3600,7 +3600,7 @@ module example-bfd-echo {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-07-04 {
+  revision 2018-07-05 {
     description "Initial revision.";
     reference
       "RFC XXXX: A YANG data model example augmentation for BFD echo
