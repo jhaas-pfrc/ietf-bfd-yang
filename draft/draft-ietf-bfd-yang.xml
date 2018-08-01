@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="5" month="July" year="2018"/>
+    <date day="1" month="August" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -919,11 +919,15 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-mpls.xml)
       modification, the BFD protocol has mechanisms in place which allow for
       in service modification.</t>
 
-      <t>When BFD clients are used to modify BFD configuration
-      (as described in <xref target="CFG-MODEL"/>), any authentication and
-      authorization for the BFD configuration changes have to take place in the BFD
-      clients. For example, if the BFD client is an IGP then the IGP should be
-      authenticated.</t>
+      <t>When BFD clients are used to modify BFD configuration (as described
+      in <xref target="CFG-MODEL"/>), the BFD clients need to be included in an
+      analysis of the security properties of the BFD-using system (e.g., when
+      considering the authentication and authorization of control actions).
+      In many cases, BFD is not the most vulnerable portion of such a composite
+      system, since BFD is limited to generating well-defined traffic at a fixed
+      rate on a given path; in the case of an IGP as BFD client, attacking the
+      IGP could cause more broad-scale disruption than (de)configuring a BFD
+      session could cause.</t>
 
       <t>Some of the readable data nodes in this YANG module may be considered
       sensitive or vulnerable in some network environments. It is thus
@@ -1261,6 +1265,12 @@ INSERT_TEXT_FROM_FILE(../src/yang/example-bfd-echo@YYYY-MM-DD.yang)
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -16 and -17">
+        <t><list style="symbols">
+            <t>Addressed IESG comments.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -15 and -16">
         <t><list style="symbols">

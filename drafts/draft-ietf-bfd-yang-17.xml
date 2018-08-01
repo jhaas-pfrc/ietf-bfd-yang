@@ -111,7 +111,7 @@
       </address>
     </author>
 
-    <date day="5" month="July" year="2018"/>
+    <date day="1" month="August" year="2018"/>
 
     <abstract>
       <t>This document defines a YANG data model that can be used to configure
@@ -1127,7 +1127,7 @@ module: ietf-bfd-mpls-te
         <figure align="left">
           <preamble/>
 
-          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@2018-07-05.yang"
+          <artwork align="left"><![CDATA[<CODE BEGINS> file "iana-bfd-types@2018-08-01.yang"
 
 module iana-bfd-types {
 
@@ -1143,8 +1143,9 @@ module iana-bfd-types {
     "        Internet Assigned Numbers Authority
 
     Postal: ICANN
-            4676 Admiralty Way, Suite 330
-            Marina del Rey, CA 90292
+            12025 Waterfront Drive, Suite 300
+            Los Angeles, CA 90094-2536
+            United States of America
 
     Tel:    +1 310 823 9358
     <mailto:iana@iana.org>";
@@ -1174,7 +1175,7 @@ module iana-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: IANA BFD YANG Data Types.";
   }
@@ -1278,7 +1279,7 @@ module iana-bfd-types {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-types@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-types@2018-08-01.yang"
 
 module ietf-bfd-types {
 
@@ -1348,7 +1349,7 @@ module ietf-bfd-types {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -1905,7 +1906,7 @@ module ietf-bfd-types {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd@2018-08-01.yang"
 
 module ietf-bfd {
 
@@ -1959,7 +1960,7 @@ module ietf-bfd {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: YANG Data Model for BFD";
   }
@@ -1997,7 +1998,7 @@ module ietf-bfd {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-sh@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-ip-sh@2018-08-01.yang"
 
 module ietf-bfd-ip-sh {
 
@@ -2067,7 +2068,7 @@ module ietf-bfd-ip-sh {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP single-hop";
   }
@@ -2161,7 +2162,7 @@ module ietf-bfd-ip-sh {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-ip-mh@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-ip-mh@2018-08-01.yang"
 
 module ietf-bfd-ip-mh {
 
@@ -2225,7 +2226,7 @@ module ietf-bfd-ip-mh {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD IP multihop.";
   }
@@ -2318,7 +2319,7 @@ module ietf-bfd-ip-mh {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-lag@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-lag@2018-08-01.yang"
 
 module ietf-bfd-lag {
 
@@ -2388,7 +2389,7 @@ module ietf-bfd-lag {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over LAG";
   }
@@ -2513,7 +2514,7 @@ module ietf-bfd-lag {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-mpls@2018-08-01.yang"
 
 module ietf-bfd-mpls {
 
@@ -2577,7 +2578,7 @@ module ietf-bfd-mpls {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
   }
@@ -2707,7 +2708,7 @@ module ietf-bfd-mpls {
           <preamble/>
 
           <artwork align="left"><![CDATA[
-<CODE BEGINS> file "ietf-bfd-mpls-te@2018-07-05.yang"
+<CODE BEGINS> file "ietf-bfd-mpls-te@2018-08-01.yang"
 
 module ietf-bfd-mpls-te {
 
@@ -2780,7 +2781,7 @@ module ietf-bfd-mpls-te {
 
   reference "RFC XXXX";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference "RFC XXXX: A YANG data model for BFD over MPLS-TE";
   }
@@ -3139,11 +3140,15 @@ module ietf-bfd-mpls-te {
       modification, the BFD protocol has mechanisms in place which allow for
       in service modification.</t>
 
-      <t>When BFD clients are used to modify BFD configuration
-      (as described in <xref target="CFG-MODEL"/>), any authentication and
-      authorization for the BFD configuration changes have to take place in the BFD
-      clients. For example, if the BFD client is an IGP then the IGP should be
-      authenticated.</t>
+      <t>When BFD clients are used to modify BFD configuration (as described
+      in <xref target="CFG-MODEL"/>), the BFD clients need to be included in an
+      analysis of the security properties of the BFD-using system (e.g., when
+      considering the authentication and authorization of control actions).
+      In many cases, BFD is not the most vulnerable portion of such a composite
+      system, since BFD is limited to generating well-defined traffic at a fixed
+      rate on a given path; in the case of an IGP as BFD client, attacking the
+      IGP could cause more broad-scale disruption than (de)configuring a BFD
+      session could cause.</t>
 
       <t>Some of the readable data nodes in this YANG module may be considered
       sensitive or vulnerable in some network environments. It is thus
@@ -3528,7 +3533,7 @@ module example-bfd-echo {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2018-07-05 {
+  revision 2018-08-01 {
     description "Initial revision.";
     reference
       "RFC XXXX: A YANG data model example augmentation for BFD echo
@@ -3584,6 +3589,12 @@ module example-bfd-echo {
 
     <section title="Change log">
       <t>RFC Editor: Remove this section upon publication as an RFC.</t>
+
+      <section title="Changes between versions -16 and -17">
+        <t><list style="symbols">
+            <t>Addressed IESG comments.</t>
+          </list></t>
+      </section>
 
       <section title="Changes between versions -15 and -16">
         <t><list style="symbols">
