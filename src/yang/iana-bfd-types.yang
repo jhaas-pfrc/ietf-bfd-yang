@@ -12,8 +12,9 @@ module iana-bfd-types {
     "        Internet Assigned Numbers Authority
 
     Postal: ICANN
-            4676 Admiralty Way, Suite 330
-            Marina del Rey, CA 90292
+            12025 Waterfront Drive, Suite 300
+            Los Angeles, CA 90094-2536
+            United States of America
 
     Tel:    +1 310 823 9358
     <mailto:iana@iana.org>";
