@@ -1,68 +1,80 @@
 module ietf-bfd-mpls {
 
   yang-version 1.1;
-
   namespace "urn:ietf:params:xml:ns:yang:ietf-bfd-mpls";
-
   prefix "bfd-mpls";
-
-  // RFC Ed.: replace occurences of XXXX with actual RFC number and
-  // remove this note
 
   import ietf-bfd-types {
     prefix "bfd-types";
-    reference "RFC XXXX: YANG Data Model for BFD";
+    reference
+      "RFC 0000: YANG Data Model for Bidirectional Forwarding
+       Detection (BFD)";
   }
 
   import ietf-bfd {
     prefix "bfd";
-    reference "RFC XXXX: YANG Data Model for BFD";
+    reference
+      "RFC 0000: YANG Data Model for Bidirectional Forwarding
+       Detection (BFD)";
   }
 
   import ietf-inet-types {
     prefix "inet";
-    reference "RFC 6991: Common YANG Data Types";
+    reference
+      "RFC 6991: Common YANG Data Types";
   }
 
   import ietf-routing {
     prefix "rt";
     reference
       "RFC 8349: A YANG Data Model for Routing Management
-       (NMDA version)";
+       (NMDA Version)";
   }
 
   organization "IETF BFD Working Group";
 
   contact
-    "WG Web:   <http://tools.ietf.org/wg/bfd>
-     WG List:  <rtg-bfd@ietf.org>
+    "WG Web:   <https://datatracker.ietf.org/wg/bfd/>
+     WG List:  <mailto:rtg-bfd@ietf.org>
 
-     Editors:   Reshad Rahman (rrahman@cisco.com),
-                Lianshu Zheng (vero.zheng@huawei.com),
-                Mahesh Jethanandani (mjethanandani@gmail.com)";
+     Editor:   Reshad Rahman
+               <mailto:reshad@yahoo.com>
+
+     Editor:   Lianshu Zheng
+               <mailto:vero.zheng@huawei.com>
+
+     Editor:   Mahesh Jethanandani
+               <mailto:mjethanandani@gmail.com>";
 
   description
     "This module contains the YANG definition for BFD parameters for
      MPLS LSPs as per RFC 5884.
 
-     Copyright (c) 2018 IETF Trust and the persons
-     identified as authors of the code.  All rights reserved.
+     Copyright (c) 2021 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
-     without modification, is permitted pursuant to, and subject
-     to the license terms contained in, the Simplified BSD License
-     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     without modification, is permitted pursuant to, and subject to
+     the license terms contained in, the Simplified BSD License set
+     forth in Section 4.c of the IETF Trust's Legal Provisions
      Relating to IETF Documents
-     (http://trustee.ietf.org/license-info).
+     (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC XXXX; see
-     the RFC itself for full legal notices.";
+     This version of this YANG module is part of RFC 0000; see the
+     RFC itself for full legal notices.";
 
-  reference "RFC XXXX";
+  reference
+    "RFC 5884: Bidirectional Forwarding Detection (BFD)
+     for MPLS Label Switched Paths (LSPs)
+     RFC 0000: YANG Data Model for Bidirectional Forwarding
+     Detection (BFD)";
 
   revision YYYY-MM-DD {
-    description "Initial revision.";
-    reference "RFC XXXX: A YANG data model for BFD over MPLS LSPs";
+    description
+      "Initial revision.";
+    reference
+      "RFC 0000: YANG Data Model for Bidirectional Forwarding
+       Detection (BFD)";
   }
 
   /*
@@ -72,6 +84,8 @@ module ietf-bfd-mpls {
     base bfd-types:encap-type;
     description
       "BFD with G-ACh encapsulation as per RFC 5586.";
+    reference
+      "RFC 5586: MPLS Generic Associated Channel";
   }
 
   identity encap-ip-gach {
@@ -84,19 +98,25 @@ module ietf-bfd-mpls {
    * Groupings
    */
   grouping encap-cfg {
-    description "Configuration for BFD encapsulation";
+    description
+      "Configuration for BFD encapsulation.";
 
     leaf encap {
       type identityref {
         base bfd-types:encap-type;
       }
       default bfd-types:encap-ip;
-      description "BFD encapsulation";
+      description
+        "BFD encapsulation.";
     }
   }
 
   grouping mpls-dest-address {
-    description "Destination address as per RFC 5884.";
+    description
+      "Destination address as per RFC 5884.";
+    reference
+      "RFC 5884: Bidirectional Forwarding Detection (BFD)
+       for MPLS Label Switched Paths (LSPs)";
 
     leaf mpls-dest-address {
       type inet:ip-address;
@@ -112,14 +132,17 @@ module ietf-bfd-mpls {
    */
   augment "/rt:routing/rt:control-plane-protocols/"
         + "rt:control-plane-protocol/bfd:bfd" {
-    description "BFD augmentation for MPLS.";
+    description
+      "BFD augmentation for MPLS.";
     container mpls {
-      description "BFD MPLS top level container.";
+      description
+        "BFD MPLS top-level container.";
 
       uses bfd-types:session-statistics-summary;
 
       container egress {
-        description "Egress configuration.";
+        description
+          "Egress configuration.";
 
         uses bfd-types:client-cfg-parms;
 
@@ -128,16 +151,17 @@ module ietf-bfd-mpls {
 
       container session-groups {
         description
-          "BFD over MPLS session groups.";
+          "BFD-over-MPLS session groups.";
         list session-group {
           key "mpls-fec";
           description
-            "Group of BFD MPLS sessions (for ECMP). A group of " +
-            "sessions is for 1 FEC, each session has a different " +
-            "field in UDP/IP hdr for ECMP.";
+            "Group of BFD MPLS sessions (for ECMP).  A group of
+             sessions is for one FEC.  Each session has a different
+             field in the UDP/IP header for ECMP.";
           leaf mpls-fec {
             type inet:ip-prefix;
-            description "MPLS FEC.";
+            description
+              "MPLS FEC.";
           }
 
           uses bfd-types:common-cfg-parms;
@@ -145,9 +169,9 @@ module ietf-bfd-mpls {
           list sessions {
             config false;
             description
-              "The BFD sessions for an MPLS FEC. Local " +
-              "discriminator is unique for each session in the " +
-              "group.";
+              "The BFD sessions for an MPLS FEC.  The local
+               discriminator is unique for each session in the
+               group.";
             uses bfd-types:all-session;
 
             uses bfd-mpls:mpls-dest-address;
@@ -162,9 +186,9 @@ module ietf-bfd-mpls {
    */
   notification mpls-notification {
     description
-      "Notification for BFD over MPLS FEC session state change. " +
-      "An implementation may rate-limit notifications, e.g. when a " +
-      "session is continuously changing state.";
+      "Notification for BFD-over-MPLS FEC session state change.
+       An implementation may rate-limit notifications, e.g., when a
+       session is continuously changing state.";
 
     uses bfd-types:notification-parms;
 

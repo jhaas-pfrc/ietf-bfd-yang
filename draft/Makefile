@@ -50,12 +50,11 @@ ifeq (org,$(draft_type))
 	-rm -f $(draft).xml
 endif
 
-$(next).xml: $(draft).xml ../src/yang/iana-bfd-types.yang ../src/yang/ietf-bfd-ip-mh.yang ../src/yang/ietf-bfd-ip-sh.yang ../src/yang/ietf-bfd-lag.yang ../src/yang/ietf-bfd-mpls-te.yang ../src/yang/ietf-bfd-mpls.yang ../src/yang/ietf-bfd.yang
+$(next).xml: $(draft).xml ../src/yang/iana-bfd-types.yang ../src/yang/ietf-bfd-ip-mh.yang ../src/yang/ietf-bfd-ip-sh.yang ../src/yang/ietf-bfd-lag.yang ../src/yang/ietf-bfd-mpls.yang ../src/yang/ietf-bfd.yang
 	sed -e"s/$(basename $<)-latest/$(basename $@)/" -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" $< > $@
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-ip-mh.yang > ../src/yang/ietf-bfd-ip-mh\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-ip-sh.yang > ../src/yang/ietf-bfd-ip-sh\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-lag.yang > ../src/yang/ietf-bfd-lag\@$(shell date +%Y-%m-%d).yang
-	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-mpls-te.yang > ../src/yang/ietf-bfd-mpls-te\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd-mpls.yang > ../src/yang/ietf-bfd-mpls\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/ietf-bfd.yang > ../src/yang/ietf-bfd\@$(shell date +%Y-%m-%d).yang
 	sed -e"s/YYYY-MM-DD/$(shell date +%Y-%m-%d)/" ../src/yang/iana-bfd-types.yang > ../src/yang/iana-bfd-types\@$(shell date +%Y-%m-%d).yang
